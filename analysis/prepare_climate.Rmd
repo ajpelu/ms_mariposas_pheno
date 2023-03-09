@@ -1,0 +1,202 @@
+---
+title: "prepare_climate"
+author: "ajpelu"
+date: "2023-03-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r, message=FALSE, warning=FALSE}
+library(here)
+library(tidyverse)
+library(purrr)
+library(runner)
+library(kableExtra)
+```
+
+```{r, message=FALSE, warning=FALSE}
+files <- list.files("data/raw_data/", pattern = ".csv", full.names = TRUE)
+
+custom_f <- function(x) { 
+  out <- x %>% 
+    read_csv %>% 
+    separate(name, into = c("var", "year", "month", "cog")) %>%
+    dplyr::select(-x,-y,-cog)
+  return(out)
+  }
+  
+d <- files %>% 
+  map_df(~custom_f(.)) %>% 
+  mutate(var = recode(var, 
+                      "tm2" = "tmin", 
+                      "tm3" = "tmax"))
+
+dmean <- d %>% 
+  group_by(ID, var, year, month) %>% 
+  summarise(avg_transect = mean(value)) %>% 
+  mutate(date = as.Date(paste(year, month, "01", sep="-"), format="%Y-%m-%d")) %>% ungroup() %>% 
+  filter(date >= as.Date("2007-01-01", format="%Y-%m-%d")) %>%
+  filter(date < as.Date("2022-01-01", format="%Y-%m-%d")) %>% 
+  mutate(month_names = strftime(date, '%b')) 
+```
+
+
+```{r}
+aux <- dmean %>% 
+  filter(var != "p") 
+
+d1m <- aux %>% 
+  dplyr::select(-month, -date) %>% 
+  pivot_wider(values_from = avg_transect, 
+              names_from = month_names) %>% 
+  filter(year > 2007)
+
+
+aux2 <- aux %>% 
+  group_by(var) %>% 
+  mutate(
+    avg_two_months = runner(
+      x = avg_transect,
+      k = 2,
+      f = mean,
+      na_pad = TRUE
+    )) %>% 
+  mutate(
+    month_names2 = runner(
+      x = month_names, 
+      k = 2, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  )
+
+
+d2m <- aux2 %>% 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) %>% 
+  filter(!(is.na(month_names2))) %>% 
+  pivot_wider(values_from = avg_two_months, 
+              names_from = month_names2) %>% 
+  filter(year > 2007)
+
+aux3 <- aux %>% 
+  group_by(var) %>% 
+  mutate(
+    avg_three_months = runner(
+      x = avg_transect,
+      k = 3,
+      f = mean,
+      na_pad = TRUE
+    )
+  ) %>% 
+  mutate(
+    month_names3 = runner(
+      x = month_names, 
+      k = 3, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) 
+
+d3m <- aux3 %>% 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) %>% 
+  filter(!(is.na(month_names3))) %>% 
+  pivot_wider(values_from = avg_three_months, 
+              names_from = month_names3) %>% 
+  filter(year > 2007)
+    
+
+climate_temp <- d1m %>% 
+  inner_join(d2m) %>% 
+  inner_join(d3m)
+```
+
+```{r}
+auxp <- dmean %>% 
+  filter(var == "p") 
+
+d1mp <- auxp %>% 
+  dplyr::select(-month, -date) %>% 
+  pivot_wider(values_from = avg_transect, 
+              names_from = month_names) %>% 
+  filter(year > 2007)
+
+
+aux2p <- auxp %>% 
+  mutate(
+    sum_two_months = runner(
+      x = avg_transect,
+      k = 2,
+      f = sum,
+      na_pad = TRUE
+    )) %>% 
+  mutate(
+    month_names2 = runner(
+      x = month_names, 
+      k = 2, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  )
+
+
+d2mp <- aux2p %>% 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) %>% 
+  filter(!(is.na(month_names2))) %>% 
+  pivot_wider(values_from = sum_two_months, 
+              names_from = month_names2) %>% 
+  filter(year > 2007)
+
+aux3p <- auxp %>% 
+  mutate(
+    sum_three_months = runner(
+      x = avg_transect,
+      k = 3,
+      f = mean,
+      na_pad = TRUE
+    )
+  ) %>% 
+  mutate(
+    month_names3 = runner(
+      x = month_names, 
+      k = 3, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) 
+
+d3mp <- aux3p %>% 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) %>% 
+  filter(!(is.na(month_names3))) %>% 
+  pivot_wider(values_from = sum_three_months, 
+              names_from = month_names3) %>% 
+  filter(year > 2007)
+    
+
+climate_prec <- d1mp %>% 
+  inner_join(d2mp) %>% 
+  inner_join(d3mp)
+```
+
+
+```{r}
+climate_transects <- bind_rows(
+  climate_temp, climate_prec)
+
+write_csv(climate_transects, "data/climate_transects.csv")
+```
+
+```{r}
+climate_transects %>% 
+  kbl() %>% 
+  kable_styling()
+```
+
+
+
