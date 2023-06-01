@@ -12,18 +12,29 @@ editor_options:
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(janitor)
 library(here)
 ```
 
 
 ```{r}
+
+# Prepare variable transects
+transectos <- readxl::read_excel("data/raw_data/Tabla_variables_transectos_22.xls", 
+                                 sheet = "Otras variables") |>
+  janitor::clean_names() |> 
+  filter(transecto != "ENSNEVADA")
+
+write_csv(transectos, "data/transectos_variables.csv")
+
+
 # Read the transect data 
-transectos <- read_csv(here::here("data/variables_transects.csv")) |> 
+transectos_metadata <- transectos |> 
   dplyr::select(transecto, id_transect, abreviatura, altitud) |> 
   mutate(site_id = as.numeric(gsub("16_", "", id_transect))) |> 
   unite("abb_elev", c("abreviatura", "altitud"), sep = " (", remove = FALSE) |> 
   mutate(abb_elev = paste0(abb_elev, ")"))
 
-write_csv(transectos, here::here("data/transects.csv"))
+write_csv(transectos_metadata, here::here("data/transectos_metadata.csv"))
 ```
 
