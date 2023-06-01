@@ -1,0 +1,289 @@
+---
+title: "Prepare climate data"
+author: "ajpelu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r, message=FALSE, warning=FALSE}
+library(here)
+library(tidyverse)
+library(purrr)
+library(runner)
+library(kableExtra)
+library(DT)
+```
+
+- We used the climate data from REDIAM (500 x 500 grid for all Andalusian territory). Gridded data comes from meteorological stations. For each pixel values of maximum, minimum and median monthly temperatures are available from 1971 to 2021. Monthly rainfall are available from 1951 to 2021.  
+
+- For each transect we obtained all the data of the pixels that contact with the transects (see $REPO$). Then we generated the average value of each variable by transect and month. 
+
+```{r, message=FALSE, warning=FALSE}
+files <- list.files("data/raw_data/", pattern = ".csv", full.names = TRUE)
+
+custom_f <- function(x) { 
+  out <- x |>  
+    read_csv() |> 
+    separate(name, into = c("var", "year", "month", "cog")) |>
+    dplyr::select(-x,-y,-cog)
+  return(out)
+  }
+  
+raw <- files |> 
+  map_df(~custom_f(.)) |> 
+  mutate(var = recode(var, 
+                      "tm2" = "tmin", 
+                      "tm3" = "tmax"))
+
+climate_transect <- raw |> 
+  group_by(ID, var, year, month) |> 
+  summarise(avg_transect = mean(value)) |> 
+  mutate(date = as.Date(paste(year, month, "01", sep="-"), format="%Y-%m-%d")) |> ungroup() |> 
+  filter(date >= as.Date("2007-01-01", format="%Y-%m-%d")) |>
+  filter(date < as.Date("2022-01-01", format="%Y-%m-%d")) |> 
+  mutate(month_names = strftime(date, '%b')) 
+```
+
+See aspect of the table: 
+
+```{r, echo=FALSE}
+head(climate_transect, 1000) |> datatable()
+```
+
+## Compute month, bi-month and three-month data
+For each transect, we selected monthly data. Then we computed the bi-months and three-months average. 
+
+### Temperature data
+#### Monthly data 
+We selected temperature data in the `climate_transect` dataframe. For each variable (*i.e.* tmax, tmed, tmin) we pivot the data to obtain the temperature data for each transect (`ID` transect) and year (from 2007 to 2021). The resulted dataframe is called `d1mt` (data-1-month-temperature). 
+
+```{r}
+aux <- climate_transect |> 
+  filter(var != "p") 
+
+d1mt <- aux |> 
+  dplyr::select(-month, -date) |> 
+  pivot_wider(values_from = avg_transect, 
+              names_from = month_names) |> 
+  filter(year > 2007)
+```
+
+Explore the results
+
+```{r echo=FALSE}
+d1mt |>
+  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  DT::datatable()
+```
+
+#### Bimonthly data
+
+To obtain values of temperature aggregated each 2-months, we used the `runner()` function of [runner](https://cran.r-project.org/web/packages/runner/index.html) package. This function computes a function over a temporal window. For the temperature data we use the bimonth average temperature. As monthly data, we pivot this dataframe to obtain for each variable, transect and year the temperature value (in this case the 2-month average temperature). The name of the variables will be a combination of the two averaged month, *i.e.*: `JanFeb`. The resulting dataset is called `d2mt` (data-2-month-temperature).  
+
+```{r}
+aux2 <- aux |> 
+  group_by(var) |> 
+  mutate(
+    avg_two_months = runner::runner(
+      x = avg_transect,
+      k = 2,
+      f = mean,
+      na_pad = TRUE
+    )) |> 
+  mutate(
+    month_names2 = runner::runner(
+      x = month_names, 
+      k = 2, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) |> 
+  ungroup()
+
+d2mt <- aux2 |> 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) |> 
+  filter(!(is.na(month_names2))) |> 
+  pivot_wider(values_from = avg_two_months, 
+              names_from = month_names2) |> 
+  filter(year > 2007)
+
+```
+
+See the results 
+
+```{r, echo=FALSE}
+d2mt |>
+  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  DT::datatable()
+```
+
+Some test were performed to check the results: 
+
+```{r, eval=TRUE}
+d2007 <- aux |>
+  filter(var == "tmax") |>
+  filter(ID == 1) |>
+  filter(year == 2007)
+
+# test 1
+janfeb <- mean(as.vector(d2007[1:2, "avg_transect"]$avg_transect))
+
+test_aux2 <- aux2 |>
+  filter(var == "tmax") |>
+  filter(ID == 1) |>
+  filter(year %in% c(2007, 2008))
+
+identical(janfeb, (test_aux2 |> 
+  filter(year == 2007) |> 
+  filter(month_names2 == "JanFeb") |> pull(avg_two_months)))
+
+# test 2
+febmar <- mean(as.vector(d2007[2:3, "avg_transect"]$avg_transect))  
+
+identical(febmar, (test_aux2 |> 
+  filter(year == 2007) |> 
+  filter(month_names2 == "FebMar") |> pull(avg_two_months)))
+```
+
+#### Trimonthly data
+
+To obtain values of temperature aggregated each 3-months, we again used the `runner()` function of [runner](https://cran.r-project.org/web/packages/runner/index.html) package. As monthly data, we pivot this dataframe to obtain for each variable, transect and year the temperature value (in this case the 3-month average temperature). The name of the variables will be a combination of the three averaged month, *i.e.*: `JanFebMar`. The resulting dataset is called `d3mt` (data-3-month-temperature).
+
+```{r}
+aux3 <- aux |> 
+  group_by(var) |> 
+  mutate(
+    avg_three_months = runner::runner(
+      x = avg_transect,
+      k = 3,
+      f = mean,
+      na_pad = TRUE
+    )
+  ) |> 
+  mutate(
+    month_names3 = runner::runner(
+      x = month_names, 
+      k = 3, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) |> ungroup()
+
+d3mt <- aux3 |> 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) |> 
+  filter(!(is.na(month_names3))) |> 
+  pivot_wider(values_from = avg_three_months, 
+              names_from = month_names3) |> 
+  filter(year > 2007)
+```
+
+See the results: 
+```{r, echo=FALSE}
+d3mt |>
+  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  DT::datatable()
+```
+
+We generated a dataframe with monthly, 2-month and 3-month data
+
+```{r}
+climate_temp <- d1mt |> 
+  inner_join(d2mt) |> 
+  inner_join(d3mt)
+```
+
+### Rainfall data
+As we see in the previous section, we also computed the monthly, bimonthly and 3-monthly data for the rainfall, but in this case we used the cummulative precipitation (not the average), so the value for JanFeb corresponds to the cummulative rainfall of Jan and Feb. 
+
+```{r}
+auxp <- climate_transect |> 
+  filter(var == "p") 
+
+d1mp <- auxp |> 
+  dplyr::select(-month, -date) |> 
+  pivot_wider(values_from = avg_transect, 
+              names_from = month_names) |> 
+  filter(year > 2007)
+
+
+aux2p <- auxp |> 
+  mutate(
+    sum_two_months = runner(
+      x = avg_transect,
+      k = 2,
+      f = sum,
+      na_pad = TRUE
+    )) |> 
+  mutate(
+    month_names2 = runner(
+      x = month_names, 
+      k = 2, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) |> ungroup()
+
+
+d2mp <- aux2p |> 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) |> 
+  filter(!(is.na(month_names2))) |> 
+  pivot_wider(values_from = sum_two_months, 
+              names_from = month_names2) |> 
+  filter(year > 2007)
+
+aux3p <- auxp |> 
+  mutate(
+    sum_three_months = runner(
+      x = avg_transect,
+      k = 3,
+      f = mean,
+      na_pad = TRUE
+    )
+  ) |> 
+  mutate(
+    month_names3 = runner(
+      x = month_names, 
+      k = 3, 
+      f = paste, 
+      na_pad = TRUE, 
+      collapse="")
+  ) |> ungroup()
+
+d3mp <- aux3p |> 
+  dplyr::select(-month, -date, 
+                -month_names, -avg_transect) |> 
+  filter(!(is.na(month_names3))) |> 
+  pivot_wider(values_from = sum_three_months, 
+              names_from = month_names3) |> 
+  filter(year > 2007)
+    
+
+climate_prec <- d1mp |> 
+  inner_join(d2mp) |> 
+  inner_join(d3mp)
+```
+
+
+## Generated data 
+
+The temperature and rainfall data were joinned and exported. 
+
+```{r}
+climate_data  <- bind_rows(
+  climate_temp, climate_prec)
+
+climate_data |>
+  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  DT::datatable()
+```
+
+
+```{r, echo=FALSE}
+write_csv(climate_data, "data/climate_transects.csv")
+```
