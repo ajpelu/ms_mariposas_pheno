@@ -285,5 +285,5 @@ climate_data |>
 
 
 ```{r, echo=FALSE}
-write_csv(climate_data, "data/climate_transects.csv")
+write_csv(climate_data, "data/transectos_climate.csv")
 ```
