@@ -1,0 +1,29 @@
+---
+title: "Prepare Transects data"
+author: "ajpelu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+- Prepare transect data for use it thorough the analysis
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+```
+
+
+```{r}
+# Read the transect data 
+transectos <- read_csv(here::here("data/variables_transects.csv")) |> 
+  dplyr::select(transecto, id_transect, abreviatura, altitud) |> 
+  mutate(site_id = as.numeric(gsub("16_", "", id_transect))) |> 
+  unite("abb_elev", c("abreviatura", "altitud"), sep = " (", remove = FALSE) |> 
+  mutate(abb_elev = paste0(abb_elev, ")"))
+
+write_csv(transectos, here::here("data/transects.csv"))
+```
+
