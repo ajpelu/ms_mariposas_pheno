@@ -1,0 +1,218 @@
+---
+title: "analysis peak"
+author: "ajpelu"
+date: "2023-06-01"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(janitor) 
+library(lubridate)
+library(ggpubr)
+```
+
+
+```{r}
+df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
+```
+
+
+
+
+```{r}
+
+plot_trend_doy <- function(df, sp){ 
+  p <- df |> 
+    filter(species == sp) |> 
+    mutate(abb = fct_reorder(abb_elev, altitud)) |> 
+    ggplot(aes(x=year, y=doy)) + 
+    geom_point() + 
+    facet_wrap(~abb) +
+    geom_smooth(method = "lm", se = FALSE) +
+    ggpubr::stat_cor(
+      aes(label = after_stat(rr.label))
+      ) + 
+    theme_bw() +
+    theme(
+    panel.grid= element_blank(), 
+    strip.background = element_blank()) + 
+    ylab("Day of year") + xlab("Year") + 
+  labs(
+    title = sp
+  )  +
+    scale_x_continuous(breaks = seq(min(year), max(year), by = 1)) 
+  
+  return(p)
+  
+  }
+
+plot_trend_doy(df_doy, sp = "Aglais urticae")
+
+
+
+
+  unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
+  mutate(abb = fct_reorder(abb, altitud)) |> 
+  ggplot(aes(x=doy, y=nm, colour = as.factor(year))) + 
+  geom_point() + 
+  geom_path() + 
+  facet_wrap(~abb) + 
+  theme_bw() + 
+  theme(
+    panel.grid= element_blank(), 
+    strip.background = element_blank()
+  ) + ylab("") +
+  labs(
+    title = "Aglais urticae",
+    colour = "Year"
+  )
+
+
+
+
+
+
+df_doy |> 
+  filter(species == "Aglais urticae") |> 
+  mutate(abb = fct_reorder(abb_elev, altitud)) |> 
+  ggplot(aes(x=year, y=doy)) + 
+  geom_point() + 
+  facet_wrap(~abb) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggpubr::stat_cor(
+    aes(label = after_stat(rr.label))  
+  ) + theme_bw()
+
+```
+
+
+```{r}
+
+df_doy  |> 
+  filter(species == "Aglais urticae") |> 
+  unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
+  mutate(abb = fct_reorder(abreviatura, altitud)) |> 
+  ggplot(aes(x=year, y=doy)) + 
+  geom_point() + 
+  facet_wrap(~abb_elev) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggpubr::stat_cor(
+    aes(label = after_stat(rr.label))  
+  ) +
+  theme_bw()
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
+
+d |> 
+  unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
+  mutate(abb = fct_reorder(abb, altitud)) |> 
+  ggplot(aes(x=doy, y=nm, colour = as.factor(year))) + 
+  geom_point() + 
+  geom_path() + 
+  facet_wrap(~abb) + 
+  theme_bw() + 
+  theme(
+    panel.grid= element_blank(), 
+    strip.background = element_blank()
+  ) + ylab("") +
+  labs(
+    title = "Aglais urticae",
+    colour = "Year"
+  )
+
+```
+
+
+
+```{r}
+sps <- unique(pheno$species)
+```
+
+
+Generate for each species, site and year, the day with the maximum peak of the fitted abundance 
+
+
+```{r}
+
+
+
+peak_day %>%
+  inner_join(transectos) %>%
+  filter(species == "Aglais urticae") %>%
+  unite("abb", c("altitud", "abreviatura"), remove = FALSE) %>%
+  mutate(abb = fct_reorder(abreviatura, altitud)) %>%
+  group_by(abb) %>%
+  mutate(num_points = n()) %>%
+  filter(num_points > 4) %>%
+  ggplot(aes(x = year, y = doy)) +
+  geom_point() +
+  facet_wrap(~ abb) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggpubr::stat_cor(
+    aes(label = after_stat(rr.label))
+  ) +
+  theme_bw()
+
+
+
+
+
+
+
+
+
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(forcats)
+
+peak_day %>%
+  inner_join(transectos) %>%
+  filter(species == "Aglais urticae") %>%
+  unite("abb", c("altitud","abreviatura"), remove = FALSE) %>%
+  mutate(abb = fct_reorder(abb, altitud)) %>%
+  ggplot(aes(x = year, y = doy)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(
+    ~ abb,
+    labeller = labeller(
+      abb = function(variable) {
+        r_squared <- summary(lm(doy ~ year, data = subset(., abb == variable)))$adj.r.squared
+        p_value <- summary(lm(doy ~ year, data = subset(., abb == variable)))$coefficients[8, 4]
+        label <- paste(variable, "R-squared:", round(r_squared, 2), "p-value:", round(p_value, 2))
+        label
+      }
+    )
+  )
+
+```
+
+
+```{r}
+# pheno <- readxl::read_excel("data/raw_data/pheno.xlsx") |>
+#   janitor::clean_names() |> 
+#   mutate(date = lubridate::make_date(year, month, day)) |>
+#   mutate(doy = lubridate::yday(date)) |> 
+#   inner_join(transectos)
+```
+
