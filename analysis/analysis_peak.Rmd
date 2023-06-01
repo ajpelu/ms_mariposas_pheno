@@ -26,8 +26,7 @@ df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
 
 
 ```{r}
-
-plot_trend_doy <- function(df, sp){ 
+plot_trend_doy_all <- function(df, sp){ 
   p <- df |> 
     filter(species == sp) |> 
     mutate(abb = fct_reorder(abb_elev, altitud)) |> 
@@ -46,17 +45,94 @@ plot_trend_doy <- function(df, sp){
   labs(
     title = sp
   )  +
-    scale_x_continuous(breaks = seq(min(year), max(year), by = 1)) 
+    scale_x_continuous(breaks = seq(min(df$year), max(df$year), by = 2)) 
   
   return(p)
-  
   }
 
-plot_trend_doy(df_doy, sp = "Aglais urticae")
+```
+
+```{r}
+# Get species 
+species <- unique(df_doy$species)
+
+# Generate PDF files for each species using purrr::map()
+map(species, ~{
+  sp <- .
+  p <- plot_trend_doy(df_doy, sp)
+  pdf_file <- here::here("output/pheno_peak_doy/", paste0(sp, ".pdf"))
+  ggsave(filename = pdf_file, plot = p, device = "pdf")
+})
+```
+
+
+```{r}
+
+sp <- "Aglais urticae"
+min_points = 4
+df <- df_doy
+
+p <- df |> ungroup() |> 
+    filter(species == sp) |> 
+    mutate(abb = fct_reorder(abb_elev, altitud)) |> 
+    group_by(abb) |> 
+    mutate(num_points = n()) |> 
+    filter(num_points > min_points) |> 
+  
+
+
+plot_trend_doy_all_points <- function(df, sp, min_points){ 
+  p <- df |> 
+    ungroup() |> 
+    filter(species == sp) |> 
+    mutate(abb = fct_reorder(abb_elev, altitud)) |> 
+    group_by(abb) |> 
+    mutate(num_points = n()) |> 
+    filter(num_points > min_points) |> 
+    ggplot(aes(x=year, y=doy)) + 
+    geom_point() + 
+    facet_wrap(~abb) +
+    geom_smooth(method = "lm", se = FALSE) +
+    ggpubr::stat_cor(
+      aes(label = after_stat(rr.label))
+      ) + 
+    theme_bw() +
+    theme(
+    panel.grid= element_blank(), 
+    strip.background = element_blank()) + 
+    ylab("Day of year") + xlab("Year") + 
+  labs(
+    title = sp
+  )  +
+    scale_x_continuous(breaks = seq(min(df$year), max(df$year), by = 2)) 
+  
+  return(p)
+}
+
+plot_trend_doy_all_points(df_doy, sp = "Aglais urticae", min_points = 4)
+
+```
+
+
+```{r}
+### error, falla cuando no hay min points 
+map(species, ~{
+  sp <- .
+  p <- plot_trend_doy_all_points(df_doy, sp, min_points = 4)
+  pdf_file <- here::here("output/pheno_peak_doy5/", paste0(sp, ".pdf"))
+  ggsave(filename = pdf_file, plot = p, device = "pdf")
+})
+```
+
+```
 
 
 
 
+
+
+
+```{r}
   unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
   mutate(abb = fct_reorder(abb, altitud)) |> 
   ggplot(aes(x=doy, y=nm, colour = as.factor(year))) + 
