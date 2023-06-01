@@ -1,0 +1,78 @@
+---
+title: "Prepare peak data"
+author: "ajpelu"
+date: "2023-05-31"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor) 
+library(lubridate)
+library(ggpubr)
+```
+
+
+```{r}
+# Read the transect data 
+transectos <- read_csv(here::here("data/transectos_metadata.csv"))
+```
+
+
+### Get the peak day of the phenology by year and site for each species 
+
+- JMBA give the a folder with files for each species of the curve fitted by year and site (`/raw_data/pheno_sp`)
+- We prepare the data: read the data, join the transects metadata and then compute the day of year with the maximum fitted valued (peak_day) 
+- There are problems with the files: `Glaucopsyche_alexis_BMSSN_pheno.xlsx` and `Libythea_celtis_BMSSN_pheno.xlsx`. We removed them into folder (`/raw_data/pheno_sp_novalid`)
+
+- I wrote a custom function to read the data, unite year, month and day and convert it into date. Then compute the day of year (`doy`), generate a dataframe (`pheno`) and export the data as `/data/pheno.csv`
+
+```{r}
+# List the files 
+pheno_files <- list.files(here::here("data/raw_data/pheno_sp/"), pattern = "*pheno.xlsx", full.names = TRUE)
+
+
+prepare_pheno <- function(file) { 
+  df_pheno <- readxl::read_excel(file) |>
+    janitor::clean_names() |> 
+    mutate(date = lubridate::make_date(year, month, day)) |>
+    mutate(doy = lubridate::yday(date)) 
+  
+  return(df_pheno)
+  }
+
+
+pheno <- purrr::map_df(pheno_files, ~ prepare_pheno(.)) 
+
+write_csv(pheno, here::here("data/pheno.csv"))
+```
+
+- The dataframe `pheno` has `r nrow(pheno)` records.  
+
+- We extract the doy (day of the year) for each species, sites and year with the maximum peak of the fitted valued. For this purpose we write a custom function `get_peak_day`. The dataframe `pheno` contains some records with `NA` value in `site_id` and also some data with `NA` values in `fitted` variable. So we remove them using the option `na.rm` in the function `dplyr::slice_max`. The information about transect was joined. The output results is exported as `data/doy_peak_sps.csv`) 
+
+```{r}
+get_peak_day <- function(df_pheno) { 
+  peak_day <- df_pheno |> 
+    group_by(species, site_id, year) |>
+    slice_max(fitted, na_rm = TRUE) |> 
+    dplyr::select(species, site_id, year,
+                month, day, week,
+                fitted, date, doy) |> 
+  ungroup()
+  
+  return(peak_day)
+  }
+ 
+doy_peak_sps <- get_peak_day(pheno) |> 
+  inner_join(transectos)
+
+write_csv(doy_peak_sps, here::here("data/doy_peak_sps.csv"))
+```
+
+
