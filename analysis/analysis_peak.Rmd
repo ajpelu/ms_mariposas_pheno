@@ -15,14 +15,15 @@ library(here)
 library(janitor) 
 library(lubridate)
 library(ggpubr)
+library(Kendall)
+library(trend)
 ```
 
 
 ```{r}
 df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
+transectos <- read_csv(here::here("data/transectos_metadata.csv"))
 ```
-
-
 
 
 ```{r}
@@ -68,19 +69,6 @@ map(species, ~{
 
 ```{r}
 
-sp <- "Aglais urticae"
-min_points = 4
-df <- df_doy
-
-p <- df |> ungroup() |> 
-    filter(species == sp) |> 
-    mutate(abb = fct_reorder(abb_elev, altitud)) |> 
-    group_by(abb) |> 
-    mutate(num_points = n()) |> 
-    filter(num_points > min_points) |> 
-  
-
-
 plot_trend_doy_all_points <- function(df, sp, min_points){ 
   p <- df |> 
     ungroup() |> 
@@ -113,8 +101,7 @@ plot_trend_doy_all_points(df_doy, sp = "Aglais urticae", min_points = 4)
 
 ```
 
-
-```{r}
+```{r, eval=FALSE}
 ### error, falla cuando no hay min points 
 map(species, ~{
   sp <- .
@@ -124,8 +111,95 @@ map(species, ~{
 })
 ```
 
+Compute the number of sites where the sps are present and the number of sites with more than 4 points 
+
+```{r}
+npoints_sp_site <- df_doy |> 
+    ungroup() |> 
+    group_by(species, site_id, abb_elev) |> 
+  summarise(num_points = n())
+
+nsites_by_sps <- npoints_sp_site |> 
+  group_by(species) |> 
+  summarise(nsites = n())
+
+nsites_by_sps_4points <- npoints_sp_site |>
+  filter(num_points > 4) |> 
+  group_by(species) |> 
+  summarise(nsites_higher4points = n())
+
+
+ns <- nsites_by_sps |> 
+  full_join(nsites_by_sps_4points)
 ```
 
+
+
+
+# Compute trend 
+
+```{r}
+compute_trend <- function(y, x) {
+  # Compute Mann-Kendall test
+  mk <- MannKendall(y)
+  mk_tau <- mk$tau
+  mk_pvalue <- mk$sl
+  
+  # Compute Sen's slope
+  sen <- trend::sens.slope(y)
+  sen_slope <- unname(sen$estimates)
+  sen_stats <- unname(sen$statistic)
+  sen_pvalue <- unname(sen$p.value)
+
+  # Compute LM 
+  model <- lm(y ~ x)
+  lm_slope <- model$coefficients[2]
+  lm_pvalue <- summary(model)$coefficients[2,4]
+  lm_rsquared <- summary(model)$r.squared
+
+
+  # Check for NULL values
+  if (is.null(mk_tau)) mk_tau <- NA
+  if (is.null(mk_pvalue)) mk_pvalue <- NA
+  if (is.null(sen_slope)) sen_slope <- NA
+  if (is.null(sen_stats)) sen_stats <- NA
+  if (is.null(sen_pvalue)) sen_pvalue <- NA
+  if (is.null(lm_slope)) lm_slope <- NA
+  if (is.null(lm_pvalue)) lm_pvalue <- NA
+  if (is.null(lm_rsquared)) lm_rsquared <- NA
+
+  
+  # Return results
+  result <- data.frame(mk_tau = mk_tau, 
+                       mk_pvalue = mk_pvalue, 
+                       sen_slope = sen_slope, 
+                       sen_stats = sen_stats, 
+                       sen_pvalue = sen_pvalue, 
+                       lm_slope = lm_slope, 
+                       lm_pvalue = lm_pvalue, 
+                       lm_rsquared = lm_rsquared)
+
+  return(result)
+}
+
+
+
+df_trends <- df_doy |> 
+  ungroup() |> 
+  group_by(species, site_id) |> 
+  mutate(num_points = n()) |> 
+  filter(num_points > 4)  |> 
+  group_modify(~compute_trend(.x$doy, .x$year)) |> 
+  inner_join(transectos)
+
+```
+
+
+```{r}
+df_trends |> 
+  ggplot(aes(x=altitud, y = sen_slope)) + geom_point() +
+  theme_bw()
+```
 
 
 
