@@ -21,7 +21,7 @@ library(DT)
 ```
 
 
-```{r}
+```{r, message=FALSE}
 df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
 transectos <- read_csv(here::here("data/transectos_metadata.csv"))
 ```
@@ -270,7 +270,7 @@ doy_mean <- df_doy |>
 #             n = length(doy)) 
 ```
 
-```{r, fig.height=12}
+```{r, fig.height=12, eval=FALSE}
 doy_mean |> 
   ggplot(aes(x=forcats::fct_reorder(species, mean), y = mean)) + geom_point() +
   geom_errorbar(aes(ymin = mean - se, ymax= mean + se)) + 
@@ -283,6 +283,20 @@ doy_mean |>
   xlab("") + ylab("DOY")
 ```
 
+
+```{r, fig.height=14}
+df_doy |> 
+  ggplot(aes(x=reorder(species, doy, mean), y = doy)) + geom_point(size=.5, colour = "gray") +
+  stat_summary(fun.data = mean_sd, geom = "pointrange") +
+  coord_flip() + 
+  theme_bw() + 
+  theme(
+    panel.grid.major.x = element_blank(), 
+    panel.grid.minor.x = element_blank()
+  ) + 
+  xlab("") + ylab("DOY") +
+  scale_y_continuous(breaks = seq(0, max(df_doy$doy), by = 20)) 
+```
 
 
 
