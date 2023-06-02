@@ -17,6 +17,7 @@ library(lubridate)
 library(ggpubr)
 library(Kendall)
 library(trend)
+library(DT)
 ```
 
 
@@ -25,6 +26,8 @@ df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
 transectos <- read_csv(here::here("data/transectos_metadata.csv"))
 ```
 
+### Exploratory analysis 
+First, we examine how the day of the year (doy) at which the maximum peak occurs varies throughout the years for each species and site. We create a custom function to generate a plot for each species faceted by site. All the pdfs generated are stored [here](https://github.com/ajpelu/ms_mariposas_pheno/tree/main/output/pheno_peak_doy). 
 
 ```{r}
 plot_trend_doy_all <- function(df, sp){ 
@@ -36,7 +39,8 @@ plot_trend_doy_all <- function(df, sp){
     facet_wrap(~abb) +
     geom_smooth(method = "lm", se = FALSE) +
     ggpubr::stat_cor(
-      aes(label = after_stat(rr.label))
+      cor.coef.name = "R"
+      # aes(label = after_stat(r.label))
       ) + 
     theme_bw() +
     theme(
@@ -53,22 +57,28 @@ plot_trend_doy_all <- function(df, sp){
 
 ```
 
+
+For instance, the following figure shows the data plot for *Aglais urticae*
+
 ```{r}
 # Get species 
 species <- unique(df_doy$species)
 
+plot_trend_doy_all(df_doy, species[1])
+```
+
+```{r, eval=FALSE}
 # Generate PDF files for each species using purrr::map()
 map(species, ~{
   sp <- .
-  p <- plot_trend_doy(df_doy, sp)
+  p <- plot_trend_doy_all(df_doy, sp)
   pdf_file <- here::here("output/pheno_peak_doy/", paste0(sp, ".pdf"))
   ggsave(filename = pdf_file, plot = p, device = "pdf")
 })
 ```
 
 
-```{r}
-
+```{r, eval=FALSE, echo=FALSE}
 plot_trend_doy_all_points <- function(df, sp, min_points){ 
   p <- df |> 
     ungroup() |> 
@@ -99,9 +109,6 @@ plot_trend_doy_all_points <- function(df, sp, min_points){
 
 plot_trend_doy_all_points(df_doy, sp = "Aglais urticae", min_points = 4)
 
-```
-
-```{r, eval=FALSE}
 ### error, falla cuando no hay min points 
 map(species, ~{
   sp <- .
@@ -111,7 +118,9 @@ map(species, ~{
 })
 ```
 
-Compute the number of sites where the sps are present and the number of sites with more than 4 points 
+#### How many data? 
+
+We would like to determine the number of sites where each species is present (`nsites`), and also compute the number of sites where the species has been recorded for at least 5 years (`nsites_higher4points`)
 
 ```{r}
 npoints_sp_site <- df_doy |> 
@@ -131,12 +140,18 @@ nsites_by_sps_4points <- npoints_sp_site |>
 
 ns <- nsites_by_sps |> 
   full_join(nsites_by_sps_4points)
+
+write_csv(ns, here::here("data/trends_peak_nsites.csv"))
 ```
 
 
+```{r, echo=FALSE}
+ns |> DT::datatable()
+```
 
+## Compute trends 
 
-# Compute trend 
+We analyze the temporal trend of the date at which the peak flight occurs (DOY). We calculate the trends using both the Mann-Kendall and Sen's slope methods, as well as linear methods, to assess how the DOY varies over time. We specifically focus on species where we have at least 5 data points, indicating that the species has been observed for a minimum of 5 years.
 
 ```{r}
 compute_trend <- function(y, x) {
@@ -181,9 +196,10 @@ compute_trend <- function(y, x) {
 
   return(result)
 }
+```
 
 
-
+```{r}
 df_trends <- df_doy |> 
   ungroup() |> 
   group_by(species, site_id) |> 
@@ -192,13 +208,79 @@ df_trends <- df_doy |>
   group_modify(~compute_trend(.x$doy, .x$year)) |> 
   inner_join(transectos)
 
+write_csv(df_trends, here::here("data/trends_peak.csv"))
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 df_trends |> 
-  ggplot(aes(x=altitud, y = sen_slope)) + geom_point() +
-  theme_bw()
+  DT::datatable() |> 
+  formatRound(
+    columns = c("mk_tau", "mk_pvalue", "sen_slope", "sen_stats", "sen_pvalue", "lm_slope", "lm_pvalue", "lm_rsquared"),
+    digits = c(3,4,3,2,4,3,4,3))
+```
+
+
+### Explore the trends 
+#### By elevation 
+
+```{r}
+ggscatter(df_trends, 
+          x = "altitud", y = "sen_slope", 
+          add = "reg.line",
+          add.params = list(color = "blue", fill = "lightgray"),
+          conf.int = TRUE, 
+          xlab = "Elevation (m)", 
+          ylab = "Sen's Slope") +
+   stat_cor(method = "pearson", label.y = -10, label.x = 2500)
+```
+
+```{r}
+ggscatter(df_trends, 
+          x = "altitud", y = "mk_tau", 
+          add = "reg.line",
+          add.params = list(color = "blue", fill = "lightgray"),
+          conf.int = TRUE, 
+          xlab = "Elevation (m)", 
+          ylab = "Mann-Kendall tau") +
+   stat_cor(method = "pearson")
+```
+
+#### Explore by timing of the maximum 
+
+
+- First we computed the doy mean for each specie 
+
+DUDA -> computar por sitio o por año 
+```{r}
+doy_mean <- df_doy |> 
+  group_by(species) |> 
+  summarise(mean = mean(doy, na.rm = TRUE),
+            median = median(doy, na.rm = TRUE),
+            sd = sd(doy, na.rm = TRUE),
+            se = sd(doy, na.rm = TRUE) / sqrt(n()), 
+            n = length(doy)) 
+
+# df_doy |> 
+#   group_by(species, site_id) |> 
+#   summarise(mean = mean(doy, na.rm = TRUE),
+#             median = median(doy, na.rm = TRUE),
+#             sd = sd(doy, na.rm = TRUE),
+#             se = sd(doy, na.rm = TRUE) / sqrt(n()), 
+#             n = length(doy)) 
+```
+
+```{r, fig.height=12}
+doy_mean |> 
+  ggplot(aes(x=forcats::fct_reorder(species, mean), y = mean)) + geom_point() +
+  geom_errorbar(aes(ymin = mean - se, ymax= mean + se)) + 
+  coord_flip() +
+  theme_bw() + 
+  theme(
+    panel.grid.major.x = element_blank(), 
+    panel.grid.minor.x = element_blank()
+  ) + 
+  xlab("") + ylab("DOY")
 ```
 
 
@@ -206,7 +288,7 @@ df_trends |>
 
 
 
-```{r}
+```{r, eval=FALSE, echo=FALSE}
   unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
   mutate(abb = fct_reorder(abb, altitud)) |> 
   ggplot(aes(x=doy, y=nm, colour = as.factor(year))) + 
@@ -239,11 +321,6 @@ df_doy |>
     aes(label = after_stat(rr.label))  
   ) + theme_bw()
 
-```
-
-
-```{r}
-
 df_doy  |> 
   filter(species == "Aglais urticae") |> 
   unite("abb", c("altitud","abreviatura"), remove = FALSE) |>
@@ -257,16 +334,6 @@ df_doy  |>
   ) +
   theme_bw()
 
-```
-
-
-
-
-
-
-
-
-```{r}
 
 
 d |> 
@@ -286,19 +353,6 @@ d |>
     colour = "Year"
   )
 
-```
-
-
-
-```{r}
-sps <- unique(pheno$species)
-```
-
-
-Generate for each species, site and year, the day with the maximum peak of the fitted abundance 
-
-
-```{r}
 
 
 
@@ -319,18 +373,6 @@ peak_day %>%
   ) +
   theme_bw()
 
-
-
-
-
-
-
-
-
-```
-
-
-```{r}
 library(ggplot2)
 library(dplyr)
 library(forcats)
@@ -357,12 +399,4 @@ peak_day %>%
 
 ```
 
-
-```{r}
-# pheno <- readxl::read_excel("data/raw_data/pheno.xlsx") |>
-#   janitor::clean_names() |> 
-#   mutate(date = lubridate::make_date(year, month, day)) |>
-#   mutate(doy = lubridate::yday(date)) |> 
-#   inner_join(transectos)
-```
 
