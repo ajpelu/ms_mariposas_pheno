@@ -1,0 +1,187 @@
+---
+title: "Plot of climate variabbles"
+author: "ajpelu"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Get climate plots 
+
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2)
+library(ggpmisc)
+library(patchwork)
+library(here)
+```
+
+- Read data of SN 
+
+```{r}
+prec <- readRDS(here::here("data/raw_data/prec_sn.rda"))
+tmin <- readRDS(here::here("data/raw_data/tmin_sn.rda"))
+tmax <- readRDS(here::here("data/raw_data/tmax_sn.rda"))
+tmed <- readRDS(here::here("data/raw_data/tmed_sn.rda"))
+```
+
+
+- Get summary for variables 
+```{r}
+prec_anual <- prec |> 
+  filter(year < 2022) |> 
+  group_by(year, x, y) |>  
+  summarise(
+    panual = sum(value)
+  ) |> 
+  ungroup() |> 
+  group_by(year) |> 
+  summarise(
+    mean = mean(panual, na.rm=TRUE),
+    sd = sd(panual, na.rm=TRUE),
+    se = sd/sqrt(length(panual))
+  ) |>  
+  mutate(var = "prec")
+
+
+tmed_anual <- tmed |>  
+  group_by(year, x, y) |>  
+  summarise(
+    tanual = mean(value, na.rm=TRUE),
+  ) |> 
+  ungroup() |> 
+  group_by(year) |> 
+  summarise(
+    mean = mean(tanual, na.rm=TRUE),
+    sd = sd(tanual, na.rm=TRUE),
+    se = sd/sqrt(length(tanual))
+  ) |>  
+  mutate(var = "tmed")
+
+tmin_anual <- tmin |>  
+  group_by(year, x, y) |>  
+  summarise(
+    tanual = mean(value, na.rm=TRUE),
+  ) |> 
+  ungroup() |> 
+  group_by(year) |> 
+  summarise(
+    mean = mean(tanual, na.rm=TRUE),
+    sd = sd(tanual, na.rm=TRUE),
+    se = sd/sqrt(length(tanual))
+  ) |>   
+  mutate(var = "tmin")
+
+tmax_anual <- tmax |>  
+  group_by(year, x, y) |>  
+  summarise(
+    tanual = mean(value, na.rm=TRUE),
+  ) |> 
+  ungroup() |> 
+  group_by(year) |> 
+  summarise(
+    mean = mean(tanual, na.rm=TRUE),
+    sd = sd(tanual, na.rm=TRUE),
+    se = sd/sqrt(length(tanual))
+  ) |>    
+  mutate(var = "tmax")
+
+temp <- bind_rows(tmed_anual, tmin_anual, tmax_anual) |>  
+  filter(year < 2022)
+```
+
+
+```{r}
+plot_temp <- temp |>  ggplot(aes(x=year, y = mean)) +
+  geom_ribbon(aes(ymin = (mean - sd), ymax=(mean+sd)), colour=NA, alpha=.2) +
+  facet_wrap(~var, nrow = 3, scales = "free_y") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_path() +
+  geom_point() + 
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_rect(fill = "white")
+  ) +
+  ylab("Temperatures") + 
+  ggpmisc::stat_poly_eq(use_label(c("eq", "p.value", "R2")))
+```
+
+
+```{r}
+ggsave(
+  plot_temp,
+  filename = "output/climate/plot_temp_sn.png",
+  height = 15, width = 12, units = "cm",
+  device = "png", dpi = 150
+)
+```
+
+
+
+```{r}
+plot_prec <- prec_anual |> 
+ggplot(aes(x=year, y = mean)) +
+  geom_ribbon(aes(ymin = (mean - sd), ymax=(mean+sd)), colour=NA, alpha=.2) +
+  # facet_wrap(~var, nrow = 3, scales = "free_y") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_path() +
+  geom_point() + 
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_rect(fill = "white")
+  ) +
+  ylab("Rainfall") + 
+  ggpmisc::stat_poly_eq(use_label(c("eq", "p.value", "R2")))
+```
+
+
+```{r}
+ggsave(
+  plot_prec,
+  filename = "output/climate/plot_prec_sn.png",
+  height = 5, width = 12, units = "cm",
+  device = "png", dpi = 150
+)
+```
+
+
+```{r, fig.height=12}
+plot_climate <- plot_temp + plot_prec + plot_layout(ncol = 1, heights = c(3/4, 1/4))
+plot_climate
+```
+
+
+```{r}
+ggsave(
+  plot_climate,
+  filename = "output/climate/plot_climate_sn.png",
+  height = 20, width = 15, units = "cm",
+  device = "png", dpi = 200
+)
+```
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+df <- bind_rows(prec_anual, temp)
+
+
+df |> 
+ggplot(aes(x=year, y = mean)) +
+  geom_ribbon(aes(ymin = (mean - sd), ymax=(mean+sd)), colour=NA, alpha=.2) +
+  facet_wrap(~var, nrow = 4, scales = "free_y") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_path() +
+  geom_point() + 
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_rect(fill = "white")
+  ) +
+  ylab("Temperatures") + 
+  ggpmisc::stat_poly_eq(use_label(c("eq", "p.value", "R2")))
+```
+
