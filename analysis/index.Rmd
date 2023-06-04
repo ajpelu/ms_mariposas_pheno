@@ -15,3 +15,6 @@ editor_options:
 
 # Analysis
 - [Peak analysis](analysis_peak.html) 
+
+# Plots
+- [Climtate](plot_climate.html)
