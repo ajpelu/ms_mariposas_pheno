@@ -338,8 +338,18 @@ df_doy |>
 ### Explore by doy_mean 
 
 ```{r}
+df_trends_selected_mean <- df_trends_selected |> 
+  group_by(species) |> 
+  summarise(tau_mean = mean(mk_tau),
+            tau_sd = sd(mk_tau, na.rm = TRUE),
+            ta_se = sd(mk_tau, na.rm = TRUE) / sqrt(n()),
+            sen_mean = mean(sen_slope),
+            sen_sd = sd(sen_slope, na.rm = TRUE),
+            sen_se = sd(sen_slope, na.rm = TRUE) / sqrt(n())
+            )
+
 d <- inner_join(
-  df_trends_selected, 
+  df_trends_selected_mean, 
   (doy_mean |> 
   rename(doy_mean = mean, 
          doy_se = se, 
@@ -349,7 +359,7 @@ d <- inner_join(
 
 ```{r, eval=FALSE}
 d |> 
-  ggplot(aes(doy_mean, y = sen_slope)) +
+  ggplot(aes(doy_mean, y = sen_mean)) +
   geom_point() + 
   theme_bw() +
   geom_smooth() +
@@ -371,20 +381,23 @@ d |>
 
 ```{r}
 ggscatter(d, 
-          x = "doy_mean", y = "mk_tau", 
+          x = "doy_mean", y = "tau_mean", 
           conf.int = TRUE, 
           xlab = "DOY", 
           ylab = "Mann-Kendall tau") +
-   geom_smooth(method = "loess", formula = y ~ x)
+   geom_smooth(method = "loess", formula = y ~ x) +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") 
+  
 ```
 
 ```{r}
 ggscatter(d, 
-          x = "doy_mean", y = "sen_slope", 
+          x = "doy_mean", y = "sen_mean", 
           conf.int = TRUE, 
           xlab = "DOY", 
           ylab = "Sen's Slope") +
-   geom_smooth(method = "loess", formula = y ~ x)
+     geom_smooth(method = "loess", formula = y ~ x) +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") 
 ```
 
 
