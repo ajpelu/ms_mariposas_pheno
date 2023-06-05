@@ -18,12 +18,13 @@ library(ggpubr)
 library(Kendall)
 library(trend)
 library(DT)
+library(vroom)
 ```
 
 
 ```{r, message=FALSE}
-df_doy <- read_csv(here::here("data/doy_peak_sps.csv"))
-transectos <- read_csv(here::here("data/transectos_metadata.csv"))
+df_doy <- vroom::vroom(here::here("data/doy_peak_sps.csv"))
+transectos <- vroom::vroom(here::here("data/transectos_metadata.csv"))
 ```
 
 ### Exploratory analysis 
@@ -220,12 +221,33 @@ df_trends |>
     digits = c(3,4,3,2,4,3,4,3))
 ```
 
+### Apply only to selected species 
 
-### Explore the trends 
+Criteria for selected species: 
+- Only univoltine species.
+- Non-migratory.
+- Exclude *Favonius quercus*
+- They must present data from at least five years (which do not have to be consecutive)
+- They don't have to appear in more than one location to calculate their phenology
+
+```{r}
+selected_sp <- vroom::vroom(here::here("data/selected_species.csv"),delim = ",") 
+
+df_trends_selected <- df_trends |> 
+  filter(species %in% selected_sp$sp)
+
+```
+
+We selected `r length(unique(df_trends_selected$species))` species. 
+
+### Explore the trends
+
+
+
 #### By elevation 
 
 ```{r}
-ggscatter(df_trends, 
+ggscatter(df_trends_selected, 
           x = "altitud", y = "sen_slope", 
           add = "reg.line",
           add.params = list(color = "blue", fill = "lightgray"),
@@ -236,7 +258,7 @@ ggscatter(df_trends,
 ```
 
 ```{r}
-ggscatter(df_trends, 
+ggscatter(df_trends_selected, 
           x = "altitud", y = "mk_tau", 
           add = "reg.line",
           add.params = list(color = "blue", fill = "lightgray"),
@@ -248,10 +270,8 @@ ggscatter(df_trends,
 
 #### Explore by timing of the maximum 
 
-
 - First we computed the doy mean for each specie 
 
-DUDA -> computar por sitio o por año 
 ```{r}
 doy_mean <- df_doy |> 
   group_by(species) |> 
@@ -297,6 +317,77 @@ df_doy |>
   xlab("") + ylab("DOY") +
   scale_y_continuous(breaks = seq(0, max(df_doy$doy), by = 20)) 
 ```
+
+Only for selected species 
+
+```{r}
+df_doy |> 
+  filter(species %in% selected_sp$sp) |> 
+  ggplot(aes(x=reorder(species, doy, mean), y = doy)) + geom_point(size=.5, colour = "gray") +
+  stat_summary(fun.data = mean_sd, geom = "pointrange") +
+  coord_flip() + 
+  theme_bw() + 
+  theme(
+    panel.grid.major.x = element_blank(), 
+    panel.grid.minor.x = element_blank()
+  ) + 
+  xlab("") + ylab("DOY") +
+  scale_y_continuous(breaks = seq(0, max(df_doy$doy), by = 20)) 
+```
+
+### Explore by doy_mean 
+
+```{r}
+d <- inner_join(
+  df_trends_selected, 
+  (doy_mean |> 
+  rename(doy_mean = mean, 
+         doy_se = se, 
+         doy_sd = sd))
+)
+```
+
+```{r, eval=FALSE}
+d |> 
+  ggplot(aes(doy_mean, y = sen_slope)) +
+  geom_point() + 
+  theme_bw() +
+  geom_smooth() +
+  xlab("DOY") + 
+  ylab("Sen's slope")
+```
+
+
+
+```{r, eval=FALSE}
+d |> 
+  ggplot(aes(doy_mean, y = mk_tau)) +
+  geom_point() + 
+  theme_bw() +
+  geom_smooth() +
+  xlab("DOY") + 
+  ylab("Sen's slope")
+```
+
+```{r}
+ggscatter(d, 
+          x = "doy_mean", y = "mk_tau", 
+          conf.int = TRUE, 
+          xlab = "DOY", 
+          ylab = "Mann-Kendall tau") +
+   geom_smooth(method = "loess", formula = y ~ x)
+```
+
+```{r}
+ggscatter(d, 
+          x = "doy_mean", y = "sen_slope", 
+          conf.int = TRUE, 
+          xlab = "DOY", 
+          ylab = "Sen's Slope") +
+   geom_smooth(method = "loess", formula = y ~ x)
+```
+
+
 
 
 
