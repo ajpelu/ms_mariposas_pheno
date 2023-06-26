@@ -56,26 +56,50 @@ head(climate_transect, 1000) |> datatable()
 ## Compute month, bi-month and three-month data
 For each transect, we selected monthly data. Then we computed the bi-months and three-months average. 
 
+
+### Prepare hydrological months 
+
+```{r}
+aux <- climate_transect |> 
+  mutate_at(vars(month, year), as.numeric) |> # convert to numeric 
+  mutate(
+    hydro_month = case_when(
+      month >= 10 ~ (month - 9), 
+      TRUE ~ month + 3), 
+    hydro_year = case_when(
+      month >= 10 ~ (year + 1), 
+      TRUE ~ year), 
+    name_m = case_when(
+      month >= 10 ~ paste0(month_names, "_pre"), 
+      TRUE ~ month_names
+    )
+  ) 
+
+# |> 
+#   filter(hydro_year > 2007)
+  
+```
+
+
+
 ### Temperature data
 #### Monthly data 
 We selected temperature data in the `climate_transect` dataframe. For each variable (*i.e.* tmax, tmed, tmin) we pivot the data to obtain the temperature data for each transect (`ID` transect) and year (from 2007 to 2021). The resulted dataframe is called `d1mt` (data-1-month-temperature). 
 
 ```{r}
-aux <- climate_transect |> 
-  filter(var != "p") 
-
 d1mt <- aux |> 
-  dplyr::select(-month, -date) |> 
+  filter(var != "p") |> 
+  dplyr::select(-month, -date, -month_names, -year, -hydro_month) |> 
   pivot_wider(values_from = avg_transect, 
-              names_from = month_names) |> 
-  filter(year > 2007)
+              names_from = name_m) 
 ```
+
 
 Explore the results
 
 ```{r echo=FALSE}
 d1mt |>
-  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
@@ -85,6 +109,7 @@ To obtain values of temperature aggregated each 2-months, we used the `runner()`
 
 ```{r}
 aux2 <- aux |> 
+  filter(var != "p") |> 
   group_by(var) |> 
   mutate(
     avg_two_months = runner::runner(
@@ -95,7 +120,7 @@ aux2 <- aux |>
     )) |> 
   mutate(
     month_names2 = runner::runner(
-      x = month_names, 
+      x = name_m, 
       k = 2, 
       f = paste, 
       na_pad = TRUE, 
@@ -104,12 +129,11 @@ aux2 <- aux |>
   ungroup()
 
 d2mt <- aux2 |> 
-  dplyr::select(-month, -date, 
-                -month_names, -avg_transect) |> 
-  filter(!(is.na(month_names2))) |> 
+  filter(var != "p") |> 
+  dplyr::select(-month, -date, -month_names, -year, -hydro_month, -avg_transect, -name_m) |> 
+  filter(!(is.na(month_names2))) |>
   pivot_wider(values_from = avg_two_months, 
-              names_from = month_names2) |> 
-  filter(year > 2007)
+              names_from = month_names2) 
 
 ```
 
@@ -117,36 +141,36 @@ See the results
 
 ```{r, echo=FALSE}
 d2mt |>
-  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
 Some test were performed to check the results: 
 
 ```{r, eval=TRUE}
-d2007 <- aux |>
+d2008 <- aux |>
   filter(var == "tmax") |>
   filter(ID == 1) |>
-  filter(year == 2007)
+  filter(hydro_year == 2008)
 
 # test 1
-janfeb <- mean(as.vector(d2007[1:2, "avg_transect"]$avg_transect))
+janfeb <- mean(as.vector(d2008[4:5, "avg_transect"]$avg_transect))
 
 test_aux2 <- aux2 |>
   filter(var == "tmax") |>
   filter(ID == 1) |>
-  filter(year %in% c(2007, 2008))
+  filter(hydro_year %in% c(2007, 2008))
 
 identical(janfeb, (test_aux2 |> 
-  filter(year == 2007) |> 
+  filter(hydro_year == 2008) |> 
   filter(month_names2 == "JanFeb") |> pull(avg_two_months)))
 
 # test 2
-febmar <- mean(as.vector(d2007[2:3, "avg_transect"]$avg_transect))  
+Dec_pre_jan <- mean(as.vector(d2008[3:4, "avg_transect"]$avg_transect))  
 
-identical(febmar, (test_aux2 |> 
-  filter(year == 2007) |> 
-  filter(month_names2 == "FebMar") |> pull(avg_two_months)))
+identical(Dec_pre_jan, (test_aux2 |> 
+  filter(hydro_year == 2008) |> 
+  filter(month_names2 == "Dec_preJan") |> pull(avg_two_months)))
 ```
 
 #### Trimonthly data
@@ -155,6 +179,7 @@ To obtain values of temperature aggregated each 3-months, we again used the `run
 
 ```{r}
 aux3 <- aux |> 
+  filter(var != "p") |>
   group_by(var) |> 
   mutate(
     avg_three_months = runner::runner(
@@ -166,7 +191,7 @@ aux3 <- aux |>
   ) |> 
   mutate(
     month_names3 = runner::runner(
-      x = month_names, 
+      x = name_m, 
       k = 3, 
       f = paste, 
       na_pad = TRUE, 
@@ -174,18 +199,19 @@ aux3 <- aux |>
   ) |> ungroup()
 
 d3mt <- aux3 |> 
+  filter(var != "p") |> 
   dplyr::select(-month, -date, 
-                -month_names, -avg_transect) |> 
+                -month_names, -year, 
+                -hydro_month, -avg_transect, -name_m) |> 
   filter(!(is.na(month_names3))) |> 
   pivot_wider(values_from = avg_three_months, 
-              names_from = month_names3) |> 
-  filter(year > 2007)
+              names_from = month_names3)
 ```
 
 See the results: 
 ```{r, echo=FALSE}
 d3mt |>
-  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
@@ -201,17 +227,19 @@ climate_temp <- d1mt |>
 As we see in the previous section, we also computed the monthly, bimonthly and 3-monthly data for the rainfall, but in this case we used the cummulative precipitation (not the average), so the value for JanFeb corresponds to the cummulative rainfall of Jan and Feb. 
 
 ```{r}
-auxp <- climate_transect |> 
-  filter(var == "p") 
+auxp <- aux |> 
+  filter(var == "p")
 
-d1mp <- auxp |> 
-  dplyr::select(-month, -date) |> 
+
+d1mp <- aux |> 
+  filter(var == "p") |> 
+  dplyr::select(-month, -date, -month_names, -year, -hydro_month) |> 
   pivot_wider(values_from = avg_transect, 
-              names_from = month_names) |> 
-  filter(year > 2007)
+              names_from = name_m) 
 
 
-aux2p <- auxp |> 
+aux2p <- aux |> 
+  filter(var == "p") |> 
   mutate(
     sum_two_months = runner(
       x = avg_transect,
@@ -221,7 +249,7 @@ aux2p <- auxp |>
     )) |> 
   mutate(
     month_names2 = runner(
-      x = month_names, 
+      x = name_m, 
       k = 2, 
       f = paste, 
       na_pad = TRUE, 
@@ -230,14 +258,14 @@ aux2p <- auxp |>
 
 
 d2mp <- aux2p |> 
-  dplyr::select(-month, -date, 
-                -month_names, -avg_transect) |> 
+  dplyr::select(-month, -date, -month_names, 
+                -year, -hydro_month, -avg_transect, -name_m) |> 
   filter(!(is.na(month_names2))) |> 
   pivot_wider(values_from = sum_two_months, 
-              names_from = month_names2) |> 
-  filter(year > 2007)
+              names_from = month_names2) 
 
-aux3p <- auxp |> 
+aux3p <- aux |> 
+  filter(var == "p") |> 
   mutate(
     sum_three_months = runner(
       x = avg_transect,
@@ -248,7 +276,7 @@ aux3p <- auxp |>
   ) |> 
   mutate(
     month_names3 = runner(
-      x = month_names, 
+      x = name_m, 
       k = 3, 
       f = paste, 
       na_pad = TRUE, 
@@ -256,12 +284,11 @@ aux3p <- auxp |>
   ) |> ungroup()
 
 d3mp <- aux3p |> 
-  dplyr::select(-month, -date, 
-                -month_names, -avg_transect) |> 
+  dplyr::select(-month, -date, -month_names, 
+                -year, -hydro_month, -avg_transect, -name_m) |> 
   filter(!(is.na(month_names3))) |> 
   pivot_wider(values_from = sum_three_months, 
-              names_from = month_names3) |> 
-  filter(year > 2007)
+              names_from = month_names3) 
     
 
 climate_prec <- d1mp |> 
@@ -279,7 +306,7 @@ climate_data  <- bind_rows(
   climate_temp, climate_prec)
 
 climate_data |>
-  mutate(across(-c(ID, var, year), ~round(., digits = 2))) |>
+  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
