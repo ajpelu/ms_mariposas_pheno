@@ -1,0 +1,262 @@
+---
+title: "analysis peak"
+author: "ajpelu"
+date: "2023-06-01"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(vroom)
+library(glue)
+library(glmulti)
+library(lme4)
+library(broom)
+library(broom.mixed)
+
+
+
+
+library(lubridate)
+library(ggpubr)
+library(DT)
+
+```
+
+
+```{r, message=FALSE}
+df_doy <- vroom::vroom(here::here("data/doy_peak_sps.csv"))
+transectos <- vroom::vroom(here::here("data/transectos_metadata.csv"))
+selected_sps <- vroom::vroom(here::here("data/selected_species.csv"))
+
+climate_data <- vroom::vroom(here::here("data/transectos_climate.csv")) |> 
+  filter(hydro_year !=2007) |> 
+  filter(hydro_year !=2022) |> 
+  rename(site_id = ID, year = hydro_year)
+```
+
+## Prepare data 
+```{r}
+
+aux_df <- df_doy |> 
+  filter(species %in% selected_sps$sp) |> 
+  dplyr::select(species, year, doy, site_id) 
+
+df_tmean <- aux_df |> 
+  left_join(
+    (climate_data |> filter(var == "tmed")))
+
+df_tmin <- aux_df |> 
+  inner_join(
+    (climate_data |> filter(var == "tmin")))
+
+df_tmax <- aux_df |> 
+  inner_join(
+    (climate_data |> filter(var == "tmax")))
+
+df_prec <- aux_df |> 
+  inner_join(
+    (climate_data |> filter(var == "p")))
+```
+
+
+
+
+
+```{r}
+au <- df_doy |> 
+  filter(species == "Aglais urticae") |> 
+  dplyr::select(species, year, doy, site_id) 
+
+df <- au |> inner_join(tmean)
+
+
+```
+
+
+# Model 
+
+```{r}
+
+for 
+
+# df |> 
+#   # dplyr::select(-species, -year, -var) |> 
+#   dplyr::select(doy, site_id, Jan:Jul)
+#   
+
+
+fit_glmm <- function(df, x) {
+  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
+                family = gaussian, 
+                data = df)
+  return(glmm)
+}
+
+# Step 3: Apply the 'fit_glmm' function to each 'x' column using purrr's 'map' function
+models <- df |> 
+  select(Jan:Dec_preJanFeb) |> 
+  map(~fit_glmm(df, .x))
+
+models_aic <- map(models, broom.mixed::glance) |> 
+  bind_rows(.id = "Model") 
+
+models_coef <- map(models, ~broom.mixed::tidy(.x, 
+                                 effects = c("fixed"), 
+                                 conf.level = 0.95)) |> 
+  bind_rows(.id = "Model") 
+
+
+models_coef %>%
+  mutate(p_value = 2 * (1 - pnorm(abs(statistic))))
+
+
+
+p_values <- map_dbl(models, ~tidy(.x) |>  filter(term == "x") |>  pull(p.value))
+p_values <- map_dbl(models, ~summary(.x)$coefficients["x", "Pr(>|z|)"])
+
+# Step 5: Combine the p-values with the corresponding model names
+result_df <- data.frame(Model = names(result), p_value = p_values)
+
+
+p_values <- map_dbl(models, ~summary(.x)$coefficients[["x", "Pr(>|z|)"]])
+
+df_tmean |> 
+  filter(species == "Aglais urticae") |> 
+  ggplot(aes(x=Feb, y = doy)) + geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+```
+
+
+
+
+```{r}
+potential_vars <- setdiff(names(df), 
+                      c("species", "year", "var", "doy", "site_id"))
+
+yvar <- "doy"
+covariates <- glue::glue_collapse(potential_vars, sep = " + ")
+f <- reformulate(covariates, response = yvar)
+
+# random_part <- "(1 | site_id)"
+
+glmer.glmulti<-function(formula, data, random = "", ...){
+   glmer(paste(deparse(formula),random),
+         data    = data,  ...)
+}
+
+
+mixed_model <- glmulti(
+  f,
+  random  = "+(1|site_id)",
+  crit    = aicc,
+  data    = df,
+  family  = gaussian,
+  method  = "d",
+  fitfunc = glmer.glmulti,
+  level   = 1)
+
+
+
+glmm_models <- list()
+
+# Iterate over each variable from Jan to Dec
+for (v in potential_vars) {
+  # Define the formula for the GLMM model
+  formula <- formula(paste("doy ~", v, "+ (1 | site_id)"))
+  
+  # Fit the GLMM model
+  glmm_model <- lmer(formula, data = df)
+  
+  # Store the model in the list
+  glmm_models[[v]] <- glmm_model
+}
+
+
+# Calculate the AIC values for each model
+aic_values <- sort(sapply(glmm_models, AIC))
+
+# Find the index of the model with the lowest AIC
+best_model_index <- which.min(aic_values)
+
+# Get the best model based on the lowest AIC
+best_model <- glmm_models[[best_model_index]]
+
+# Get the best model
+best_model <- glmm_models[[which.min(model_comparison)]]
+
+
+
+
+
+
+m1<- lmer(doy ~ Jan + (1|site_id), data = df)
+m2<- lmer(doy ~ Feb + (1|site_id), data = df)
+
+aic(m1)
+
+
+
+
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part), sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part), sep = " + ")
+
+
+
+
+mm <- glmulti::glmulti(
+  formula = f,
+  data = df,
+  random = random_part,
+  method = "lmer",
+  level = 2,
+  fitfunction = lme4::lmer,
+  family = gaussian
+)
+
+
+covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
+                                       sep = " + ")
+
+f <- reformulate(covariates_lmer, response = yvar)
+
+
+
+
+
+
+
+```
+
+
+
+```{r}
+df |> 
+  pivot_longer(-c(species:var)) |> 
+  ggplot(aes(x=value, y=doy, colour=as.factor(site_id))) +
+  geom_point() + 
+  geom_smooth(method="lm", se=FALSE) + 
+  facet_wrap(~name)
+  
+
+
+df |> 
+  filter
+  ggplot(aes(x=Feb, y=doy, colour=as.factor(site_id))) +
+  geom_point() + geom_smooth(method="lm", se=FALSE)
+
+
+
+
+```
+
