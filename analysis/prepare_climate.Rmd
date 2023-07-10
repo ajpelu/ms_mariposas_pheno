@@ -21,31 +21,44 @@ library(DT)
 
 - For each transect we obtained all the data of the pixels that contact with the transects (see `code/get_climate_transect.R`). Then we generated the average value of each variable by transect and month. 
 
-```{r, message=FALSE, warning=FALSE}
-files <- list.files("data/raw_data/", pattern = ".csv", full.names = TRUE)
+
+
+```{r, eval=FALSE}
+files <- list.files("data/raw_data/climate_transects", pattern = "transect.csv", full.names = TRUE)
 
 custom_f <- function(x) { 
-  out <- x |>  
-    read_csv() |> 
-    separate(name, into = c("var", "year", "month", "cog")) |>
-    dplyr::select(-x,-y,-cog)
+  out <- 
+    read_csv(x) |> 
+    dplyr::select(-ID) |> 
+    pivot_longer(-c("transectid","x", "y")) |> 
+    separate(name, into = c("var", "year", "month", "cog")) |> 
+    dplyr::select(-cog, -x, -y)
   return(out)
   }
-  
+
+
 raw <- files |> 
   map_df(~custom_f(.)) |> 
   mutate(var = recode(var, 
                       "tm2" = "tmin", 
                       "tm3" = "tmax"))
 
+
 climate_transect <- raw |> 
-  group_by(ID, var, year, month) |> 
+  group_by(transectid, var, year, month) |> 
   summarise(avg_transect = mean(value)) |> 
   mutate(date = as.Date(paste(year, month, "01", sep="-"), format="%Y-%m-%d")) |> ungroup() |> 
   filter(date >= as.Date("2007-01-01", format="%Y-%m-%d")) |>
   filter(date < as.Date("2022-01-01", format="%Y-%m-%d")) |> 
   mutate(month_names = strftime(date, '%b')) 
+
+write_csv(climate_transect, "data/raw_data/climate_transects/climate_transect_all_avg.csv")
 ```
+
+```{r}
+climate_transect <- read_csv("data/raw_data/climate_transects/climate_transect_all_avg.csv")
+```
+
 
 See aspect of the table: 
 
@@ -99,7 +112,7 @@ Explore the results
 
 ```{r echo=FALSE}
 d1mt |>
-  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
+  mutate(across(-c(transectid, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
@@ -141,7 +154,7 @@ See the results
 
 ```{r, echo=FALSE}
 d2mt |>
-  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
+  mutate(across(-c(transectid, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
@@ -150,7 +163,7 @@ Some test were performed to check the results:
 ```{r, eval=TRUE}
 d2008 <- aux |>
   filter(var == "tmax") |>
-  filter(ID == 1) |>
+  filter(transectid == 14) |>
   filter(hydro_year == 2008)
 
 # test 1
@@ -158,7 +171,7 @@ janfeb <- mean(as.vector(d2008[4:5, "avg_transect"]$avg_transect))
 
 test_aux2 <- aux2 |>
   filter(var == "tmax") |>
-  filter(ID == 1) |>
+  filter(transectid == 14) |>
   filter(hydro_year %in% c(2007, 2008))
 
 identical(janfeb, (test_aux2 |> 
@@ -211,7 +224,7 @@ d3mt <- aux3 |>
 See the results: 
 ```{r, echo=FALSE}
 d3mt |>
-  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
+  mutate(across(-c(transectid, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
@@ -306,7 +319,7 @@ climate_data  <- bind_rows(
   climate_temp, climate_prec)
 
 climate_data |>
-  mutate(across(-c(ID, var, hydro_year), ~round(., digits = 2))) |>
+  mutate(across(-c(transectid, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
 ```
 
