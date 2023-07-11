@@ -18,14 +18,8 @@ library(glmulti)
 library(lme4)
 library(broom)
 library(broom.mixed)
-
-
-
-
-library(lubridate)
-library(ggpubr)
+library(kableExtra)
 library(DT)
-
 ```
 
 
@@ -36,13 +30,11 @@ selected_sps <- vroom::vroom(here::here("data/selected_species.csv"))
 
 climate_data <- vroom::vroom(here::here("data/transectos_climate.csv")) |> 
   filter(hydro_year !=2007) |> 
-  filter(hydro_year !=2022) |> 
-  rename(site_id = ID, year = hydro_year)
+  rename(site_id = transectid, year = hydro_year)
 ```
 
 ## Prepare data 
 ```{r}
-
 aux_df <- df_doy |> 
   filter(species %in% selected_sps$sp) |> 
   dplyr::select(species, year, doy, site_id) 
@@ -51,46 +43,23 @@ df_tmean <- aux_df |>
   left_join(
     (climate_data |> filter(var == "tmed")))
 
-df_tmin <- aux_df |> 
-  inner_join(
-    (climate_data |> filter(var == "tmin")))
-
-df_tmax <- aux_df |> 
-  inner_join(
-    (climate_data |> filter(var == "tmax")))
-
 df_prec <- aux_df |> 
   inner_join(
     (climate_data |> filter(var == "p")))
 ```
 
 
+# Models
 
+- For each species, we model the relationship between the flight's peak doy and the temperature (and precipitation) variables. 
+- We built 36 models using a time-window approach. We calculated the mean temperatures (and cummulative precipitation) of 36 potential time-windows ranging from one to three months from October of the previous year to September of the current year.
+- We used these potential timewindows to identify the period of the year with the highest temperature (or precipation) effect on the phenology of each species (the critical period). 
+- For each time-window and species, we fitted the DOY using a GLMM with temperature (or precipation) as a predictor, site as a random effect and a Gaussian error distribution.
+- For each species, we selected the best-fit model according to the AIC. 
 
-
-```{r}
-au <- df_doy |> 
-  filter(species == "Aglais urticae") |> 
-  dplyr::select(species, year, doy, site_id) 
-
-df <- au |> inner_join(tmean)
-
-
-```
-
-
-# Model 
+## Temperature med 
 
 ```{r}
-
-for 
-
-# df |> 
-#   # dplyr::select(-species, -year, -var) |> 
-#   dplyr::select(doy, site_id, Jan:Jul)
-#   
-
-
 fit_glmm <- function(df, x) {
   glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
                 family = gaussian, 
@@ -98,149 +67,194 @@ fit_glmm <- function(df, x) {
   return(glmm)
 }
 
-# Step 3: Apply the 'fit_glmm' function to each 'x' column using purrr's 'map' function
-models <- df |> 
-  select(Jan:Dec_preJanFeb) |> 
-  map(~fit_glmm(df, .x))
+sps <- selected_sps |> 
+  filter(sp != "Polyommatus thersites") |> 
+  pull(sp)
 
-models_aic <- map(models, broom.mixed::glance) |> 
-  bind_rows(.id = "Model") 
 
-models_coef <- map(models, ~broom.mixed::tidy(.x, 
+models_tmed<- data.frame()
+
+# Tmed 
+for (i in sps) { 
+  df <- 
+    df_doy |> 
+    filter(species == i) |> 
+    dplyr::select(species, year, doy, site_id) |> 
+    left_join(climate_data |> filter(var == "tmed"))
+  
+  if (nrow(df) > 5) { 
+
+  models <- df |> 
+    dplyr::select(Jan:Dec_preJanFeb) |> 
+    map(~fit_glmm(df, .x))
+  
+  # get AIC
+  models_aic <- map(models, broom.mixed::glance) |> 
+    bind_rows(.id = "Model") 
+  
+  # get R2 
+  models_r <- map2_dfr(names(models), models, 
+                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
+
+  # get COEF
+  models_coef <- map(models, ~broom.mixed::tidy(.x, 
                                  effects = c("fixed"), 
                                  conf.level = 0.95)) |> 
-  bind_rows(.id = "Model") 
+    bind_rows(.id = "Model") |> 
+    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+
+  output_models <- models_coef |> 
+    full_join(models_aic, multiple = "all") |>
+    full_join(models_r, multiple = "all") |> 
+    arrange(AIC) |> 
+    mutate(species = i) |> 
+    relocate(species)
+  
+  models_tmed <- rbind(models_tmed, output_models)
+     
+  }
+}
+
+```
+
+#### How many species 
+```{r}
+length(unique(models_tmed$species))
+```
 
 
-models_coef %>%
-  mutate(p_value = 2 * (1 - pnorm(abs(statistic))))
+```{r}
+models_tmed |>
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 2))) |> 
+  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(p_value), ~round(., digits = 4))) |> 
+  DT::datatable()
+```
+
+```{r}
+write_csv(models_tmed, "data/models_tmed.csv")
+writexl::write_xlsx(models_tmed, "data/models_tmed.xlsx")
+```
 
 
+## Precip 
+```{r}
+fit_glmm <- function(df, x) {
+  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
+                family = gaussian, 
+                data = df)
+  return(glmm)
+}
 
-p_values <- map_dbl(models, ~tidy(.x) |>  filter(term == "x") |>  pull(p.value))
-p_values <- map_dbl(models, ~summary(.x)$coefficients["x", "Pr(>|z|)"])
-
-# Step 5: Combine the p-values with the corresponding model names
-result_df <- data.frame(Model = names(result), p_value = p_values)
+sps <- selected_sps |> 
+  filter(sp != "Polyommatus thersites") |> 
+  pull(sp)
 
 
-p_values <- map_dbl(models, ~summary(.x)$coefficients[["x", "Pr(>|z|)"]])
+models_prec <- data.frame()
 
-df_tmean |> 
-  filter(species == "Aglais urticae") |> 
-  ggplot(aes(x=Feb, y = doy)) + geom_point() + 
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal()
+# Tmed 
+for (i in sps) { 
+  df <- 
+    df_doy |> 
+    filter(species == i) |> 
+    dplyr::select(species, year, doy, site_id) |> 
+    left_join(climate_data |> filter(var == "p"))
+  
+  if (nrow(df) > 5) { 
 
+  models <- df |> 
+    dplyr::select(Jan:Dec_preJanFeb) |> 
+    map(~fit_glmm(df, .x))
+  
+  # get AIC
+  models_aic <- map(models, broom.mixed::glance) |> 
+    bind_rows(.id = "Model") 
+  
+  # get R2 
+  models_r <- map2_dfr(names(models), models, 
+                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
+  
+  # get COEF
+  models_coef <- map(models, ~broom.mixed::tidy(.x, 
+                                 effects = c("fixed"), 
+                                 conf.level = 0.95)) |> 
+    bind_rows(.id = "Model") |> 
+    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+
+  output_models <- models_coef |> 
+    full_join(models_aic, multiple = "all") |> 
+    full_join(models_r, multiple = "all") |> 
+    arrange(AIC) |> 
+    mutate(species = i) |> 
+    relocate(species)
+  
+  models_prec <- rbind(models_prec, output_models)
+     
+  }
+}
+```
+
+#### How many species 
+```{r}
+length(unique(models_tmed$species))
+```
+
+
+```{r}
+models_prec |>
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 2))) |> 
+  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(p_value), ~round(., digits = 4))) |> 
+  DT::datatable()
+```
+
+```{r}
+write_csv(models_prec, "data/models_prec.csv")
+writexl::write_xlsx(models_prec, "data/models_prec.xlsx")
 ```
 
 
 
 
-```{r}
-potential_vars <- setdiff(names(df), 
-                      c("species", "year", "var", "doy", "site_id"))
-
-yvar <- "doy"
-covariates <- glue::glue_collapse(potential_vars, sep = " + ")
-f <- reformulate(covariates, response = yvar)
-
-# random_part <- "(1 | site_id)"
-
-glmer.glmulti<-function(formula, data, random = "", ...){
-   glmer(paste(deparse(formula),random),
-         data    = data,  ...)
-}
-
-
-mixed_model <- glmulti(
-  f,
-  random  = "+(1|site_id)",
-  crit    = aicc,
-  data    = df,
-  family  = gaussian,
-  method  = "d",
-  fitfunc = glmer.glmulti,
-  level   = 1)
 
 
 
-glmm_models <- list()
 
-# Iterate over each variable from Jan to Dec
-for (v in potential_vars) {
-  # Define the formula for the GLMM model
-  formula <- formula(paste("doy ~", v, "+ (1 | site_id)"))
+```{r, echo=FALSE, eval=FALSE}
+best_models <- models_tmed |> 
+  group_by(species) |> 
+  filter(AIC == min(AIC)) |> 
+  filter(term == "x") |> 
+  dplyr::select(species, Model)
+
+
+aux_df_tmed <- df_doy |> 
+    dplyr::select(species, year, doy, site_id) |> 
+    left_join(climate_data |> filter(var == "tmed"))
+
+# i <- "Aglais urticae"
+
+df_plots <- data.frame() 
+
+
+modelize_sps <- best_models$species
+
+for (i in modelize_sps) { 
+  xterm <- best_models |> filter(species == i) |> pull(Model)
   
-  # Fit the GLMM model
-  glmm_model <- lmer(formula, data = df)
+  out_df_plot <- aux_df_tmed |> filter(species == i) |> 
+    dplyr::select(one_of("species", "year", "doy", "site_id", "var", xterm)) |> 
+    mutate(x = xterm) |> 
+    rename(values = starts_with(xterm))
   
-  # Store the model in the list
-  glmm_models[[v]] <- glmm_model
-}
-
-
-# Calculate the AIC values for each model
-aic_values <- sort(sapply(glmm_models, AIC))
-
-# Find the index of the model with the lowest AIC
-best_model_index <- which.min(aic_values)
-
-# Get the best model based on the lowest AIC
-best_model <- glmm_models[[best_model_index]]
-
-# Get the best model
-best_model <- glmm_models[[which.min(model_comparison)]]
+  df_plots <- rbind(df_plots, out_df_plot)
+  
+  }
 
 
 
 
-
-
-m1<- lmer(doy ~ Jan + (1|site_id), data = df)
-m2<- lmer(doy ~ Feb + (1|site_id), data = df)
-
-aic(m1)
-
-
-
-
-covariates_lmer <- glue::glue_collapse(c(covariates, random_part), sep = " + ")
-
-f <- reformulate(covariates_lmer, response = yvar)
-
-covariates_lmer <- glue::glue_collapse(c(covariates, random_part), sep = " + ")
-
-
-
-
-mm <- glmulti::glmulti(
-  formula = f,
-  data = df,
-  random = random_part,
-  method = "lmer",
-  level = 2,
-  fitfunction = lme4::lmer,
-  family = gaussian
-)
-
-
-covariates_lmer <- glue::glue_collapse(c(covariates, random_part),
-                                       sep = " + ")
-
-f <- reformulate(covariates_lmer, response = yvar)
-
-
-
-
-
-
-
-```
-
-
-
-```{r}
 df |> 
   pivot_longer(-c(species:var)) |> 
   ggplot(aes(x=value, y=doy, colour=as.factor(site_id))) +
@@ -256,7 +270,17 @@ df |>
   geom_point() + geom_smooth(method="lm", se=FALSE)
 
 
-
-
 ```
+
+
+
+
+
+
+
+
+
+
+
+
 
