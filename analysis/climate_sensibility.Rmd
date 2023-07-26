@@ -1,7 +1,7 @@
 ---
-title: "analysis peak"
-author: "ajpelu"
-date: "2023-06-01"
+title: "climate sensibility"
+author: '[Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>'
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
@@ -20,6 +20,16 @@ library(broom)
 library(broom.mixed)
 library(kableExtra)
 library(DT)
+library(qpcR)
+```
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10, fig.height = 7
+)
 ```
 
 
@@ -57,11 +67,13 @@ df_prec <- aux_df |>
 - For each time-window and species, we fitted the DOY using a GLMM with temperature (or precipation) as a predictor, site as a random effect and a Gaussian error distribution.
 - For each species, we selected the best-fit model according to the AIC. 
 
-## Temperature med 
+- Scaled the models to get the slopes 
 
+## Temperature med 
+### Scaled models 
 ```{r}
 fit_glmm <- function(df, x) {
-  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
+  glmm <- lme4::glmer(scale(doy) ~ scale(x) + (1 | site_id), 
                 family = gaussian, 
                 data = df)
   return(glmm)
@@ -125,7 +137,87 @@ length(unique(models_tmed$species))
 
 ```{r}
 models_tmed |>
-  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 2))) |> 
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
+  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(p_value), ~round(., digits = 4))) |> 
+  DT::datatable()
+```
+
+```{r}
+write_csv(models_tmed, "data/models_tmed_scaled.csv")
+writexl::write_xlsx(models_tmed, "data/models_tmed_scaled.xlsx")
+```
+
+
+
+### Non-scaled models 
+```{r}
+fit_glmm <- function(df, x) {
+  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
+                family = gaussian, 
+                data = df)
+  return(glmm)
+}
+
+sps <- selected_sps |> 
+  filter(sp != "Polyommatus thersites") |> 
+  pull(sp)
+
+
+models_tmed <- data.frame()
+
+# Tmed 
+for (i in sps) { 
+  df <- 
+    df_doy |> 
+    filter(species == i) |> 
+    dplyr::select(species, year, doy, site_id) |> 
+    left_join(climate_data |> filter(var == "tmed"))
+  
+  if (nrow(df) > 5) { 
+
+  models <- df |> 
+    dplyr::select(Jan:Dec_preJanFeb) |> 
+    map(~fit_glmm(df, .x))
+  
+  # get AIC
+  models_aic <- map(models, broom.mixed::glance) |> 
+    bind_rows(.id = "Model") 
+  
+  # get R2 
+  models_r <- map2_dfr(names(models), models, 
+                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
+
+  # get COEF
+  models_coef <- map(models, ~broom.mixed::tidy(.x, 
+                                 effects = c("fixed"), 
+                                 conf.level = 0.95)) |> 
+    bind_rows(.id = "Model") |> 
+    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+
+  output_models <- models_coef |> 
+    full_join(models_aic, multiple = "all") |>
+    full_join(models_r, multiple = "all") |> 
+    arrange(AIC) |> 
+    mutate(species = i) |> 
+    relocate(species)
+  
+  models_tmed <- rbind(models_tmed, output_models)
+     
+  }
+}
+
+```
+
+#### How many species 
+```{r}
+length(unique(models_tmed$species))
+```
+
+
+```{r}
+models_tmed |>
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
   mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
@@ -137,7 +229,87 @@ writexl::write_xlsx(models_tmed, "data/models_tmed.xlsx")
 ```
 
 
-## Precip 
+
+## Precip
+### Scaled models 
+```{r}
+fit_glmm <- function(df, x) {
+  glmm <- lme4::glmer(scale(doy) ~ scale(x) + (1 | site_id), 
+                family = gaussian, 
+                data = df)
+  return(glmm)
+}
+
+sps <- selected_sps |> 
+  filter(sp != "Polyommatus thersites") |> 
+  pull(sp)
+
+
+models_prec <- data.frame()
+
+# Tmed 
+for (i in sps) { 
+  df <- 
+    df_doy |> 
+    filter(species == i) |> 
+    dplyr::select(species, year, doy, site_id) |> 
+    left_join(climate_data |> filter(var == "p"))
+  
+  if (nrow(df) > 5) { 
+
+  models <- df |> 
+    dplyr::select(Jan:Dec_preJanFeb) |> 
+    map(~fit_glmm(df, .x))
+  
+  # get AIC
+  models_aic <- map(models, broom.mixed::glance) |> 
+    bind_rows(.id = "Model") 
+  
+  # get R2 
+  models_r <- map2_dfr(names(models), models, 
+                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
+  
+  # get COEF
+  models_coef <- map(models, ~broom.mixed::tidy(.x, 
+                                 effects = c("fixed"), 
+                                 conf.level = 0.95)) |> 
+    bind_rows(.id = "Model") |> 
+    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+
+  output_models <- models_coef |> 
+    full_join(models_aic, multiple = "all") |> 
+    full_join(models_r, multiple = "all") |> 
+    arrange(AIC) |> 
+    mutate(species = i) |> 
+    relocate(species)
+  
+  models_prec <- rbind(models_prec, output_models)
+     
+  }
+}
+```
+
+#### How many species 
+```{r}
+length(unique(models_prec$species))
+```
+
+
+```{r}
+models_prec |>
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
+  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(p_value), ~round(., digits = 4))) |> 
+  DT::datatable()
+```
+
+```{r}
+write_csv(models_prec, "data/models_prec_scaled.csv")
+writexl::write_xlsx(models_prec, "data/models_prec_scaled.xlsx")
+```
+
+
+### Non-scaled models 
 ```{r}
 fit_glmm <- function(df, x) {
   glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
@@ -197,13 +369,13 @@ for (i in sps) {
 
 #### How many species 
 ```{r}
-length(unique(models_tmed$species))
+length(unique(models_prec$species))
 ```
 
 
 ```{r}
 models_prec |>
-  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 2))) |> 
+  mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
   mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
@@ -214,73 +386,40 @@ write_csv(models_prec, "data/models_prec.csv")
 writexl::write_xlsx(models_prec, "data/models_prec.xlsx")
 ```
 
+# Select best models for each species 
 
-
-
-
-
-
-
-```{r, echo=FALSE, eval=FALSE}
-best_models <- models_tmed |> 
+```{r}
+best_models_temp <- models_tmed |> 
   group_by(species) |> 
-  filter(AIC == min(AIC)) |> 
   filter(term == "x") |> 
-  dplyr::select(species, Model)
+  dplyr::select(species, Model, AIC) |> 
+  mutate(deltaAIC = akaike.weights(AIC)$deltaAIC, 
+         w = akaike.weights(AIC)$weights) |> 
+  filter(deltaAIC <= 4)
+
+write_csv(best_models_temp, "data/best_models_temp.csv")
+writexl::write_xlsx(best_models_temp, "data/best_models_temp.xlsx")
 
 
-aux_df_tmed <- df_doy |> 
-    dplyr::select(species, year, doy, site_id) |> 
-    left_join(climate_data |> filter(var == "tmed"))
+best_models_prec <- models_prec |> 
+  group_by(species) |> 
+  filter(term == "x") |> 
+  dplyr::select(species, Model, AIC) |> 
+  mutate(deltaAIC = akaike.weights(AIC)$deltaAIC, 
+         w = akaike.weights(AIC)$weights) |> 
+  filter(deltaAIC <= 4)
 
-# i <- "Aglais urticae"
-
-df_plots <- data.frame() 
-
-
-modelize_sps <- best_models$species
-
-for (i in modelize_sps) { 
-  xterm <- best_models |> filter(species == i) |> pull(Model)
-  
-  out_df_plot <- aux_df_tmed |> filter(species == i) |> 
-    dplyr::select(one_of("species", "year", "doy", "site_id", "var", xterm)) |> 
-    mutate(x = xterm) |> 
-    rename(values = starts_with(xterm))
-  
-  df_plots <- rbind(df_plots, out_df_plot)
-  
-  }
-
-
-
-
-df |> 
-  pivot_longer(-c(species:var)) |> 
-  ggplot(aes(x=value, y=doy, colour=as.factor(site_id))) +
-  geom_point() + 
-  geom_smooth(method="lm", se=FALSE) + 
-  facet_wrap(~name)
-  
-
-
-df |> 
-  filter
-  ggplot(aes(x=Feb, y=doy, colour=as.factor(site_id))) +
-  geom_point() + geom_smooth(method="lm", se=FALSE)
-
-
+write_csv(best_models_prec, "data/best_models_prec.csv")
+writexl::write_xlsx(best_models_prec, "data/best_models_prec.xlsx")
 ```
 
 
+```{r}
+doy_medio_sp <- df_doy |> 
+  group_by(species) |> 
+  summarise(doym = as.Date( mean(doy),origin = as.Date("2024-01-01")))
 
-
-
-
-
-
-
-
-
-
+write_csv(doy_medio_sp, "data/doy_medio_sp.csv")
+writexl::write_xlsx(doy_medio_sp, "data/doy_medio_sp.xlsx")
+```
 
