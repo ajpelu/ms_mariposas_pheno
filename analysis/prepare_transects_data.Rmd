@@ -1,12 +1,11 @@
 ---
 title: "Prepare Transects data"
-author: "ajpelu"
+author: '[Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>'
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
-
-## Introduction
 
 - Prepare transect data for use it thorough the analysis
 
@@ -18,7 +17,6 @@ library(here)
 
 
 ```{r}
-
 # Prepare variable transects
 transectos <- readxl::read_excel("data/raw_data/Tabla_variables_transectos_22.xls", 
                                  sheet = "Otras variables") |>
