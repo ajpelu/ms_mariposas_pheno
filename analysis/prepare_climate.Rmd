@@ -6,6 +6,15 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10, fig.height = 7
+)
+```
+
 ## Introduction
 
 ```{r, message=FALSE, warning=FALSE}
@@ -17,7 +26,7 @@ library(kableExtra)
 library(DT)
 ```
 
-- We used the climate data from REDIAM (500 x 500 grid for all Andalusian territory). Gridded data comes from meteorological stations. For each pixel values of maximum, minimum and median monthly temperatures are available from 1971 to 2021. Monthly rainfall are available from 1951 to 2021.  
+- We used the climate data from REDIAM (500 x 500 grid for all Andalusian territory). Gridded data comes from meteorological stations. For each pixel values of maximum, minimum and median monthly temperatures are available from 1971 to 2021. Monthly rainfall are available from 1951 to 2022.  
 
 - For each transect we obtained all the data of the pixels that contact with the transects (see `code/get_climate_transect.R`). Then we generated the average value of each variable by transect and month. 
 
@@ -317,6 +326,15 @@ The temperature and rainfall data were joinned and exported.
 climate_data  <- bind_rows(
   climate_temp, climate_prec)
 
+```
+
+```{r}
+# Filter erroneous date windows
+climate_data <- climate_data |> 
+  dplyr::select(-SepOct_pre, -AugSepOct_pre, -SepOct_preNov_pre)
+```
+
+```{r}
 climate_data |>
   mutate(across(-c(transectid, var, hydro_year), ~round(., digits = 2))) |>
   DT::datatable()
