@@ -32,7 +32,6 @@ library(DT)
 - For each transect we obtained all the data of the pixels that contact with the transects (see `code/get_climate_transect.R`). Then we generated the average value of each variable by transect and month. 
 
 
-
 ```{r, eval=FALSE}
 files <- list.files("data/raw_data/climate_transects", pattern = "transect.csv", full.names = TRUE)
 
