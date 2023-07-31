@@ -1,0 +1,232 @@
+---
+title: "Model Selection and plots"
+author: '[Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>'
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10, fig.height = 7
+)
+```
+
+
+## Introduction
+
+For the selection of the models we apply the following criteria: 
+
+- Elimination of periods that include dates after the flight period.
+- Lower value of AIC.
+- Higher value of weight AIC .
+- Significant P-value (very few cases).
+- Expert criteria (very few cases).
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(vroom)
+library(glue)
+library(kableExtra)
+library(DT)
+library(ggpubr)
+```
+
+
+```{r}
+df_doy <- vroom::vroom(here::here("data/doy_peak_sps.csv"))
+
+doy_mean <- df_doy |> 
+  group_by(species) |> 
+  summarise(doy_mean = mean(doy, na.rm = TRUE),
+            doy_sd = sd(doy, na.rm = TRUE)) 
+```
+
+
+
+```{r, message=FALSE}
+models_temp <- readxl::read_excel("data/models_tmed_selected.xlsx") |> 
+  filter(term == "x") 
+models_prec <- readxl::read_excel("data/models_prec_selected.xlsx") |> 
+  filter(term == "x") 
+
+mt <- models_temp |> dplyr::select(species, Model)
+mp <- models_prec |> dplyr::select(species, Model)
+```
+
+
+- Selected scaled terms 
+
+```{r}
+scaled_tmed <- vroom::vroom(here::here("data/models_tmed_scaled.csv")) |> 
+  right_join(mt) |> 
+  mutate(var = "tmed") |> 
+  left_join(doy_mean)
+  
+scaled_prec <- vroom::vroom(here::here("data/models_prec_scaled.csv")) |> 
+  right_join(mp) |> 
+  mutate(var = "prec") |> 
+  left_join(doy_mean)
+
+scaled_models <- bind_rows(
+  (scaled_tmed |> filter(term == "scale(x)") |> 
+     dplyr::select(species, Model, estimate, std.error, p_value, var, starts_with("doy_"))), 
+  (scaled_prec |> filter(term == "scale(x)") |> 
+     dplyr::select(species, Model, estimate, std.error, p_value, var, starts_with("doy_")))) |> 
+  mutate(var = case_when(
+    var == "tmed" ~ "Temperature", 
+    TRUE ~ "Precipitation"
+  )) |> 
+  mutate(
+    estimate_absolute = abs(estimate)
+  )
+```
+
+
+```{r}
+scaled_models |> 
+  ggplot(aes(estimate)) + 
+  geom_histogram(
+    fill = "black", 
+    colour= "white", 
+    stat = "bin", binwidth = 0.1) + 
+  facet_wrap(~var, ncol = 1) +
+  ylab("nº species") + 
+  xlab("Phenological sensibility") + 
+  scale_x_continuous(breaks = seq(-1, 1, by=.2)) + 
+  scale_y_continuous(breaks = seq(0, 10, 2)) + 
+  geom_vline(xintercept = 0, colour="red", linetype="dashed") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(), 
+    strip.background = element_rect(fill = "transparent"), 
+    strip.text = element_text(face = "bold")
+  )
+  
+```
+
+
+- Compare absolute values 
+
+```{r}
+ggviolin(scaled_models, 
+          y = "estimate_absolute", x = "var", 
+          palette = "npg", color = "var", 
+         add = c("boxplot", "jitter"), 
+         add.params = list(fill = "white"), 
+         ylab = "Phenological sensibility (abs. values)", 
+         xlab = "") +
+  theme(legend.position = "none") + 
+  stat_compare_means(label.y = 0.2, label.x = 2) +
+  scale_y_continuous(limits = c(0,1.2), breaks = seq(0,1, by =0.25)) 
+```
+
+
+```{r}
+qq <- scaled_models |> 
+  dplyr::select(species, estimate, var) |> 
+  pivot_wider(values_from = estimate, 
+              names_from = var)
+
+ggscatter(qq, x="Temperature", y = "Precipitation")
+```
+
+
+```{r}
+h <- scaled_models |> 
+  separate(Model, into=c("m1", "m2", "m3"), 
+           sep ="(?<=[a-z])(?=[A-Z])", 
+           remove = FALSE, extra = "drop")
+
+```
+
+
+```{r}
+hlong <- h |> 
+  pivot_longer(cols = c(m1, m2, m3), names_to = "m", values_to = "month") |> 
+  filter(!is.na(month)) |> 
+  mutate(month_hidro = 
+    case_when(
+    month == "Oct_pre" ~ 1, 
+    month == "Nov_pre" ~ 2, 
+    month == "Dec_pre" ~ 3,
+    month == "Jan" ~ 4,
+    month == "Feb" ~ 5,
+    month == "Mar" ~ 6,
+    month == "Apr" ~ 7, 
+    month == "May" ~ 8,
+    month == "Jun" ~ 9,
+    month == "Jul" ~ 10,
+    month == "Aug" ~ 11,
+    month == "Sep" ~ 12,
+  )) 
+
+
+# prepara los datos 
+hh <- hlong |> 
+  group_by(species, var, p_value, Model, doy_mean, doy_sd) |> 
+  summarise(min_month = min(month_hidro), 
+            max_month = max(month_hidro) + 1) |> 
+  mutate(p_pos = ifelse(p_value < 0.05, max_month + 0.2, NA), 
+         asterisk = ifelse(p_value < 0.05, TRUE, FALSE)) |> 
+  mutate(mean_peak_date = as.Date(paste0("2023-", round(doy_mean)), format = "%Y-%j")) |> 
+  mutate(m = lubridate::month(mean_peak_date)) |> 
+  mutate(mm = ifelse(round(doy_mean) >= 93, m + 3, m), 
+         d = mm + lubridate::day(mean_peak_date)/31,
+         sd_d = doy_sd / 31)
+```
+
+
+## Temperature
+```{r, fig.height=10}
+hh |> 
+  filter(var == "Temperature") |> 
+  ggplot(aes(y= forcats::fct_rev(species))) +
+  labs(y = "Species", x="", title = "Temperature") +
+  geom_point(aes(x = p_pos), shape=8, size = 0.75) +
+  geom_segment(aes(x = min_month, xend = max_month, yend = species), 
+               colour = "grey80", size = 4, lineend = "butt") +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank()) + 
+  scale_x_continuous(breaks = seq(1,12,by=1), limits = c(1,12.5), 
+                     labels = c(expression("Oct"[-1]), 
+                                expression("Nov"[-1]),
+                                expression("Dec"[-1]),
+                                "Jan", "Feb", "Mar",
+                                "Apr", "May", "Jun",
+                                "Jul", "Aug", "Sep")) +
+  geom_linerange(aes(xmin = d - sd_d, xmax = d + sd_d), colour="red") +
+  geom_point(aes(x=d), colour="red", size = 2)
+```
+
+## Precipitation
+
+```{r, fig.height=10}
+hh |> 
+  filter(var == "Precipitation") |> 
+  ggplot(aes(y= forcats::fct_rev(species))) +
+  labs(y = "Species", x="", title = "Precipitation") +
+  geom_point(aes(x = p_pos), shape=8, size = 0.75) +
+  geom_segment(aes(x = min_month, xend = max_month, yend = species), 
+               colour = "grey80", size = 4, lineend = "butt") +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank()) + 
+  scale_x_continuous(breaks = seq(1,12,by=1), limits = c(1,12.5), 
+                     labels = c(expression("Oct"[-1]), 
+                                expression("Nov"[-1]),
+                                expression("Dec"[-1]),
+                                "Jan", "Feb", "Mar",
+                                "Apr", "May", "Jun",
+                                "Jul", "Aug", "Sep")) +
+  geom_linerange(aes(xmin = d - sd_d, xmax = d + sd_d), colour="blue") +
+  geom_point(aes(x=d), colour="blue", size = 2)
+```
+
+  
+ 
+
