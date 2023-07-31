@@ -16,12 +16,13 @@ editor_options:
 # Analysis
 - [Peak analysis](analysis_peak.html) 
 - [Climate sensibility](climate_sensibility.html)  
+- [Selected models](model_selection.html)
 
 # Plots
 - [Sierra Nevada climtate](plot_climate.html)
 
 
-## Autores ^[Autores del repositorio]
+## Autores 
 
 - [Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
