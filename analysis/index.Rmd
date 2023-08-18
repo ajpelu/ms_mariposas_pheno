@@ -11,7 +11,8 @@ editor_options:
 # Prepare Data
 - [Climate data](prepare_climate.html)
 - [Transect data](prepare_transects_data.html)
-- [Peak doy](prepare_peak.html)
+- [Peak doy (rbms)](prepare_peak.html)
+- [Peak doy (weigth mean date)](prepare_weigth_mean_date.html)
 
 # Analysis
 - [Peak analysis](analysis_peak.html) 
