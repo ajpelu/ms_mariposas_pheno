@@ -1,0 +1,103 @@
+---
+title: "Prepare Weigth mean date"
+author: '[Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>'
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10, fig.height = 7
+)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(DT)
+```
+
+```{r}
+df_raw <- read_delim("data/raw_data/Pheno_def.csv", delim = ";") |> 
+  janitor::clean_names() |> 
+  mutate(valid_date = as.Date(date, format = "%d/%m/%y")) |> 
+  mutate(doy = lubridate::yday(valid_date))
+```
+
+```{r}
+df_raw |> DT::datatable()
+```
+
+
+```{r}
+# Agrupa por sitio, fecha, specie y suma todos los contactos de un transecto (los tramos)
+df <- df_raw |> 
+  dplyr::select(valid_date, site, species, ntotal, doy, year) |> 
+  group_by(species, valid_date, doy, site, year) |> 
+  summarise(total_count = sum(ntotal))
+```
+
+```{r}
+df |> DT::datatable()
+```
+
+```{r}
+df_aux <- df |> 
+  rowwise() |> # esto es para permitir operar a nivel de fila 
+  mutate(doy_x_bichos = doy * total_count) # dia juliano * mariposas ese día 
+
+df_aux |> DT::datatable()
+```
+
+
+```{r}
+df_pheno <- df_aux |> 
+  group_by(species, site, year) |> # agrupar por sitio, especie y año 
+  summarise(sum_doy_bichos = sum(doy_x_bichos), # Σ(día juliano x mariposas que se contabilizan ese día)
+            sum_conteos = sum(total_count)) |>  # total de mariposas de la especie x que se han contabilizado este año:
+  ungroup() |> 
+  rowwise() |> 
+  mutate(weigth_mean_date = round(sum_doy_bichos / sum_conteos, 0))
+
+df_pheno |> DT::datatable()
+
+write_csv(df_pheno, here::here("data/doy_peak_sps_WMD.csv"))
+```
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+df_raw <- readxl::read_excel("data/raw_data/Prueba_doy.xlsx") |> # leer el archivo
+  janitor::clean_names() |> # poner nombres de columnas mas manejables
+  mutate(date = lubridate::make_date(year, month, day)) |> # crea una variable que combine año, mes y día. 
+  mutate(doy = lubridate::yday(date)) # convertir fecha a día juliano 
+
+# Agrupa por sitio, fecha, specie y suma todos los contactos de un transecto (los tramos)
+df <- df_raw |> 
+  dplyr::select(date, site, species, count, doy, year) |> 
+  group_by(species, date, doy, site, year) |> 
+  summarise(total_count = sum(count))
+
+df_aux <- df |> 
+  rowwise() |> # esto es para permitir operar a nivel de fila 
+  mutate(doy_x_bichos = doy * total_count) # dia juliano * mariposas ese día 
+
+df_pheno <- df_aux |> 
+  group_by(species, site, year) |> # agrupar por sitio, especie y año 
+  summarise(sum_doy_bichos = sum(doy_x_bichos), # Σ(día juliano x mariposas que se contabilizan ese día)
+            sum_conteos = sum(total_count)) |>  # total de mariposas de la especie x que se han contabilizado este año:
+  ungroup() |> 
+  rowwise() |> 
+  mutate(weigth_mean_date = round(sum_doy_bichos / sum_conteos, 0))
+
+```
+
+
+
