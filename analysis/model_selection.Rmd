@@ -39,17 +39,17 @@ library(ggpubr)
 
 
 ```{r}
-df_doy <- vroom::vroom(here::here("data/doy_peak_sps.csv"))
+df_doy_wmd <- vroom::vroom(here::here("data/doy_peak_sps_WMD.csv"))
 
-doy_mean <- df_doy |> 
+doy_mean <- df_doy_wmd |> 
   group_by(species) |> 
-  summarise(doy_mean = mean(doy, na.rm = TRUE),
-            doy_sd = sd(doy, na.rm = TRUE)) 
+    summarise(doy_mean = mean(weigth_mean_date, na.rm = TRUE),
+            doy_sd = sd(weigth_mean_date, na.rm = TRUE)) 
 ```
 
 
 
-```{r, message=FALSE}
+```{r, echo=FALSE, eval=FALSE, message=FALSE}
 models_temp <- readxl::read_excel("data/models_tmed_selected.xlsx") |> 
   filter(term == "x") 
 models_prec <- readxl::read_excel("data/models_prec_selected.xlsx") |> 
@@ -58,6 +58,19 @@ models_prec <- readxl::read_excel("data/models_prec_selected.xlsx") |>
 mt <- models_temp |> dplyr::select(species, Model)
 mp <- models_prec |> dplyr::select(species, Model)
 ```
+
+
+```{r}
+models_temp <- readxl::read_excel("data/models_tmed_selected_new.xlsx") |> 
+  filter(term == "x") 
+models_prec <- readxl::read_excel("data/models_prec_selected_new.xlsx") |> 
+  filter(term == "x") 
+
+mt <- models_temp |> dplyr::select(species, Model)
+mp <- models_prec |> dplyr::select(species, Model)
+```
+
+
 
 
 - Selected scaled terms 
@@ -122,8 +135,8 @@ ggviolin(scaled_models,
          ylab = "Phenological sensibility (abs. values)", 
          xlab = "") +
   theme(legend.position = "none") + 
-  stat_compare_means(label.y = 0.2, label.x = 2) +
-  scale_y_continuous(limits = c(0,1.2), breaks = seq(0,1, by =0.25)) 
+  stat_compare_means(label.y = 1.15, label.x = 2) +
+  scale_y_continuous(limits = c(-0.1,1.25), breaks = seq(0,1, by =0.25)) 
 ```
 
 
@@ -203,6 +216,7 @@ hh |>
                                 "Jul", "Aug", "Sep")) +
   geom_linerange(aes(xmin = d - sd_d, xmax = d + sd_d), colour="red") +
   geom_point(aes(x=d), colour="red", size = 2)
+
 ```
 
 ## Precipitation
