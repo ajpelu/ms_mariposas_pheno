@@ -33,8 +33,20 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r, message=FALSE}
+```{r}
+df_doy_wmd <- vroom::vroom(here::here("data/doy_peak_sps_WMD.csv"))
+transectos <- vroom::vroom(here::here("data/transectos_metadata.csv"))
+
+climate_data <- vroom::vroom(here::here("data/transectos_climate.csv")) |> 
+  filter(hydro_year !=2007) |> 
+  rename(site_id = transectid, year = hydro_year)
+```
+
+
+```{r, eval=FALSE, echo=FALSE, message=FALSE}
+# Código antiguo antes del cambio de peak doy por WMD 
 df_doy <- vroom::vroom(here::here("data/doy_peak_sps.csv"))
+
 transectos <- vroom::vroom(here::here("data/transectos_metadata.csv"))
 selected_sps <- vroom::vroom(here::here("data/selected_species.csv"))
 
@@ -45,9 +57,13 @@ climate_data <- vroom::vroom(here::here("data/transectos_climate.csv")) |>
 
 ## Prepare data 
 ```{r}
-aux_df <- df_doy |> 
-  filter(species %in% selected_sps$sp) |> 
-  dplyr::select(species, year, doy, site_id) 
+# aux_df <- df_doy |> 
+#   filter(species %in% selected_sps$sp) |> 
+#   dplyr::select(species, year, doy, site_id) 
+
+aux_df <- df_doy_wmd |> 
+   # filter(species %in% selected_sps$sp) |> 
+   dplyr::select(species, year, doy = weigth_mean_date, site_id) 
 
 df_tmean <- aux_df |> 
   left_join(
@@ -62,12 +78,25 @@ df_prec <- aux_df |>
 # Models
 
 - For each species, we model the relationship between the flight's peak doy and the temperature (and precipitation) variables. 
-- We built 36 models using a time-window approach. We calculated the mean temperatures (and cummulative precipitation) of 36 potential time-windows ranging from one to three months from October of the previous year to September of the current year.
-- We used these potential timewindows to identify the period of the year with the highest temperature (or precipation) effect on the phenology of each species (the critical period). 
-- For each time-window and species, we fitted the DOY using a GLMM with temperature (or precipation) as a predictor, site as a random effect and a Gaussian error distribution.
+- We built 36 models using a time-window approach. We calculated the mean temperatures (and cumulative precipitation) of 36 potential time-windows ranging from one to three months from October of the previous year to September of the current year.
+- We used these potential time-windows to identify the period of the year with the highest temperature (or precipitation) effect on the phenology of each species (the critical period). 
+- For each time-window and species, we fitted the DOY using a model with temperature (or precipitation) as a predictor. Two types of model were used: for those species with more than 1 site, we fitted a GLMM model with site as a random effect and a Gaussian error distribution; and for species with only a site, we fitted a GLM with Gaussian error distribution. 
 - For each species, we selected the best-fit model according to the AIC. 
+- We compute the models with two approach: scaled a non-scaled. The first one were computed to get the slopes and compare the sensibility to temperature and precipitation. 
 
-- Scaled the models to get the slopes 
+
+```{r, echo=FALSE}
+# En el bucle para algunas species hay un problema de overparametrization
+# Aquí https://pbgworks.org/sites/pbgworks.org/files/CHANGES_to_lme4_V2.0.pdf he visto una solución
+
+# options(lmerControl=list(check.nobs.vs.rankZ = "warning",
+#  check.nobs.vs.nlev = "warning",
+#  check.nobs.vs.nRE = "warning",
+#  check.nlev.gtreq.5 = "warning",
+#  check.nlev.gtr.1 = "warning"))
+
+```
+
 
 ## Temperature med 
 ### Scaled models 
@@ -79,51 +108,96 @@ fit_glmm <- function(df, x) {
   return(glmm)
 }
 
-sps <- selected_sps |> 
-  filter(sp != "Polyommatus thersites") |> 
-  pull(sp)
 
+fit_glm <- function(df, x) { 
+  glm <- glm(scale(doy) ~ scale(x), 
+                family = gaussian, 
+                data = df)
+  return(glm)
+  }
+
+sps <- unique(df_doy_wmd$species)
 
 models_tmed<- data.frame()
 
 # Tmed 
-for (i in sps) { 
-  df <- 
-    df_doy |> 
-    filter(species == i) |> 
-    dplyr::select(species, year, doy, site_id) |> 
+for (i in sps) {
+  df <-
+    df_doy_wmd |>
+    filter(species == i) |>
+    # dplyr::select(species, year, doy, site_id) |>
+    dplyr::select(species, year, doy = weigth_mean_date, site_id) |>
     left_join(climate_data |> filter(var == "tmed"))
-  
-  if (nrow(df) > 5) { 
 
-  models <- df |> 
-    dplyr::select(Jan:Dec_preJanFeb) |> 
-    map(~fit_glmm(df, .x))
-  
-  # get AIC
-  models_aic <- map(models, broom.mixed::glance) |> 
-    bind_rows(.id = "Model") 
-  
-  # get R2 
-  models_r <- map2_dfr(names(models), models, 
-                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
 
-  # get COEF
-  models_coef <- map(models, ~broom.mixed::tidy(.x, 
-                                 effects = c("fixed"), 
-                                 conf.level = 0.95)) |> 
-    bind_rows(.id = "Model") |> 
-    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+  nsites <- length(unique(df$site_id))
 
-  output_models <- models_coef |> 
-    full_join(models_aic, multiple = "all") |>
-    full_join(models_r, multiple = "all") |> 
-    arrange(AIC) |> 
-    mutate(species = i) |> 
-    relocate(species)
-  
-  models_tmed <- rbind(models_tmed, output_models)
-     
+  if (nsites <= 1) {
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glm(df, .x))
+
+    # get AIC
+    models_aic <- map(models, broom::glance) |>
+      bind_rows(.id = "Model")
+    
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredLR(.y))
+    )
+    
+    # get COEF
+    models_coef <- map(models, ~ broom::tidy(.x, conf.level = 0.95)) |>
+      bind_rows(.id = "Model") |>
+      rename(p_value = p.value)
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "no mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_tmed <- bind_rows(models_tmed, output_models)
+    
+  } else {
+    # if (nrow(df) > 5) {
+
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glmm(df, .x))
+
+    # get AIC
+    models_aic <- map(models, broom.mixed::glance) |>
+      bind_rows(.id = "Model")
+
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredGLMM(.y))
+    )
+
+    # get COEF
+    models_coef <- map(models, ~ broom.mixed::tidy(.x,
+      effects = c("fixed"),
+      conf.level = 0.95
+    )) |>
+      bind_rows(.id = "Model") |>
+      mutate(p_value = round(2 * (1 - pnorm(abs(statistic))), 4)) # add p.value of coef
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_tmed <- bind_rows(models_tmed, output_models)
   }
 }
 
@@ -138,7 +212,7 @@ length(unique(models_tmed$species))
 ```{r}
 models_tmed |>
   mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
-  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(r2.R2m, r2.R2c, r2), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
 ```
@@ -147,7 +221,6 @@ models_tmed |>
 write_csv(models_tmed, "data/models_tmed_scaled.csv")
 writexl::write_xlsx(models_tmed, "data/models_tmed_scaled.xlsx")
 ```
-
 
 
 ### Non-scaled models 
@@ -159,52 +232,92 @@ fit_glmm <- function(df, x) {
   return(glmm)
 }
 
-sps <- selected_sps |> 
-  filter(sp != "Polyommatus thersites") |> 
-  pull(sp)
+fit_glm <- function(df, x) { 
+  glm <- glm(doy ~ scale(x), 
+                family = gaussian, 
+                data = df)
+  return(glm)
+  }
 
+sps <- unique(df_doy_wmd$species)
 
-models_tmed <- data.frame()
+models_tmed<- data.frame()
 
 # Tmed 
 for (i in sps) { 
-  df <- 
-    df_doy |> 
-    filter(species == i) |> 
-    dplyr::select(species, year, doy, site_id) |> 
+  df <-
+    df_doy_wmd |>
+    filter(species == i) |>
+    dplyr::select(species, year, doy = weigth_mean_date, site_id) |>
     left_join(climate_data |> filter(var == "tmed"))
   
-  if (nrow(df) > 5) { 
+  nsites <- length(unique(df$site_id))
 
-  models <- df |> 
-    dplyr::select(Jan:Dec_preJanFeb) |> 
-    map(~fit_glmm(df, .x))
-  
-  # get AIC
-  models_aic <- map(models, broom.mixed::glance) |> 
-    bind_rows(.id = "Model") 
-  
-  # get R2 
-  models_r <- map2_dfr(names(models), models, 
-                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
+  if (nsites <= 1) {
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glm(df, .x))
 
-  # get COEF
-  models_coef <- map(models, ~broom.mixed::tidy(.x, 
-                                 effects = c("fixed"), 
-                                 conf.level = 0.95)) |> 
-    bind_rows(.id = "Model") |> 
-    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+    # get AIC
+    models_aic <- map(models, broom::glance) |>
+      bind_rows(.id = "Model")
+    
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredLR(.y))
+    )
+    
+    # get COEF
+    models_coef <- map(models, ~ broom::tidy(.x, conf.level = 0.95)) |>
+      bind_rows(.id = "Model") |>
+      rename(p_value = p.value)
 
-  output_models <- models_coef |> 
-    full_join(models_aic, multiple = "all") |>
-    full_join(models_r, multiple = "all") |> 
-    arrange(AIC) |> 
-    mutate(species = i) |> 
-    relocate(species)
-  
-  models_tmed <- rbind(models_tmed, output_models)
-     
-  }
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "no mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_tmed <- bind_rows(models_tmed, output_models)
+    
+  } else { 
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glmm(df, .x))
+
+    # get AIC
+    models_aic <- map(models, broom.mixed::glance) |>
+      bind_rows(.id = "Model")
+
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredGLMM(.y))
+    )
+
+    # get COEF
+    models_coef <- map(models, ~ broom.mixed::tidy(.x,
+      effects = c("fixed"),
+      conf.level = 0.95
+    )) |>
+      bind_rows(.id = "Model") |>
+      mutate(p_value = round(2 * (1 - pnorm(abs(statistic))), 4)) # add p.value of coef
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_tmed <- bind_rows(models_tmed, output_models)
+    }
 }
 
 ```
@@ -218,7 +331,7 @@ length(unique(models_tmed$species))
 ```{r}
 models_tmed |>
   mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
-  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(r2.R2m, r2.R2c, r2), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
 ```
@@ -240,50 +353,92 @@ fit_glmm <- function(df, x) {
   return(glmm)
 }
 
-sps <- selected_sps |> 
-  filter(sp != "Polyommatus thersites") |> 
-  pull(sp)
+fit_glm <- function(df, x) { 
+  glm <- glm(scale(doy) ~ scale(x), 
+                family = gaussian, 
+                data = df)
+  return(glm)
+  }
 
+sps <- unique(df_doy_wmd$species)
 
 models_prec <- data.frame()
 
-# Tmed 
+# Prec 
 for (i in sps) { 
-  df <- 
-    df_doy |> 
-    filter(species == i) |> 
-    dplyr::select(species, year, doy, site_id) |> 
+  df <-
+    df_doy_wmd |>
+    filter(species == i) |>
+    dplyr::select(species, year, doy = weigth_mean_date, site_id) |>
     left_join(climate_data |> filter(var == "p"))
   
-  if (nrow(df) > 5) { 
+  nsites <- length(unique(df$site_id))
 
-  models <- df |> 
-    dplyr::select(Jan:Dec_preJanFeb) |> 
-    map(~fit_glmm(df, .x))
-  
-  # get AIC
-  models_aic <- map(models, broom.mixed::glance) |> 
-    bind_rows(.id = "Model") 
-  
-  # get R2 
-  models_r <- map2_dfr(names(models), models, 
-                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
-  
-  # get COEF
-  models_coef <- map(models, ~broom.mixed::tidy(.x, 
-                                 effects = c("fixed"), 
-                                 conf.level = 0.95)) |> 
-    bind_rows(.id = "Model") |> 
-    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+  if (nsites <= 1) { 
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glm(df, .x))
 
-  output_models <- models_coef |> 
-    full_join(models_aic, multiple = "all") |> 
-    full_join(models_r, multiple = "all") |> 
-    arrange(AIC) |> 
-    mutate(species = i) |> 
-    relocate(species)
+    # get AIC
+    models_aic <- map(models, broom::glance) |>
+      bind_rows(.id = "Model")
+    
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredLR(.y))
+    )
+    
+    # get COEF
+    models_coef <- map(models, ~ broom::tidy(.x, conf.level = 0.95)) |>
+      bind_rows(.id = "Model") |>
+      rename(p_value = p.value)
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "no mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_prec <- bind_rows(models_prec, output_models)
+    
+  } else {
+
+  models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glmm(df, .x))
+
+    # get AIC
+    models_aic <- map(models, broom.mixed::glance) |>
+      bind_rows(.id = "Model")
+
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredGLMM(.y))
+    )
+
+    # get COEF
+    models_coef <- map(models, ~ broom.mixed::tidy(.x,
+      effects = c("fixed"),
+      conf.level = 0.95
+    )) |>
+      bind_rows(.id = "Model") |>
+      mutate(p_value = round(2 * (1 - pnorm(abs(statistic))), 4)) # add p.value of coef
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
   
-  models_prec <- rbind(models_prec, output_models)
+  models_prec <- bind_rows(models_prec, output_models)
      
   }
 }
@@ -298,7 +453,7 @@ length(unique(models_prec$species))
 ```{r}
 models_prec |>
   mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
-  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(r2.R2m, r2.R2c, r2), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
 ```
@@ -312,56 +467,98 @@ writexl::write_xlsx(models_prec, "data/models_prec_scaled.xlsx")
 ### Non-scaled models 
 ```{r}
 fit_glmm <- function(df, x) {
-  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
+  glmm <- lme4::glmer(doy ~ scale(x) + (1 | site_id), 
                 family = gaussian, 
                 data = df)
   return(glmm)
 }
 
-sps <- selected_sps |> 
-  filter(sp != "Polyommatus thersites") |> 
-  pull(sp)
+fit_glm <- function(df, x) { 
+  glm <- glm(doy ~ scale(x), 
+                family = gaussian, 
+                data = df)
+  return(glm)
+  }
 
+sps <- unique(df_doy_wmd$species)
 
 models_prec <- data.frame()
 
-# Tmed 
+# Prec 
 for (i in sps) { 
-  df <- 
-    df_doy |> 
-    filter(species == i) |> 
-    dplyr::select(species, year, doy, site_id) |> 
+  df <-
+    df_doy_wmd |>
+    filter(species == i) |>
+    dplyr::select(species, year, doy = weigth_mean_date, site_id) |>
     left_join(climate_data |> filter(var == "p"))
   
-  if (nrow(df) > 5) { 
+  nsites <- length(unique(df$site_id))
 
-  models <- df |> 
-    dplyr::select(Jan:Dec_preJanFeb) |> 
-    map(~fit_glmm(df, .x))
-  
-  # get AIC
-  models_aic <- map(models, broom.mixed::glance) |> 
-    bind_rows(.id = "Model") 
-  
-  # get R2 
-  models_r <- map2_dfr(names(models), models, 
-                       ~ data.frame(Model = .x, MuMIn::r.squaredGLMM(.y)))
-  
-  # get COEF
-  models_coef <- map(models, ~broom.mixed::tidy(.x, 
-                                 effects = c("fixed"), 
-                                 conf.level = 0.95)) |> 
-    bind_rows(.id = "Model") |> 
-    mutate(p_value = round(2 * (1 - pnorm(abs(statistic))),4)) # add p.value of coef
+  if (nsites <= 1) { 
+    models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glm(df, .x))
 
-  output_models <- models_coef |> 
-    full_join(models_aic, multiple = "all") |> 
-    full_join(models_r, multiple = "all") |> 
-    arrange(AIC) |> 
-    mutate(species = i) |> 
-    relocate(species)
+    # get AIC
+    models_aic <- map(models, broom::glance) |>
+      bind_rows(.id = "Model")
+    
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredLR(.y))
+    )
+    
+    # get COEF
+    models_coef <- map(models, ~ broom::tidy(.x, conf.level = 0.95)) |>
+      bind_rows(.id = "Model") |>
+      rename(p_value = p.value)
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "no mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
+
+    models_prec <- bind_rows(models_prec, output_models)
+    
+  } else {
+
+  models <- df |>
+      dplyr::select(Jan:Dec_preJanFeb) |>
+      map(~ fit_glmm(df, .x))
+
+    # get AIC
+    models_aic <- map(models, broom.mixed::glance) |>
+      bind_rows(.id = "Model")
+
+    # get R2
+    models_r <- map2_dfr(
+      names(models), models,
+      ~ data.frame(Model = .x, r2 = MuMIn::r.squaredGLMM(.y))
+    )
+
+    # get COEF
+    models_coef <- map(models, ~ broom.mixed::tidy(.x,
+      effects = c("fixed"),
+      conf.level = 0.95
+    )) |>
+      bind_rows(.id = "Model") |>
+      mutate(p_value = round(2 * (1 - pnorm(abs(statistic))), 4)) # add p.value of coef
+
+    output_models <- models_coef |>
+      full_join(models_aic, multiple = "all") |>
+      full_join(models_r, multiple = "all") |>
+      arrange(AIC) |>
+      mutate(species = i, 
+             model_type = "mixed",
+             nsites = nsites) |>
+      relocate(species, nsites, model_type) 
   
-  models_prec <- rbind(models_prec, output_models)
+  models_prec <- bind_rows(models_prec, output_models)
      
   }
 }
@@ -376,7 +573,7 @@ length(unique(models_prec$species))
 ```{r}
 models_prec |>
   mutate(across(c(estimate, std.error, statistic, sigma, logLik, AIC, BIC, REMLcrit), ~round(., digits = 3))) |> 
-  mutate(across(c(R2m, R2c), ~round(., digits = 3))) |> 
+  mutate(across(c(r2.R2m, r2.R2c, r2), ~round(., digits = 3))) |> 
   mutate(across(c(p_value), ~round(., digits = 4))) |> 
   DT::datatable()
 ```
@@ -415,9 +612,9 @@ writexl::write_xlsx(best_models_prec, "data/best_models_prec.xlsx")
 
 
 ```{r}
-doy_medio_sp <- df_doy |> 
+doy_medio_sp <- df_doy_wmd |> 
   group_by(species) |> 
-  summarise(doym = as.Date( mean(doy),origin = as.Date("2024-01-01")))
+  summarise(doym = as.Date( mean(weigth_mean_date),origin = as.Date("2024-01-01")))
 
 write_csv(doy_medio_sp, "data/doy_medio_sp.csv")
 writexl::write_xlsx(doy_medio_sp, "data/doy_medio_sp.xlsx")
