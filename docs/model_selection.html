@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-08-01
+<strong>Last updated:</strong> 2023-08-21
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotreef180ab20925197fb0c981aeced258da6e7205521targetblankf180ab2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree60881feb481bbb53d01c0c35eaac0967623f947atargetblank60881fea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/f180ab20925197fb0c981aeced258da6e7205521" target="_blank">f180ab2</a>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/60881feb481bbb53d01c0c35eaac0967623f947a" target="_blank">60881fe</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotreef180ab20925197fb0c981aeced258da6e7205521targetblankf180ab2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree60881feb481bbb53d01c0c35eaac0967623f947atargetblank60881fea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/f180ab20925197fb0c981aeced258da6e7205521" target="_blank">f180ab2</a>.
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/60881feb481bbb53d01c0c35eaac0967623f947a" target="_blank">60881fe</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -557,14 +557,12 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
     Ignored:    data/raw_data/.DS_Store
 
 Untracked files:
-    Untracked:  data/models_prec_selected.xlsx
-    Untracked:  data/models_tmed_selected.xlsx
-
-Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Untracked:  data/models_prec_selected_new.xlsx
+    Untracked:  data/models_tmed_selected_new.xlsx
 
 </code></pre>
 <p>
@@ -615,6 +613,57 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/60881feb481bbb53d01c0c35eaac0967623f947a/analysis/model_selection.Rmd" target="_blank">60881fe</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-21
+</td>
+<td>
+add new selection of models
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/2dd624a785933f7abfd0b4a18d611eb87068c8ea/analysis/model_selection.Rmd" target="_blank">2dd624a</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-21
+</td>
+<td>
+update repo
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/bd4c9db2f6b281bd7307d9c80b23fec537317e88/docs/model_selection.html" target="_blank">bd4c9db</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/f180ab20925197fb0c981aeced258da6e7205521/analysis/model_selection.Rmd" target="_blank">f180ab2</a>
 </td>
 <td>
@@ -652,15 +701,15 @@ library(glue)
 library(kableExtra)
 library(DT)
 library(ggpubr)</code></pre>
-<pre class="r"><code>df_doy &lt;- vroom::vroom(here::here(&quot;data/doy_peak_sps.csv&quot;))
+<pre class="r"><code>df_doy_wmd &lt;- vroom::vroom(here::here(&quot;data/doy_peak_sps_WMD.csv&quot;))
 
-doy_mean &lt;- df_doy |&gt; 
+doy_mean &lt;- df_doy_wmd |&gt; 
   group_by(species) |&gt; 
-  summarise(doy_mean = mean(doy, na.rm = TRUE),
-            doy_sd = sd(doy, na.rm = TRUE)) </code></pre>
-<pre class="r"><code>models_temp &lt;- readxl::read_excel(&quot;data/models_tmed_selected.xlsx&quot;) |&gt; 
+    summarise(doy_mean = mean(weigth_mean_date, na.rm = TRUE),
+            doy_sd = sd(weigth_mean_date, na.rm = TRUE)) </code></pre>
+<pre class="r"><code>models_temp &lt;- readxl::read_excel(&quot;data/models_tmed_selected_new.xlsx&quot;) |&gt; 
   filter(term == &quot;x&quot;) 
-models_prec &lt;- readxl::read_excel(&quot;data/models_prec_selected.xlsx&quot;) |&gt; 
+models_prec &lt;- readxl::read_excel(&quot;data/models_prec_selected_new.xlsx&quot;) |&gt; 
   filter(term == &quot;x&quot;) 
 
 mt &lt;- models_temp |&gt; dplyr::select(species, Model)
@@ -708,7 +757,44 @@ scaled_models &lt;- bind_rows(
     strip.background = element_rect(fill = &quot;transparent&quot;), 
     strip.text = element_text(face = &quot;bold&quot;)
   )</code></pre>
-<p><img src="figure/model_selection.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/model_selection.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/bd4c9db2f6b281bd7307d9c80b23fec537317e88/docs/figure/model_selection.Rmd/unnamed-chunk-6-1.png" target="_blank">bd4c9db</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>Compare absolute values</li>
 </ul>
@@ -720,16 +806,53 @@ scaled_models &lt;- bind_rows(
          ylab = &quot;Phenological sensibility (abs. values)&quot;, 
          xlab = &quot;&quot;) +
   theme(legend.position = &quot;none&quot;) + 
-  stat_compare_means(label.y = 0.2, label.x = 2) +
-  scale_y_continuous(limits = c(0,1.2), breaks = seq(0,1, by =0.25)) </code></pre>
-<p><img src="figure/model_selection.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+  stat_compare_means(label.y = 1.15, label.x = 2) +
+  scale_y_continuous(limits = c(-0.1,1.25), breaks = seq(0,1, by =0.25)) </code></pre>
+<p><img src="figure/model_selection.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/bd4c9db2f6b281bd7307d9c80b23fec537317e88/docs/figure/model_selection.Rmd/unnamed-chunk-7-1.png" target="_blank">bd4c9db</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>qq &lt;- scaled_models |&gt; 
   dplyr::select(species, estimate, var) |&gt; 
   pivot_wider(values_from = estimate, 
               names_from = var)
 
 ggscatter(qq, x=&quot;Temperature&quot;, y = &quot;Precipitation&quot;)</code></pre>
-<p><img src="figure/model_selection.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/model_selection.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>h &lt;- scaled_models |&gt; 
   separate(Model, into=c(&quot;m1&quot;, &quot;m2&quot;, &quot;m3&quot;), 
            sep =&quot;(?&lt;=[a-z])(?=[A-Z])&quot;, 
@@ -777,7 +900,8 @@ hh &lt;- hlong |&gt;
   geom_segment(aes(x = min_month, xend = max_month, yend = species), 
                colour = &quot;grey80&quot;, size = 4, lineend = &quot;butt&quot;) +
   theme_bw() +
-  theme(panel.grid.minor = element_blank()) + 
+  theme(panel.grid.minor = element_blank(), 
+        axis.text.y = element_text(face = &quot;italic&quot;)) + 
   scale_x_continuous(breaks = seq(1,12,by=1), limits = c(1,12.5), 
                      labels = c(expression(&quot;Oct&quot;[-1]), 
                                 expression(&quot;Nov&quot;[-1]),
@@ -787,7 +911,44 @@ hh &lt;- hlong |&gt;
                                 &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;)) +
   geom_linerange(aes(xmin = d - sd_d, xmax = d + sd_d), colour=&quot;red&quot;) +
   geom_point(aes(x=d), colour=&quot;red&quot;, size = 2)</code></pre>
-<p><img src="figure/model_selection.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/model_selection.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/bd4c9db2f6b281bd7307d9c80b23fec537317e88/docs/figure/model_selection.Rmd/unnamed-chunk-11-1.png" target="_blank">bd4c9db</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="precipitation" class="section level2">
 <h2>Precipitation</h2>
@@ -799,7 +960,8 @@ hh &lt;- hlong |&gt;
   geom_segment(aes(x = min_month, xend = max_month, yend = species), 
                colour = &quot;grey80&quot;, size = 4, lineend = &quot;butt&quot;) +
   theme_bw() +
-  theme(panel.grid.minor = element_blank()) + 
+  theme(panel.grid.minor = element_blank(),
+        axis.text.y = element_text(face = &quot;italic&quot;)) + 
   scale_x_continuous(breaks = seq(1,12,by=1), limits = c(1,12.5), 
                      labels = c(expression(&quot;Oct&quot;[-1]), 
                                 expression(&quot;Nov&quot;[-1]),
@@ -809,7 +971,7 @@ hh &lt;- hlong |&gt;
                                 &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;)) +
   geom_linerange(aes(xmin = d - sd_d, xmax = d + sd_d), colour=&quot;blue&quot;) +
   geom_point(aes(x=d), colour=&quot;blue&quot;, size = 2)</code></pre>
-<p><img src="figure/model_selection.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/model_selection.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
