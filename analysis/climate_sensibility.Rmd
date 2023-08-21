@@ -233,7 +233,7 @@ fit_glmm <- function(df, x) {
 }
 
 fit_glm <- function(df, x) { 
-  glm <- glm(doy ~ scale(x), 
+  glm <- glm(doy ~ x, 
                 family = gaussian, 
                 data = df)
   return(glm)
@@ -467,14 +467,14 @@ writexl::write_xlsx(models_prec, "data/models_prec_scaled.xlsx")
 ### Non-scaled models 
 ```{r}
 fit_glmm <- function(df, x) {
-  glmm <- lme4::glmer(doy ~ scale(x) + (1 | site_id), 
+  glmm <- lme4::glmer(doy ~ x + (1 | site_id), 
                 family = gaussian, 
                 data = df)
   return(glmm)
 }
 
 fit_glm <- function(df, x) { 
-  glm <- glm(doy ~ scale(x), 
+  glm <- glm(doy ~ x, 
                 family = gaussian, 
                 data = df)
   return(glm)
