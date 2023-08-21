@@ -1,798 +1,798 @@
-species,site,year,sum_doy_bichos,sum_conteos,weigth_mean_date
-Anthocharis euphenoides,Durcal,2017,2226,14,159
-Anthocharis euphenoides,Durcal,2019,9442,68,139
-Anthocharis euphenoides,Durcal,2020,4580,27,170
-Anthocharis euphenoides,Durcal,2021,8433,49,172
-Anthocharis euphenoides,Durcal,2022,3848,26,148
-Anthocharis euphenoides,Pitres,2015,1704,13,131
-Anthocharis euphenoides,Pitres,2016,1284,11,117
-Anthocharis euphenoides,Pitres,2017,1453,13,112
-Anthocharis euphenoides,Pitres,2018,1552,11,141
-Anthocharis euphenoides,Pitres,2019,902,8,113
-Anthocharis euphenoides,Pitres,2021,708,6,118
-Anthocharis euphenoides,Robledal de Dilar,2013,1326,9,147
-Anthocharis euphenoides,Robledal de Dilar,2016,460,3,153
-Anthocharis euphenoides,Robledal de Dilar,2017,1444,11,131
-Anthocharis euphenoides,Robledal de Dilar,2019,1151,8,144
-Anthocharis euphenoides,Robledal de Dilar,2021,983,7,140
-Aporia crataegi,Durcal,2014,14715,83,177
-Aporia crataegi,Durcal,2015,15781,91,173
-Aporia crataegi,Durcal,2017,4316,25,173
-Aporia crataegi,Durcal,2018,11295,59,191
-Aporia crataegi,Durcal,2019,11184,62,180
-Aporia crataegi,Durcal,2021,2228,12,186
-Aporia crataegi,Durcal,2022,3000,17,176
-Aporia crataegi,Matas Verdes,2012,34446,195,177
-Aporia crataegi,Matas Verdes,2013,16545,88,188
-Aporia crataegi,Matas Verdes,2014,22269,129,173
-Aporia crataegi,Matas Verdes,2016,4351,24,181
-Aporia crataegi,Matas Verdes,2017,6732,42,160
-Aporia crataegi,Matas Verdes,2019,3215,19,169
-Aporia crataegi,Purche,2012,50850,309,165
-Aporia crataegi,Purche,2013,56605,331,171
-Aporia crataegi,Purche,2014,48002,309,155
-Aporia crataegi,Purche,2015,23045,147,157
-Aporia crataegi,Purche,2016,9662,57,170
-Aporia crataegi,Purche,2019,8952,54,166
-Aporia crataegi,Purche,2020,8628,53,163
-Aporia crataegi,Purche,2021,21838,134,163
-Aporia crataegi,Robledal de Dilar,2012,22403,132,170
-Aporia crataegi,Robledal de Dilar,2013,11474,64,179
-Aporia crataegi,Robledal de Dilar,2014,21480,127,169
-Aporia crataegi,Robledal de Dilar,2015,8904,54,165
-Aporia crataegi,Robledal de Dilar,2017,14557,92,158
-Aporia crataegi,Robledal de Dilar,2019,4862,29,168
-Aporia crataegi,Robledal de Dilar,2021,3301,20,165
-Argynnis pandora,Pitres,2014,2615,11,238
-Argynnis pandora,Pitres,2015,2412,11,219
-Argynnis pandora,Pitres,2016,1838,8,230
-Argynnis pandora,Pitres,2017,7574,34,223
-Argynnis pandora,Pitres,2018,7662,33,232
-Argynnis pandora,Pitres,2019,1518,7,217
-Argynnis pandora,Pitres,2022,3318,15,221
-Aricia montensis,Robledal de Dilar,2014,13523,63,215
-Aricia montensis,Robledal de Dilar,2016,26445,124,213
-Aricia montensis,Robledal de Dilar,2017,5701,26,219
-Aricia montensis,Robledal de Dilar,2019,5312,26,204
-Aricia montensis,Robledal de Dilar,2020,15323,72,213
-Aricia montensis,Robledal de Dilar,2021,37107,170,218
-Aricia montensis,Robledal de Dilar,2022,8859,40,221
-Brintesia circe,Catifas,2013,1799,9,200
-Brintesia circe,Catifas,2014,971,5,194
-Brintesia circe,Catifas,2015,422,2,211
-Brintesia circe,Catifas,2016,1267,6,211
-Brintesia circe,Catifas,2017,747,4,187
-Brintesia circe,Catifas,2019,418,2,209
-Brintesia circe,Catifas,2020,927,4,232
-Brintesia circe,Catifas,2021,2716,14,194
-Brintesia circe,Catifas,2022,639,3,213
-Brintesia circe,Durcal,2014,41633,200,208
-Brintesia circe,Durcal,2015,22289,111,201
-Brintesia circe,Durcal,2016,83255,412,202
-Brintesia circe,Durcal,2017,34597,171,202
-Brintesia circe,Durcal,2018,55171,253,218
-Brintesia circe,Durcal,2019,39633,193,205
-Brintesia circe,Durcal,2020,14844,71,209
-Brintesia circe,Durcal,2021,30997,146,212
-Brintesia circe,Durcal,2022,38156,188,203
-Brintesia circe,Pitres,2014,4495,23,195
-Brintesia circe,Pitres,2015,3256,17,192
-Brintesia circe,Pitres,2016,2158,10,216
-Brintesia circe,Pitres,2018,3183,14,227
-Brintesia circe,Pitres,2019,1044,6,174
-Brintesia circe,Pitres,2020,2004,9,223
-Brintesia circe,Pitres,2021,3857,19,203
-Brintesia circe,Pitres,2022,3871,18,215
-Brintesia circe,Purche,2013,5907,27,219
-Brintesia circe,Purche,2014,5683,27,210
-Brintesia circe,Purche,2015,1491,7,213
-Brintesia circe,Purche,2016,971,5,194
-Brintesia circe,Purche,2019,3343,18,186
-Brintesia circe,Purche,2020,2069,11,188
-Brintesia circe,Purche,2021,1550,8,194
-Brintesia circe,Robledal de Dilar,2013,7036,33,213
-Brintesia circe,Robledal de Dilar,2014,9786,49,200
-Brintesia circe,Robledal de Dilar,2015,3876,19,204
-Brintesia circe,Robledal de Dilar,2016,5328,23,232
-Brintesia circe,Robledal de Dilar,2017,2765,14,198
-Brintesia circe,Robledal de Dilar,2021,3398,14,243
-Brintesia circe,Robledal de Dilar,2022,3489,16,218
-Chazara briseis,Loma de Papeles Bajo,2012,847,4,212
-Chazara briseis,Loma de Papeles Bajo,2013,4948,22,225
-Chazara briseis,Loma de Papeles Bajo,2014,2407,11,219
-Chazara briseis,Loma de Papeles Bajo,2016,1337,6,223
-Chazara briseis,Loma de Papeles Bajo,2022,2640,13,203
-Chazara briseis,Purche,2012,15594,79,197
-Chazara briseis,Purche,2013,30305,131,231
-Chazara briseis,Purche,2014,20894,101,207
-Chazara briseis,Purche,2015,11127,52,214
-Chazara briseis,Purche,2016,17308,75,231
-Chazara briseis,Purche,2017,11718,53,221
-Chazara briseis,Purche,2020,4718,21,225
-Chazara briseis,Purche,2021,2345,11,213
-Coenonympha dorus,Purche,2012,13066,67,195
-Coenonympha dorus,Purche,2013,3199,16,200
-Coenonympha dorus,Purche,2015,6934,35,198
-Coenonympha dorus,Purche,2016,12556,60,209
-Coenonympha dorus,Purche,2017,6167,31,199
-Coenonympha dorus,Purche,2020,887,4,222
-Coenonympha dorus,Purche,2021,7017,34,206
-Erebia hispania,Borreguiles San Juan,2012,5628,28,201
-Erebia hispania,Borreguiles San Juan,2013,3387,15,226
-Erebia hispania,Borreguiles San Juan,2014,8555,40,214
-Erebia hispania,Borreguiles San Juan,2017,8176,43,190
-Erebia hispania,Borreguiles San Juan,2018,9762,46,212
-Erebia hispania,Borreguiles San Juan,2019,14231,75,190
-Erebia hispania,Borreguiles San Juan,2021,15872,82,194
-Erebia hispania,Borreguiles San Juan,2022,23296,119,196
-Euphydryas aurinia,Durcal,2014,10010,56,179
-Euphydryas aurinia,Durcal,2015,11495,68,169
-Euphydryas aurinia,Durcal,2017,784,4,196
-Euphydryas aurinia,Durcal,2018,1217,6,203
-Euphydryas aurinia,Durcal,2019,2405,13,185
-Euphydryas aurinia,Durcal,2020,3366,19,177
-Euphydryas aurinia,Durcal,2021,3282,18,182
-Euphydryas aurinia,Matas Verdes,2012,100452,566,177
-Euphydryas aurinia,Matas Verdes,2013,78348,417,188
-Euphydryas aurinia,Matas Verdes,2014,92063,525,175
-Euphydryas aurinia,Matas Verdes,2015,26931,156,173
-Euphydryas aurinia,Matas Verdes,2016,7177,41,175
-Euphydryas aurinia,Matas Verdes,2017,13513,83,163
-Euphydryas aurinia,Matas Verdes,2019,4212,24,176
-Euphydryas aurinia,Matas Verdes,2020,4997,28,178
-Euphydryas aurinia,Matas Verdes,2021,5259,30,175
-Euphydryas aurinia,Matas Verdes,2022,9605,57,169
-Euphydryas aurinia,Robledal de Dilar,2012,76325,446,171
-Euphydryas aurinia,Robledal de Dilar,2013,63276,352,180
-Euphydryas aurinia,Robledal de Dilar,2014,105377,609,173
-Euphydryas aurinia,Robledal de Dilar,2015,20958,125,168
-Euphydryas aurinia,Robledal de Dilar,2016,11806,66,179
-Euphydryas aurinia,Robledal de Dilar,2017,29640,184,161
-Euphydryas aurinia,Robledal de Dilar,2019,17656,104,170
-Euphydryas aurinia,Robledal de Dilar,2020,10960,63,174
-Euphydryas aurinia,Robledal de Dilar,2021,9601,56,171
-Euphydryas aurinia,Robledal de Dilar,2022,27778,165,168
-Fabriciana niobe,Campos de Otero,2013,7900,40,198
-Fabriciana niobe,Campos de Otero,2016,3529,18,196
-Fabriciana niobe,Campos de Otero,2017,2351,13,181
-Fabriciana niobe,Campos de Otero,2018,7616,37,206
-Fabriciana niobe,Campos de Otero,2019,1666,9,185
-Fabriciana niobe,Campos de Otero,2021,4722,25,189
-Fabriciana niobe,Campos de Otero,2022,1681,9,187
-Fabriciana niobe,Matas Verdes,2012,3594,19,189
-Fabriciana niobe,Matas Verdes,2013,6725,34,198
-Fabriciana niobe,Matas Verdes,2014,1360,7,194
-Fabriciana niobe,Matas Verdes,2017,724,4,181
-Fabriciana niobe,Matas Verdes,2021,3432,17,202
-Fabriciana niobe,Praillos,2017,179,1,179
-Fabriciana niobe,Praillos,2019,204,1,204
-Fabriciana niobe,Praillos,2022,189,1,189
-Fabriciana niobe,Robledal de Dilar,2013,5152,27,191
-Fabriciana niobe,Robledal de Dilar,2014,1428,8,178
-Fabriciana niobe,Robledal de Dilar,2017,1468,9,163
-Fabriciana niobe,Robledal de Dilar,2021,3746,20,187
-Fabriciana niobe,Robledal de Dilar,2022,1821,10,182
-Hipparchia fidia,Matas Verdes,2013,5240,22,238
-Hipparchia fidia,Matas Verdes,2016,5125,22,233
-Hipparchia fidia,Matas Verdes,2017,2047,9,227
-Hipparchia fidia,Matas Verdes,2019,2328,10,233
-Hipparchia fidia,Matas Verdes,2021,3618,15,241
-Hipparchia fidia,Pitres,2017,1120,5,224
-Hipparchia fidia,Pitres,2018,1468,6,245
-Hipparchia fidia,Pitres,2020,899,4,225
-Hipparchia fidia,Pitres,2021,1911,8,239
-Hipparchia fidia,Pitres,2022,1350,6,225
-Hipparchia fidia,Robledal de Dilar,2013,7677,33,233
-Hipparchia fidia,Robledal de Dilar,2016,2075,9,231
-Hipparchia fidia,Robledal de Dilar,2017,5145,23,224
-Hipparchia fidia,Robledal de Dilar,2019,1825,8,228
-Hipparchia fidia,Robledal de Dilar,2020,4234,18,235
-Hipparchia fidia,Robledal de Dilar,2021,7571,32,237
-Hipparchia fidia,Robledal de Dilar,2022,2769,12,231
-Hipparchia hermione,Loma de Papeles Bajo,2012,2426,12,202
-Hipparchia hermione,Loma de Papeles Bajo,2013,2779,13,214
-Hipparchia hermione,Loma de Papeles Bajo,2014,2000,10,200
-Hipparchia hermione,Loma de Papeles Bajo,2019,2751,15,183
-Hipparchia hermione,Loma de Papeles Bajo,2020,2716,13,209
-Hipparchia hermione,Loma de Papeles Bajo,2021,1165,6,194
-Hipparchia hermione,Matas Verdes,2012,2993,15,200
-Hipparchia hermione,Matas Verdes,2013,1807,8,226
-Hipparchia hermione,Matas Verdes,2014,1065,5,213
-Hipparchia hermione,Matas Verdes,2016,1022,5,204
-Hipparchia hermione,Matas Verdes,2017,1489,7,213
-Hipparchia hermione,Matas Verdes,2019,2372,12,198
-Hipparchia hermione,Matas Verdes,2020,7292,35,208
-Hipparchia hermione,Matas Verdes,2021,5132,25,205
-Hipparchia hermione,Matas Verdes,2022,4503,22,205
-Hipparchia hermione,Robledal de Dilar,2012,9723,47,207
-Hipparchia hermione,Robledal de Dilar,2013,8547,37,231
-Hipparchia hermione,Robledal de Dilar,2014,9036,41,220
-Hipparchia hermione,Robledal de Dilar,2015,6251,29,216
-Hipparchia hermione,Robledal de Dilar,2016,6925,34,204
-Hipparchia hermione,Robledal de Dilar,2017,12900,59,219
-Hipparchia hermione,Robledal de Dilar,2019,11308,55,206
-Hipparchia hermione,Robledal de Dilar,2020,5670,27,210
-Hipparchia hermione,Robledal de Dilar,2021,9968,47,212
-Hipparchia hermione,Robledal de Dilar,2022,4089,19,215
-Hipparchia semele,Durcal,2014,8459,38,223
-Hipparchia semele,Durcal,2015,5043,24,210
-Hipparchia semele,Durcal,2016,3886,19,205
-Hipparchia semele,Durcal,2017,10834,55,197
-Hipparchia semele,Durcal,2018,10048,47,214
-Hipparchia semele,Durcal,2019,5499,28,196
-Hipparchia semele,Durcal,2020,9468,49,193
-Hipparchia semele,Durcal,2021,19931,103,194
-Hipparchia semele,Durcal,2022,7297,37,197
-Hipparchia semele,Purche,2012,3664,20,183
-Hipparchia semele,Purche,2013,11047,44,251
-Hipparchia semele,Purche,2014,4555,21,217
-Hipparchia semele,Purche,2015,154,1,154
-Hipparchia semele,Purche,2017,3317,14,237
-Hipparchia semele,Purche,2019,2040,12,170
-Hipparchia semele,Purche,2020,162,1,162
-Hipparchia semele,Purche,2021,2644,14,189
-Hipparchia semele,Robledal de Dilar,2012,884,4,221
-Hipparchia semele,Robledal de Dilar,2013,178,1,178
-Hipparchia semele,Robledal de Dilar,2014,1624,7,232
-Hipparchia semele,Robledal de Dilar,2015,436,2,218
-Hipparchia semele,Robledal de Dilar,2017,1304,6,217
-Hipparchia semele,Robledal de Dilar,2020,192,1,192
-Hipparchia semele,Robledal de Dilar,2021,996,4,249
-Hipparchia semele,Robledal de Dilar,2022,2073,9,230
-Hipparchia statilinus,Catifas,2013,4455,18,248
-Hipparchia statilinus,Catifas,2016,1395,6,232
-Hipparchia statilinus,Catifas,2019,921,4,230
-Hipparchia statilinus,Catifas,2020,2067,9,230
-Hipparchia statilinus,Catifas,2021,2727,12,227
-Hipparchia statilinus,Durcal,2015,1368,6,228
-Hipparchia statilinus,Durcal,2016,7215,33,219
-Hipparchia statilinus,Durcal,2017,11031,54,204
-Hipparchia statilinus,Durcal,2018,12800,59,217
-Hipparchia statilinus,Durcal,2019,9794,47,208
-Hipparchia statilinus,Durcal,2020,5794,28,207
-Hipparchia statilinus,Durcal,2021,11432,56,204
-Hipparchia statilinus,Matas Verdes,2013,1145,5,229
-Hipparchia statilinus,Matas Verdes,2016,6312,27,234
-Hipparchia statilinus,Matas Verdes,2017,1606,7,229
-Hipparchia statilinus,Matas Verdes,2019,2506,11,228
-Hipparchia statilinus,Matas Verdes,2021,3118,13,240
-Hipparchia statilinus,Purche,2013,48786,203,240
-Hipparchia statilinus,Purche,2014,13764,58,237
-Hipparchia statilinus,Purche,2015,7297,33,221
-Hipparchia statilinus,Purche,2016,11530,48,240
-Hipparchia statilinus,Purche,2017,9302,41,227
-Hipparchia statilinus,Purche,2020,13150,57,231
-Hipparchia statilinus,Purche,2021,10871,48,226
-Hipparchia statilinus,Robledal de Dilar,2016,4243,18,236
-Hipparchia statilinus,Robledal de Dilar,2017,5913,26,227
-Hipparchia statilinus,Robledal de Dilar,2019,3487,15,232
-Hipparchia statilinus,Robledal de Dilar,2021,10962,47,233
-Hipparchia statilinus,Robledal de Dilar,2022,11084,48,231
-Hyponephele,Borreguiles San Juan,2012,4774,23,208
-Hyponephele,Borreguiles San Juan,2013,3554,15,237
-Hyponephele,Borreguiles San Juan,2014,3103,14,222
-Hyponephele,Borreguiles San Juan,2015,12772,63,203
-Hyponephele,Borreguiles San Juan,2017,1573,8,197
-Hyponephele,Borreguiles San Juan,2019,1920,9,213
-Hyponephele,Campos de Otero,2012,13672,66,207
-Hyponephele,Campos de Otero,2013,28892,133,217
-Hyponephele,Campos de Otero,2014,18448,86,215
-Hyponephele,Campos de Otero,2015,24348,118,206
-Hyponephele,Campos de Otero,2016,32824,153,215
-Hyponephele,Campos de Otero,2017,26805,131,205
-Hyponephele,Campos de Otero,2018,12958,59,220
-Hyponephele,Campos de Otero,2019,19839,98,202
-Hyponephele,Campos de Otero,2020,13629,65,210
-Hyponephele,Campos de Otero,2021,17889,85,210
-Hyponephele,Campos de Otero,2022,14253,70,204
-Hyponephele,Catifas,2013,3799,18,211
-Hyponephele,Catifas,2016,2590,13,199
-Hyponephele,Catifas,2017,2697,13,207
-Hyponephele,Catifas,2019,4027,19,212
-Hyponephele,Catifas,2020,2595,13,200
-Hyponephele,Catifas,2021,1872,9,208
-Hyponephele,Catifas,2022,2679,13,206
-Hyponephele,Durcal,2014,26268,124,212
-Hyponephele,Durcal,2015,19003,92,207
-Hyponephele,Durcal,2016,25599,126,203
-Hyponephele,Durcal,2017,32697,163,201
-Hyponephele,Durcal,2019,29167,139,210
-Hyponephele,Durcal,2020,14486,68,213
-Hyponephele,Durcal,2021,22551,110,205
-Hyponephele,Durcal,2022,89296,443,202
-Hyponephele,Loma de Papeles Bajo,2012,18149,92,197
-Hyponephele,Loma de Papeles Bajo,2013,23771,114,209
-Hyponephele,Loma de Papeles Bajo,2014,9783,47,208
-Hyponephele,Loma de Papeles Bajo,2016,5552,27,206
-Hyponephele,Loma de Papeles Bajo,2017,4134,21,197
-Hyponephele,Loma de Papeles Bajo,2019,4392,21,209
-Hyponephele,Loma de Papeles Bajo,2020,19777,97,204
-Hyponephele,Loma de Papeles Bajo,2021,10354,52,199
-Hyponephele,Loma de Papeles Bajo,2022,14086,73,193
-Hyponephele,Matas Verdes,2012,32945,161,205
-Hyponephele,Matas Verdes,2013,55676,261,213
-Hyponephele,Matas Verdes,2014,16558,81,204
-Hyponephele,Matas Verdes,2015,11270,54,209
-Hyponephele,Matas Verdes,2016,21895,105,209
-Hyponephele,Matas Verdes,2017,36917,188,196
-Hyponephele,Matas Verdes,2019,20106,99,203
-Hyponephele,Matas Verdes,2020,23954,115,208
-Hyponephele,Matas Verdes,2021,29562,145,204
-Hyponephele,Matas Verdes,2022,63349,320,198
-Hyponephele,Praillos,2013,2909,14,208
-Hyponephele,Praillos,2016,1958,9,218
-Hyponephele,Praillos,2017,823,4,206
-Hyponephele,Praillos,2020,3063,15,204
-Hyponephele,Praillos,2022,803,4,201
-Hyponephele,Purche,2012,24990,134,186
-Hyponephele,Purche,2013,58693,296,198
-Hyponephele,Purche,2014,15838,69,230
-Hyponephele,Purche,2016,7807,32,244
-Hyponephele,Purche,2017,2578,13,198
-Hyponephele,Purche,2019,4268,22,194
-Hyponephele,Purche,2020,3235,14,231
-Hyponephele,Purche,2021,1895,8,237
-Hyponephele,Robledal de Dilar,2012,44373,221,201
-Hyponephele,Robledal de Dilar,2013,101146,471,215
-Hyponephele,Robledal de Dilar,2014,20757,104,200
-Hyponephele,Robledal de Dilar,2015,12258,59,208
-Hyponephele,Robledal de Dilar,2016,44664,214,209
-Hyponephele,Robledal de Dilar,2017,28056,142,198
-Hyponephele,Robledal de Dilar,2019,39226,192,204
-Hyponephele,Robledal de Dilar,2020,27016,129,209
-Hyponephele,Robledal de Dilar,2021,51332,255,201
-Hyponephele,Robledal de Dilar,2022,73309,361,203
-Lycaena alciphron,Campos de Otero,2013,2650,13,204
-Lycaena alciphron,Campos de Otero,2014,2158,11,196
-Lycaena alciphron,Campos de Otero,2015,4955,26,191
-Lycaena alciphron,Campos de Otero,2016,6823,35,195
-Lycaena alciphron,Campos de Otero,2017,7336,41,179
-Lycaena alciphron,Campos de Otero,2019,4805,25,192
-Lycaena alciphron,Campos de Otero,2021,2164,11,197
-Lycaena alciphron,Durcal,2014,1989,11,181
-Lycaena alciphron,Durcal,2015,1921,12,160
-Lycaena alciphron,Durcal,2016,9105,48,190
-Lycaena alciphron,Durcal,2017,5197,29,179
-Lycaena alciphron,Durcal,2019,7354,38,194
-Lycaena alciphron,Durcal,2021,8317,44,189
-Lycaena alciphron,Durcal,2022,2936,17,173
-Lycaena alciphron,Loma de Papeles Alto,2012,3546,19,187
-Lycaena alciphron,Loma de Papeles Alto,2013,4526,22,206
-Lycaena alciphron,Loma de Papeles Alto,2014,11096,57,195
-Lycaena alciphron,Loma de Papeles Alto,2015,3866,21,184
-Lycaena alciphron,Loma de Papeles Alto,2016,16046,86,187
-Lycaena alciphron,Loma de Papeles Alto,2017,5304,32,166
-Lycaena alciphron,Loma de Papeles Alto,2018,10594,53,200
-Lycaena alciphron,Loma de Papeles Alto,2019,6050,34,178
-Lycaena alciphron,Loma de Papeles Alto,2020,2890,17,170
-Lycaena alciphron,Loma de Papeles Alto,2021,14256,77,185
-Lycaena alciphron,Loma de Papeles Alto,2022,5758,31,186
-Lycaena alciphron,Loma de Papeles Bajo,2012,7685,41,187
-Lycaena alciphron,Loma de Papeles Bajo,2013,2979,15,199
-Lycaena alciphron,Loma de Papeles Bajo,2014,6583,36,183
-Lycaena alciphron,Loma de Papeles Bajo,2015,945,5,189
-Lycaena alciphron,Loma de Papeles Bajo,2016,4128,23,179
-Lycaena alciphron,Loma de Papeles Bajo,2018,4237,22,193
-Lycaena alciphron,Loma de Papeles Bajo,2019,4412,25,176
-Lycaena alciphron,Loma de Papeles Bajo,2020,8055,44,183
-Lycaena alciphron,Loma de Papeles Bajo,2021,4018,22,183
-Lycaena alciphron,Loma de Papeles Bajo,2022,1305,7,186
-Lycaena alciphron,Matas Verdes,2013,2708,14,193
-Lycaena alciphron,Matas Verdes,2014,4447,24,185
-Lycaena alciphron,Matas Verdes,2016,2619,14,187
-Lycaena alciphron,Matas Verdes,2017,815,5,163
-Lycaena alciphron,Matas Verdes,2019,1938,11,176
-Lycaena alciphron,Praillos,2013,4554,24,190
-Lycaena alciphron,Praillos,2014,3035,17,179
-Lycaena alciphron,Praillos,2019,1668,10,167
-Lycaena alciphron,Praillos,2021,1377,8,172
-Lycaena alciphron,Robledal de Dilar,2014,4082,22,186
-Lycaena alciphron,Robledal de Dilar,2015,2177,11,198
-Lycaena alciphron,Robledal de Dilar,2017,4960,29,171
-Lycaena alciphron,Robledal de Dilar,2019,3892,21,185
-Lycaena alciphron,Robledal de Dilar,2020,1162,6,194
-Lycaena alciphron,Robledal de Dilar,2021,1510,8,189
-Maniola jurtina,Pitres,2014,13058,74,176
-Maniola jurtina,Pitres,2015,7220,42,172
-Maniola jurtina,Pitres,2016,8761,49,179
-Maniola jurtina,Pitres,2017,9667,54,179
-Maniola jurtina,Pitres,2018,12735,64,199
-Maniola jurtina,Pitres,2019,9358,52,180
-Maniola jurtina,Pitres,2020,8930,47,190
-Maniola jurtina,Pitres,2021,14890,84,177
-Maniola jurtina,Pitres,2022,5655,28,202
-Maniola jurtina,Purche,2012,644,4,161
-Maniola jurtina,Purche,2013,17417,83,210
-Maniola jurtina,Purche,2014,36302,213,170
-Maniola jurtina,Purche,2015,15932,94,169
-Maniola jurtina,Purche,2016,11604,66,176
-Maniola jurtina,Purche,2017,4025,22,183
-Maniola jurtina,Purche,2019,12624,74,171
-Maniola jurtina,Purche,2020,17905,93,193
-Maniola jurtina,Purche,2021,36653,204,180
-Melanargia lachesis,Barranco de San Juan,2013,16749,84,199
-Melanargia lachesis,Barranco de San Juan,2014,11361,60,189
-Melanargia lachesis,Barranco de San Juan,2016,2550,13,196
-Melanargia lachesis,Barranco de San Juan,2017,1553,9,173
-Melanargia lachesis,Barranco de San Juan,2019,2899,15,193
-Melanargia lachesis,Barranco de San Juan,2020,3681,19,194
-Melanargia lachesis,Barranco de San Juan,2021,7166,37,194
-Melanargia lachesis,Barranco de San Juan,2022,4939,27,183
-Melanargia lachesis,Catifas,2013,13854,68,204
-Melanargia lachesis,Catifas,2014,8323,42,198
-Melanargia lachesis,Catifas,2015,2847,15,190
-Melanargia lachesis,Catifas,2016,6311,32,197
-Melanargia lachesis,Catifas,2017,11814,65,182
-Melanargia lachesis,Catifas,2019,7757,40,194
-Melanargia lachesis,Catifas,2021,9943,52,191
-Melanargia lachesis,Catifas,2022,13059,69,189
-Melanargia lachesis,Durcal,2014,54034,265,204
-Melanargia lachesis,Durcal,2015,40326,213,189
-Melanargia lachesis,Durcal,2016,60073,304,198
-Melanargia lachesis,Durcal,2017,68531,348,197
-Melanargia lachesis,Durcal,2018,60240,280,215
-Melanargia lachesis,Durcal,2019,47375,239,198
-Melanargia lachesis,Durcal,2020,58316,307,190
-Melanargia lachesis,Durcal,2021,57096,292,196
-Melanargia lachesis,Durcal,2022,142277,716,199
-Melanargia lachesis,Matas Verdes,2012,52661,266,198
-Melanargia lachesis,Matas Verdes,2013,71132,334,213
-Melanargia lachesis,Matas Verdes,2014,31738,157,202
-Melanargia lachesis,Matas Verdes,2016,12830,62,207
-Melanargia lachesis,Matas Verdes,2017,30316,157,193
-Melanargia lachesis,Matas Verdes,2019,19486,99,197
-Melanargia lachesis,Matas Verdes,2020,27214,134,203
-Melanargia lachesis,Matas Verdes,2021,70102,350,200
-Melanargia lachesis,Matas Verdes,2022,106335,540,197
-Melanargia lachesis,Pitres,2014,3218,17,189
-Melanargia lachesis,Pitres,2015,2576,14,184
-Melanargia lachesis,Pitres,2016,5003,26,192
-Melanargia lachesis,Pitres,2017,3159,18,176
-Melanargia lachesis,Pitres,2021,2718,14,194
-Melanargia lachesis,Pitres,2022,541,3,180
-Melanargia lachesis,Praillos,2013,5878,28,210
-Melanargia lachesis,Praillos,2014,4360,22,198
-Melanargia lachesis,Praillos,2016,3491,17,205
-Melanargia lachesis,Praillos,2017,3418,18,190
-Melanargia lachesis,Praillos,2020,5220,26,201
-Melanargia lachesis,Praillos,2021,6350,33,192
-Melanargia lachesis,Praillos,2022,4731,24,197
-Melanargia lachesis,Purche,2012,21136,110,192
-Melanargia lachesis,Purche,2013,40248,202,199
-Melanargia lachesis,Purche,2014,41451,222,187
-Melanargia lachesis,Purche,2015,11036,61,181
-Melanargia lachesis,Purche,2016,12296,62,198
-Melanargia lachesis,Purche,2017,4385,24,183
-Melanargia lachesis,Purche,2019,22454,121,186
-Melanargia lachesis,Purche,2020,3002,16,188
-Melanargia lachesis,Purche,2021,12397,65,191
-Melanargia lachesis,Robledal de Dilar,2012,57440,290,198
-Melanargia lachesis,Robledal de Dilar,2013,94831,451,210
-Melanargia lachesis,Robledal de Dilar,2014,72900,367,199
-Melanargia lachesis,Robledal de Dilar,2015,13454,69,195
-Melanargia lachesis,Robledal de Dilar,2016,15131,72,210
-Melanargia lachesis,Robledal de Dilar,2017,49914,264,189
-Melanargia lachesis,Robledal de Dilar,2019,46128,237,195
-Melanargia lachesis,Robledal de Dilar,2020,17967,87,207
-Melanargia lachesis,Robledal de Dilar,2021,100730,500,201
-Melanargia lachesis,Robledal de Dilar,2022,124905,632,198
-Melanargia occitanica,Loma de Papeles Alto,2012,9248,50,185
-Melanargia occitanica,Loma de Papeles Alto,2013,4484,22,204
-Melanargia occitanica,Loma de Papeles Alto,2014,4150,22,189
-Melanargia occitanica,Loma de Papeles Alto,2016,14166,81,175
-Melanargia occitanica,Loma de Papeles Alto,2018,9245,46,201
-Melanargia occitanica,Loma de Papeles Alto,2019,2636,16,165
-Melanargia occitanica,Loma de Papeles Alto,2020,4651,27,172
-Melanargia occitanica,Loma de Papeles Alto,2021,14221,77,185
-Melanargia occitanica,Loma de Papeles Bajo,2012,1613,9,179
-Melanargia occitanica,Loma de Papeles Bajo,2013,1741,9,193
-Melanargia occitanica,Loma de Papeles Bajo,2014,2801,16,175
-Melanargia occitanica,Loma de Papeles Bajo,2019,491,3,164
-Melanargia occitanica,Loma de Papeles Bajo,2021,2893,17,170
-Melitaea deione,Pitres,2014,25932,192,135
-Melitaea deione,Pitres,2015,42704,316,135
-Melitaea deione,Pitres,2016,11489,80,144
-Melitaea deione,Pitres,2017,13497,98,138
-Melitaea deione,Pitres,2018,21930,144,152
-Melitaea deione,Pitres,2019,22523,192,117
-Melitaea deione,Pitres,2020,11067,75,148
-Melitaea deione,Pitres,2021,24425,168,145
-Melitaea phoebe,Barranco de San Juan,2014,1385,9,154
-Melitaea phoebe,Barranco de San Juan,2015,990,7,141
-Melitaea phoebe,Barranco de San Juan,2019,938,7,134
-Melitaea phoebe,Barranco de San Juan,2020,1875,11,170
-Melitaea phoebe,Barranco de San Juan,2021,882,5,176
-Melitaea phoebe,Purche,2014,4123,29,142
-Melitaea phoebe,Purche,2015,4110,25,164
-Melitaea phoebe,Purche,2016,4772,28,170
-Melitaea phoebe,Purche,2019,3512,23,153
-Melitaea phoebe,Purche,2021,2729,16,171
-Melitaea phoebe,Robledal de Dilar,2014,1653,11,150
-Melitaea phoebe,Robledal de Dilar,2015,2316,16,145
-Melitaea phoebe,Robledal de Dilar,2016,1604,10,160
-Melitaea phoebe,Robledal de Dilar,2017,6166,40,154
-Melitaea phoebe,Robledal de Dilar,2019,1398,10,140
-Melitaea phoebe,Robledal de Dilar,2020,1525,10,152
-Melitaea phoebe,Robledal de Dilar,2021,1017,7,145
-Melitaea trivia,Loma de Papeles Alto,2014,3087,18,172
-Melitaea trivia,Loma de Papeles Alto,2015,3357,18,186
-Melitaea trivia,Loma de Papeles Alto,2016,8684,48,181
-Melitaea trivia,Loma de Papeles Alto,2020,4965,26,191
-Melitaea trivia,Loma de Papeles Alto,2021,5266,31,170
-Melitaea trivia,Praillos,2013,1520,9,169
-Melitaea trivia,Praillos,2014,3356,20,168
-Melitaea trivia,Praillos,2017,514,3,171
-Melitaea trivia,Praillos,2019,614,4,154
-Melitaea trivia,Praillos,2020,2373,13,183
-Parnassius apollo,Borreguiles San Juan,2012,1187,6,198
-Parnassius apollo,Borreguiles San Juan,2013,4000,19,211
-Parnassius apollo,Borreguiles San Juan,2014,10847,54,201
-Parnassius apollo,Borreguiles San Juan,2015,9042,46,197
-Parnassius apollo,Borreguiles San Juan,2017,13423,79,170
-Parnassius apollo,Borreguiles San Juan,2018,3972,19,209
-Parnassius apollo,Campos de Otero,2012,9497,50,190
-Parnassius apollo,Campos de Otero,2013,41809,205,204
-Parnassius apollo,Campos de Otero,2014,48613,253,192
-Parnassius apollo,Campos de Otero,2015,15973,85,188
-Parnassius apollo,Campos de Otero,2016,13450,69,195
-Parnassius apollo,Campos de Otero,2017,7515,44,171
-Parnassius apollo,Campos de Otero,2018,9746,47,207
-Parnassius apollo,Campos de Otero,2019,13177,73,181
-Parnassius apollo,Campos de Otero,2020,7994,42,190
-Parnassius apollo,Campos de Otero,2021,6642,36,184
-Parnassius apollo,Laguna Seca,2012,22047,120,184
-Parnassius apollo,Laguna Seca,2013,29301,149,197
-Parnassius apollo,Laguna Seca,2014,53709,293,183
-Parnassius apollo,Laguna Seca,2015,7481,42,178
-Parnassius apollo,Laguna Seca,2017,6943,41,169
-Parnassius apollo,Laguna Seca,2018,9492,48,198
-Parnassius apollo,Laguna Seca,2019,1945,11,177
-Parnassius apollo,Laguna Seca,2021,2965,16,185
-Parnassius apollo,Loma de Papeles Alto,2013,16656,83,201
-Parnassius apollo,Loma de Papeles Alto,2014,17719,95,187
-Parnassius apollo,Loma de Papeles Alto,2016,6312,34,186
-Parnassius apollo,Loma de Papeles Alto,2018,5017,25,201
-Parnassius apollo,Loma de Papeles Alto,2019,3730,21,178
-Parnassius apollo,Loma de Papeles Bajo,2013,19968,106,188
-Parnassius apollo,Loma de Papeles Bajo,2014,35212,203,173
-Parnassius apollo,Loma de Papeles Bajo,2015,16349,91,180
-Parnassius apollo,Loma de Papeles Bajo,2016,11440,63,182
-Parnassius apollo,Loma de Papeles Bajo,2017,13540,84,161
-Parnassius apollo,Loma de Papeles Bajo,2018,11999,62,194
-Parnassius apollo,Loma de Papeles Bajo,2020,6155,34,181
-Parnassius apollo,Loma de Papeles Bajo,2021,6838,38,180
-Plebejus argus,Catifas,2013,2284,12,190
-Plebejus argus,Catifas,2014,6872,38,181
-Plebejus argus,Catifas,2016,7439,39,191
-Plebejus argus,Catifas,2017,8742,51,171
-Plebejus argus,Catifas,2019,3161,18,176
-Plebejus argus,Catifas,2021,3001,16,188
-Plebejus argus,Durcal,2014,5526,27,205
-Plebejus argus,Durcal,2015,5660,29,195
-Plebejus argus,Durcal,2016,46952,242,194
-Plebejus argus,Durcal,2017,8450,43,197
-Plebejus argus,Durcal,2018,8800,43,205
-Plebejus argus,Durcal,2019,7323,36,203
-Plebejus argus,Durcal,2020,6444,32,201
-Plebejus argus,Durcal,2021,8509,43,198
-Plebejus argus,Matas Verdes,2013,38372,197,195
-Plebejus argus,Matas Verdes,2014,23580,128,184
-Plebejus argus,Matas Verdes,2015,10432,57,183
-Plebejus argus,Matas Verdes,2017,15665,85,184
-Plebejus argus,Matas Verdes,2019,17300,94,184
-Plebejus argus,Matas Verdes,2020,9764,51,191
-Plebejus argus,Matas Verdes,2021,7516,39,193
-Plebejus argus,Matas Verdes,2022,3790,21,180
-Plebejus argus,Praillos,2013,4342,23,189
-Plebejus argus,Praillos,2014,3336,18,185
-Plebejus argus,Praillos,2016,6487,34,191
-Plebejus argus,Praillos,2017,5525,31,178
-Plebejus argus,Praillos,2020,1516,8,190
-Plebejus argus,Praillos,2021,6120,33,185
-Plebejus argus,Robledal de Dilar,2013,8392,44,191
-Plebejus argus,Robledal de Dilar,2014,21715,119,182
-Plebejus argus,Robledal de Dilar,2016,11814,64,185
-Plebejus argus,Robledal de Dilar,2019,7098,39,182
-Plebejus argus,Robledal de Dilar,2020,10080,53,190
-Plebejus argus,Robledal de Dilar,2021,4008,21,191
-Plebejus idas,Durcal,2014,12758,68,188
-Plebejus idas,Durcal,2015,11155,60,186
-Plebejus idas,Durcal,2016,12940,67,193
-Plebejus idas,Durcal,2017,7156,39,183
-Plebejus idas,Durcal,2018,10694,54,198
-Plebejus idas,Durcal,2019,11974,62,193
-Plebejus idas,Durcal,2020,7968,43,185
-Plebejus idas,Durcal,2021,11118,59,188
-Plebejus idas,Durcal,2022,39615,211,188
-Plebejus idas,Laguna Seca,2012,68007,366,186
-Plebejus idas,Laguna Seca,2014,25008,131,191
-Plebejus idas,Laguna Seca,2016,24972,131,191
-Plebejus idas,Laguna Seca,2019,96282,528,182
-Plebejus idas,Laguna Seca,2020,33283,181,184
-Plebejus idas,Laguna Seca,2021,27013,145,186
-Polyommatus amandus,Durcal,2014,8747,49,179
-Polyommatus amandus,Durcal,2015,5056,28,181
-Polyommatus amandus,Durcal,2016,6037,33,183
-Polyommatus amandus,Durcal,2018,3767,20,188
-Polyommatus amandus,Durcal,2019,2269,12,189
-Polyommatus amandus,Durcal,2020,3162,18,176
-Polyommatus escheri,Borreguiles San Juan,2013,3735,18,208
-Polyommatus escheri,Borreguiles San Juan,2014,4817,26,185
-Polyommatus escheri,Borreguiles San Juan,2015,3933,21,187
-Polyommatus escheri,Borreguiles San Juan,2017,9484,57,166
-Polyommatus escheri,Borreguiles San Juan,2020,4887,26,188
-Polyommatus escheri,Borreguiles San Juan,2021,11875,62,192
-Polyommatus escheri,Durcal,2016,2734,13,210
-Polyommatus escheri,Durcal,2017,1140,6,190
-Polyommatus escheri,Durcal,2018,4382,22,199
-Polyommatus escheri,Durcal,2019,1587,8,198
-Polyommatus escheri,Durcal,2020,1610,8,201
-Polyommatus escheri,Durcal,2021,3695,19,194
-Polyommatus escheri,Durcal,2022,1965,10,196
-Polyommatus escheri,Matas Verdes,2013,9252,42,220
-Polyommatus escheri,Matas Verdes,2016,2064,11,188
-Polyommatus escheri,Matas Verdes,2017,1099,6,183
-Polyommatus escheri,Matas Verdes,2021,1574,8,197
-Polyommatus escheri,Matas Verdes,2022,1555,8,194
-Polyommatus golgus,Borreguiles San Juan,2012,990,5,198
-Polyommatus golgus,Borreguiles San Juan,2013,850,4,212
-Polyommatus golgus,Borreguiles San Juan,2014,1662,9,185
-Polyommatus golgus,Borreguiles San Juan,2016,1575,8,197
-Polyommatus golgus,Borreguiles San Juan,2017,5783,33,175
-Polyommatus golgus,Borreguiles San Juan,2018,1422,7,203
-Polyommatus golgus,Borreguiles San Juan,2019,5281,28,189
-Polyommatus golgus,Borreguiles San Juan,2020,2282,12,190
-Polyommatus golgus,Borreguiles San Juan,2021,2858,15,191
-Polyommatus golgus,Borreguiles San Juan,2022,12259,64,192
-Polyommatus nivescens,Durcal,2014,7613,41,186
-Polyommatus nivescens,Durcal,2015,4091,27,152
-Polyommatus nivescens,Durcal,2016,8111,42,193
-Polyommatus nivescens,Durcal,2017,3916,21,186
-Polyommatus nivescens,Durcal,2018,3495,17,206
-Polyommatus nivescens,Durcal,2019,4450,28,159
-Polyommatus nivescens,Durcal,2020,4384,26,169
-Polyommatus nivescens,Durcal,2021,4149,24,173
-Polyommatus nivescens,Durcal,2022,1997,13,154
-Pyronia bathseba,Barranco de San Juan,2013,4726,26,182
-Pyronia bathseba,Barranco de San Juan,2014,6064,35,173
-Pyronia bathseba,Barranco de San Juan,2017,3159,19,166
-Pyronia bathseba,Barranco de San Juan,2019,2331,14,166
-Pyronia bathseba,Barranco de San Juan,2020,1245,7,178
-Pyronia bathseba,Barranco de San Juan,2021,3789,21,180
-Pyronia bathseba,Barranco de San Juan,2022,3661,21,174
-Pyronia bathseba,Purche,2013,4361,24,182
-Pyronia bathseba,Purche,2014,5832,35,167
-Pyronia bathseba,Purche,2015,2764,18,154
-Pyronia bathseba,Purche,2016,2077,12,173
-Pyronia bathseba,Purche,2019,5315,30,177
-Pyronia bathseba,Purche,2020,1648,10,165
-Pyronia bathseba,Purche,2021,1078,6,180
-Pyronia cecilia,Turbera,2015,7721,40,193
-Pyronia cecilia,Turbera,2016,1811,10,181
-Pyronia cecilia,Turbera,2017,964,4,241
-Pyronia cecilia,Turbera,2019,2756,14,197
-Pyronia cecilia,Turbera,2020,501,3,167
-Pyronia cecilia,Turbera,2022,1245,7,178
-Pyronia tithonus,Durcal,2014,24760,111,223
-Pyronia tithonus,Durcal,2015,17618,80,220
-Pyronia tithonus,Durcal,2016,58717,269,218
-Pyronia tithonus,Durcal,2017,39528,178,222
-Pyronia tithonus,Durcal,2018,6379,29,220
-Pyronia tithonus,Durcal,2019,15797,73,216
-Pyronia tithonus,Durcal,2020,15082,69,219
-Pyronia tithonus,Durcal,2021,49071,241,204
-Pyronia tithonus,Pitres,2014,2246,10,225
-Pyronia tithonus,Pitres,2015,1434,7,205
-Pyronia tithonus,Pitres,2016,1722,8,215
-Pyronia tithonus,Pitres,2017,1069,5,214
-Pyronia tithonus,Pitres,2020,1615,7,231
-Pyronia tithonus,Pitres,2021,1291,6,215
-Satyrium esculi,Pitres,2014,2446,13,188
-Satyrium esculi,Pitres,2015,4664,25,187
-Satyrium esculi,Pitres,2016,4621,24,193
-Satyrium esculi,Pitres,2018,12492,63,198
-Satyrium esculi,Pitres,2021,1779,9,198
-Satyrus actaea,Borreguiles San Juan,2012,21267,101,211
-Satyrus actaea,Borreguiles San Juan,2013,17404,74,235
-Satyrus actaea,Borreguiles San Juan,2014,21224,94,226
-Satyrus actaea,Borreguiles San Juan,2016,8468,38,223
-Satyrus actaea,Borreguiles San Juan,2017,20539,97,212
-Satyrus actaea,Borreguiles San Juan,2018,8922,39,229
-Satyrus actaea,Borreguiles San Juan,2019,5969,28,213
-Satyrus actaea,Borreguiles San Juan,2021,6330,29,218
-Satyrus actaea,Borreguiles San Juan,2022,14740,70,211
-Satyrus actaea,Campos de Otero,2012,28972,133,218
-Satyrus actaea,Campos de Otero,2013,25297,110,230
-Satyrus actaea,Campos de Otero,2014,20006,88,227
-Satyrus actaea,Campos de Otero,2015,15093,71,213
-Satyrus actaea,Campos de Otero,2016,27977,124,226
-Satyrus actaea,Campos de Otero,2017,45558,216,211
-Satyrus actaea,Campos de Otero,2018,17028,73,233
-Satyrus actaea,Campos de Otero,2019,9442,44,215
-Satyrus actaea,Campos de Otero,2020,11963,55,218
-Satyrus actaea,Campos de Otero,2021,18570,84,221
-Satyrus actaea,Campos de Otero,2022,30160,141,214
-Satyrus actaea,Durcal,2014,103576,468,221
-Satyrus actaea,Durcal,2015,31138,147,212
-Satyrus actaea,Durcal,2016,86487,397,218
-Satyrus actaea,Durcal,2017,116982,547,214
-Satyrus actaea,Durcal,2018,84923,381,223
-Satyrus actaea,Durcal,2019,46094,217,212
-Satyrus actaea,Durcal,2020,40928,175,234
-Satyrus actaea,Durcal,2021,47970,206,233
-Satyrus actaea,Durcal,2022,34209,158,217
-Satyrus actaea,Laguna Seca,2012,53059,250,212
-Satyrus actaea,Laguna Seca,2013,136572,596,229
-Satyrus actaea,Laguna Seca,2014,32424,143,227
-Satyrus actaea,Laguna Seca,2015,32374,148,219
-Satyrus actaea,Laguna Seca,2016,35983,167,215
-Satyrus actaea,Laguna Seca,2017,39030,183,213
-Satyrus actaea,Laguna Seca,2018,15412,63,245
-Satyrus actaea,Laguna Seca,2019,37422,174,215
-Satyrus actaea,Laguna Seca,2020,17454,77,227
-Satyrus actaea,Laguna Seca,2021,28423,128,222
-Satyrus actaea,Laguna Seca,2022,11970,55,218
-Satyrus actaea,Loma de Papeles Alto,2012,35795,174,206
-Satyrus actaea,Loma de Papeles Alto,2013,144263,638,226
-Satyrus actaea,Loma de Papeles Alto,2014,60447,277,218
-Satyrus actaea,Loma de Papeles Alto,2016,50745,232,219
-Satyrus actaea,Loma de Papeles Alto,2017,46613,222,210
-Satyrus actaea,Loma de Papeles Alto,2018,23022,96,240
-Satyrus actaea,Loma de Papeles Alto,2019,13335,62,215
-Satyrus actaea,Loma de Papeles Alto,2020,26011,118,220
-Satyrus actaea,Loma de Papeles Alto,2021,16996,78,218
-Satyrus actaea,Loma de Papeles Alto,2022,16440,80,206
-Satyrus actaea,Loma de Papeles Bajo,2012,13425,65,207
-Satyrus actaea,Loma de Papeles Bajo,2013,19045,84,227
-Satyrus actaea,Loma de Papeles Bajo,2014,5829,27,216
-Satyrus actaea,Loma de Papeles Bajo,2015,4428,21,211
-Satyrus actaea,Loma de Papeles Bajo,2016,10195,46,222
-Satyrus actaea,Loma de Papeles Bajo,2017,10345,51,203
-Satyrus actaea,Loma de Papeles Bajo,2021,4071,18,226
-Satyrus actaea,Loma de Papeles Bajo,2022,10270,49,210
-Satyrus actaea,Matas Verdes,2012,4478,21,213
-Satyrus actaea,Matas Verdes,2013,6237,27,231
-Satyrus actaea,Matas Verdes,2014,5390,24,225
-Satyrus actaea,Matas Verdes,2016,6579,29,227
-Satyrus actaea,Matas Verdes,2017,2075,10,208
-Satyrus actaea,Matas Verdes,2021,1190,5,238
-Satyrus actaea,Matas Verdes,2022,1723,8,215
-Satyrus actaea,Praillos,2013,1770,8,221
-Satyrus actaea,Praillos,2014,1735,8,217
-Satyrus actaea,Praillos,2019,614,3,205
-Satyrus actaea,Praillos,2021,902,4,226
-Satyrus actaea,Praillos,2022,1037,5,207
-Satyrus actaea,Robledal de Dilar,2012,3453,16,216
-Satyrus actaea,Robledal de Dilar,2013,5680,24,237
-Satyrus actaea,Robledal de Dilar,2014,4230,19,223
-Satyrus actaea,Robledal de Dilar,2015,5875,27,218
-Satyrus actaea,Robledal de Dilar,2016,5740,25,230
-Satyrus actaea,Robledal de Dilar,2021,1694,7,242
-Satyrus actaea,Robledal de Dilar,2022,7742,37,209
-Satyrus actaea,Sabinas,2013,4202,18,233
-Satyrus actaea,Sabinas,2014,5710,26,220
-Satyrus actaea,Sabinas,2019,2875,14,205
-Satyrus actaea,Sabinas,2020,2373,11,216
-Satyrus actaea,Sabinas,2021,4389,20,219
-Satyrus actaea,Sabinas,2022,6775,32,212
-Thymelicus sylvestris,Durcal,2014,7561,40,189
-Thymelicus sylvestris,Durcal,2015,4119,21,196
-Thymelicus sylvestris,Durcal,2017,12241,59,207
-Thymelicus sylvestris,Durcal,2018,12065,58,208
-Thymelicus sylvestris,Durcal,2019,19149,98,195
-Thymelicus sylvestris,Durcal,2020,15332,78,197
-Thymelicus sylvestris,Durcal,2021,19339,100,193
-Thymelicus sylvestris,Durcal,2022,4360,24,182
-Thymelicus sylvestris,Purche,2014,47886,289,166
-Thymelicus sylvestris,Purche,2015,40692,245,166
-Thymelicus sylvestris,Purche,2016,11995,67,179
-Thymelicus sylvestris,Purche,2019,16086,93,173
-Thymelicus sylvestris,Purche,2021,16467,98,168
-Zerynthia rumina,Pitres,2014,4876,46,106
-Zerynthia rumina,Pitres,2015,1545,14,110
-Zerynthia rumina,Pitres,2016,1264,13,97
-Zerynthia rumina,Pitres,2017,2083,22,95
-Zerynthia rumina,Pitres,2018,2188,17,129
-Zerynthia rumina,Pitres,2019,1066,13,82
-Zerynthia rumina,Pitres,2021,1387,13,107
-Zerynthia rumina,Pitres,2022,2452,20,123
+species,site,site_id,year,sum_doy_bichos,sum_conteos,weigth_mean_date
+Anthocharis euphenoides,Durcal,45,2017,2226,14,159
+Anthocharis euphenoides,Durcal,45,2019,9442,68,139
+Anthocharis euphenoides,Durcal,45,2020,4580,27,170
+Anthocharis euphenoides,Durcal,45,2021,8433,49,172
+Anthocharis euphenoides,Durcal,45,2022,3848,26,148
+Anthocharis euphenoides,Pitres,48,2015,1704,13,131
+Anthocharis euphenoides,Pitres,48,2016,1284,11,117
+Anthocharis euphenoides,Pitres,48,2017,1453,13,112
+Anthocharis euphenoides,Pitres,48,2018,1552,11,141
+Anthocharis euphenoides,Pitres,48,2019,902,8,113
+Anthocharis euphenoides,Pitres,48,2021,708,6,118
+Anthocharis euphenoides,Robledal de Dilar,23,2013,1326,9,147
+Anthocharis euphenoides,Robledal de Dilar,23,2016,460,3,153
+Anthocharis euphenoides,Robledal de Dilar,23,2017,1444,11,131
+Anthocharis euphenoides,Robledal de Dilar,23,2019,1151,8,144
+Anthocharis euphenoides,Robledal de Dilar,23,2021,983,7,140
+Aporia crataegi,Durcal,45,2014,14715,83,177
+Aporia crataegi,Durcal,45,2015,15781,91,173
+Aporia crataegi,Durcal,45,2017,4316,25,173
+Aporia crataegi,Durcal,45,2018,11295,59,191
+Aporia crataegi,Durcal,45,2019,11184,62,180
+Aporia crataegi,Durcal,45,2021,2228,12,186
+Aporia crataegi,Durcal,45,2022,3000,17,176
+Aporia crataegi,Matas Verdes,21,2012,34446,195,177
+Aporia crataegi,Matas Verdes,21,2013,16545,88,188
+Aporia crataegi,Matas Verdes,21,2014,22269,129,173
+Aporia crataegi,Matas Verdes,21,2016,4351,24,181
+Aporia crataegi,Matas Verdes,21,2017,6732,42,160
+Aporia crataegi,Matas Verdes,21,2019,3215,19,169
+Aporia crataegi,Purche,20,2012,50850,309,165
+Aporia crataegi,Purche,20,2013,56605,331,171
+Aporia crataegi,Purche,20,2014,48002,309,155
+Aporia crataegi,Purche,20,2015,23045,147,157
+Aporia crataegi,Purche,20,2016,9662,57,170
+Aporia crataegi,Purche,20,2019,8952,54,166
+Aporia crataegi,Purche,20,2020,8628,53,163
+Aporia crataegi,Purche,20,2021,21838,134,163
+Aporia crataegi,Robledal de Dilar,23,2012,22403,132,170
+Aporia crataegi,Robledal de Dilar,23,2013,11474,64,179
+Aporia crataegi,Robledal de Dilar,23,2014,21480,127,169
+Aporia crataegi,Robledal de Dilar,23,2015,8904,54,165
+Aporia crataegi,Robledal de Dilar,23,2017,14557,92,158
+Aporia crataegi,Robledal de Dilar,23,2019,4862,29,168
+Aporia crataegi,Robledal de Dilar,23,2021,3301,20,165
+Argynnis pandora,Pitres,48,2014,2615,11,238
+Argynnis pandora,Pitres,48,2015,2412,11,219
+Argynnis pandora,Pitres,48,2016,1838,8,230
+Argynnis pandora,Pitres,48,2017,7574,34,223
+Argynnis pandora,Pitres,48,2018,7662,33,232
+Argynnis pandora,Pitres,48,2019,1518,7,217
+Argynnis pandora,Pitres,48,2022,3318,15,221
+Aricia montensis,Robledal de Dilar,23,2014,13523,63,215
+Aricia montensis,Robledal de Dilar,23,2016,26445,124,213
+Aricia montensis,Robledal de Dilar,23,2017,5701,26,219
+Aricia montensis,Robledal de Dilar,23,2019,5312,26,204
+Aricia montensis,Robledal de Dilar,23,2020,15323,72,213
+Aricia montensis,Robledal de Dilar,23,2021,37107,170,218
+Aricia montensis,Robledal de Dilar,23,2022,8859,40,221
+Brintesia circe,Catifas,34,2013,1799,9,200
+Brintesia circe,Catifas,34,2014,971,5,194
+Brintesia circe,Catifas,34,2015,422,2,211
+Brintesia circe,Catifas,34,2016,1267,6,211
+Brintesia circe,Catifas,34,2017,747,4,187
+Brintesia circe,Catifas,34,2019,418,2,209
+Brintesia circe,Catifas,34,2020,927,4,232
+Brintesia circe,Catifas,34,2021,2716,14,194
+Brintesia circe,Catifas,34,2022,639,3,213
+Brintesia circe,Durcal,45,2014,41633,200,208
+Brintesia circe,Durcal,45,2015,22289,111,201
+Brintesia circe,Durcal,45,2016,83255,412,202
+Brintesia circe,Durcal,45,2017,34597,171,202
+Brintesia circe,Durcal,45,2018,55171,253,218
+Brintesia circe,Durcal,45,2019,39633,193,205
+Brintesia circe,Durcal,45,2020,14844,71,209
+Brintesia circe,Durcal,45,2021,30997,146,212
+Brintesia circe,Durcal,45,2022,38156,188,203
+Brintesia circe,Pitres,48,2014,4495,23,195
+Brintesia circe,Pitres,48,2015,3256,17,192
+Brintesia circe,Pitres,48,2016,2158,10,216
+Brintesia circe,Pitres,48,2018,3183,14,227
+Brintesia circe,Pitres,48,2019,1044,6,174
+Brintesia circe,Pitres,48,2020,2004,9,223
+Brintesia circe,Pitres,48,2021,3857,19,203
+Brintesia circe,Pitres,48,2022,3871,18,215
+Brintesia circe,Purche,20,2013,5907,27,219
+Brintesia circe,Purche,20,2014,5683,27,210
+Brintesia circe,Purche,20,2015,1491,7,213
+Brintesia circe,Purche,20,2016,971,5,194
+Brintesia circe,Purche,20,2019,3343,18,186
+Brintesia circe,Purche,20,2020,2069,11,188
+Brintesia circe,Purche,20,2021,1550,8,194
+Brintesia circe,Robledal de Dilar,23,2013,7036,33,213
+Brintesia circe,Robledal de Dilar,23,2014,9786,49,200
+Brintesia circe,Robledal de Dilar,23,2015,3876,19,204
+Brintesia circe,Robledal de Dilar,23,2016,5328,23,232
+Brintesia circe,Robledal de Dilar,23,2017,2765,14,198
+Brintesia circe,Robledal de Dilar,23,2021,3398,14,243
+Brintesia circe,Robledal de Dilar,23,2022,3489,16,218
+Chazara briseis,Loma de Papeles Bajo,18,2012,847,4,212
+Chazara briseis,Loma de Papeles Bajo,18,2013,4948,22,225
+Chazara briseis,Loma de Papeles Bajo,18,2014,2407,11,219
+Chazara briseis,Loma de Papeles Bajo,18,2016,1337,6,223
+Chazara briseis,Loma de Papeles Bajo,18,2022,2640,13,203
+Chazara briseis,Purche,20,2012,15594,79,197
+Chazara briseis,Purche,20,2013,30305,131,231
+Chazara briseis,Purche,20,2014,20894,101,207
+Chazara briseis,Purche,20,2015,11127,52,214
+Chazara briseis,Purche,20,2016,17308,75,231
+Chazara briseis,Purche,20,2017,11718,53,221
+Chazara briseis,Purche,20,2020,4718,21,225
+Chazara briseis,Purche,20,2021,2345,11,213
+Coenonympha dorus,Purche,20,2012,13066,67,195
+Coenonympha dorus,Purche,20,2013,3199,16,200
+Coenonympha dorus,Purche,20,2015,6934,35,198
+Coenonympha dorus,Purche,20,2016,12556,60,209
+Coenonympha dorus,Purche,20,2017,6167,31,199
+Coenonympha dorus,Purche,20,2020,887,4,222
+Coenonympha dorus,Purche,20,2021,7017,34,206
+Erebia hispania,Borreguiles San Juan,16,2012,5628,28,201
+Erebia hispania,Borreguiles San Juan,16,2013,3387,15,226
+Erebia hispania,Borreguiles San Juan,16,2014,8555,40,214
+Erebia hispania,Borreguiles San Juan,16,2017,8176,43,190
+Erebia hispania,Borreguiles San Juan,16,2018,9762,46,212
+Erebia hispania,Borreguiles San Juan,16,2019,14231,75,190
+Erebia hispania,Borreguiles San Juan,16,2021,15872,82,194
+Erebia hispania,Borreguiles San Juan,16,2022,23296,119,196
+Euphydryas aurinia,Durcal,45,2014,10010,56,179
+Euphydryas aurinia,Durcal,45,2015,11495,68,169
+Euphydryas aurinia,Durcal,45,2017,784,4,196
+Euphydryas aurinia,Durcal,45,2018,1217,6,203
+Euphydryas aurinia,Durcal,45,2019,2405,13,185
+Euphydryas aurinia,Durcal,45,2020,3366,19,177
+Euphydryas aurinia,Durcal,45,2021,3282,18,182
+Euphydryas aurinia,Matas Verdes,21,2012,100452,566,177
+Euphydryas aurinia,Matas Verdes,21,2013,78348,417,188
+Euphydryas aurinia,Matas Verdes,21,2014,92063,525,175
+Euphydryas aurinia,Matas Verdes,21,2015,26931,156,173
+Euphydryas aurinia,Matas Verdes,21,2016,7177,41,175
+Euphydryas aurinia,Matas Verdes,21,2017,13513,83,163
+Euphydryas aurinia,Matas Verdes,21,2019,4212,24,176
+Euphydryas aurinia,Matas Verdes,21,2020,4997,28,178
+Euphydryas aurinia,Matas Verdes,21,2021,5259,30,175
+Euphydryas aurinia,Matas Verdes,21,2022,9605,57,169
+Euphydryas aurinia,Robledal de Dilar,23,2012,76325,446,171
+Euphydryas aurinia,Robledal de Dilar,23,2013,63276,352,180
+Euphydryas aurinia,Robledal de Dilar,23,2014,105377,609,173
+Euphydryas aurinia,Robledal de Dilar,23,2015,20958,125,168
+Euphydryas aurinia,Robledal de Dilar,23,2016,11806,66,179
+Euphydryas aurinia,Robledal de Dilar,23,2017,29640,184,161
+Euphydryas aurinia,Robledal de Dilar,23,2019,17656,104,170
+Euphydryas aurinia,Robledal de Dilar,23,2020,10960,63,174
+Euphydryas aurinia,Robledal de Dilar,23,2021,9601,56,171
+Euphydryas aurinia,Robledal de Dilar,23,2022,27778,165,168
+Fabriciana niobe,Campos de Otero,24,2013,7900,40,198
+Fabriciana niobe,Campos de Otero,24,2016,3529,18,196
+Fabriciana niobe,Campos de Otero,24,2017,2351,13,181
+Fabriciana niobe,Campos de Otero,24,2018,7616,37,206
+Fabriciana niobe,Campos de Otero,24,2019,1666,9,185
+Fabriciana niobe,Campos de Otero,24,2021,4722,25,189
+Fabriciana niobe,Campos de Otero,24,2022,1681,9,187
+Fabriciana niobe,Matas Verdes,21,2012,3594,19,189
+Fabriciana niobe,Matas Verdes,21,2013,6725,34,198
+Fabriciana niobe,Matas Verdes,21,2014,1360,7,194
+Fabriciana niobe,Matas Verdes,21,2017,724,4,181
+Fabriciana niobe,Matas Verdes,21,2021,3432,17,202
+Fabriciana niobe,Praillos,35,2017,179,1,179
+Fabriciana niobe,Praillos,35,2019,204,1,204
+Fabriciana niobe,Praillos,35,2022,189,1,189
+Fabriciana niobe,Robledal de Dilar,23,2013,5152,27,191
+Fabriciana niobe,Robledal de Dilar,23,2014,1428,8,178
+Fabriciana niobe,Robledal de Dilar,23,2017,1468,9,163
+Fabriciana niobe,Robledal de Dilar,23,2021,3746,20,187
+Fabriciana niobe,Robledal de Dilar,23,2022,1821,10,182
+Hipparchia fidia,Matas Verdes,21,2013,5240,22,238
+Hipparchia fidia,Matas Verdes,21,2016,5125,22,233
+Hipparchia fidia,Matas Verdes,21,2017,2047,9,227
+Hipparchia fidia,Matas Verdes,21,2019,2328,10,233
+Hipparchia fidia,Matas Verdes,21,2021,3618,15,241
+Hipparchia fidia,Pitres,48,2017,1120,5,224
+Hipparchia fidia,Pitres,48,2018,1468,6,245
+Hipparchia fidia,Pitres,48,2020,899,4,225
+Hipparchia fidia,Pitres,48,2021,1911,8,239
+Hipparchia fidia,Pitres,48,2022,1350,6,225
+Hipparchia fidia,Robledal de Dilar,23,2013,7677,33,233
+Hipparchia fidia,Robledal de Dilar,23,2016,2075,9,231
+Hipparchia fidia,Robledal de Dilar,23,2017,5145,23,224
+Hipparchia fidia,Robledal de Dilar,23,2019,1825,8,228
+Hipparchia fidia,Robledal de Dilar,23,2020,4234,18,235
+Hipparchia fidia,Robledal de Dilar,23,2021,7571,32,237
+Hipparchia fidia,Robledal de Dilar,23,2022,2769,12,231
+Hipparchia hermione,Loma de Papeles Bajo,18,2012,2426,12,202
+Hipparchia hermione,Loma de Papeles Bajo,18,2013,2779,13,214
+Hipparchia hermione,Loma de Papeles Bajo,18,2014,2000,10,200
+Hipparchia hermione,Loma de Papeles Bajo,18,2019,2751,15,183
+Hipparchia hermione,Loma de Papeles Bajo,18,2020,2716,13,209
+Hipparchia hermione,Loma de Papeles Bajo,18,2021,1165,6,194
+Hipparchia hermione,Matas Verdes,21,2012,2993,15,200
+Hipparchia hermione,Matas Verdes,21,2013,1807,8,226
+Hipparchia hermione,Matas Verdes,21,2014,1065,5,213
+Hipparchia hermione,Matas Verdes,21,2016,1022,5,204
+Hipparchia hermione,Matas Verdes,21,2017,1489,7,213
+Hipparchia hermione,Matas Verdes,21,2019,2372,12,198
+Hipparchia hermione,Matas Verdes,21,2020,7292,35,208
+Hipparchia hermione,Matas Verdes,21,2021,5132,25,205
+Hipparchia hermione,Matas Verdes,21,2022,4503,22,205
+Hipparchia hermione,Robledal de Dilar,23,2012,9723,47,207
+Hipparchia hermione,Robledal de Dilar,23,2013,8547,37,231
+Hipparchia hermione,Robledal de Dilar,23,2014,9036,41,220
+Hipparchia hermione,Robledal de Dilar,23,2015,6251,29,216
+Hipparchia hermione,Robledal de Dilar,23,2016,6925,34,204
+Hipparchia hermione,Robledal de Dilar,23,2017,12900,59,219
+Hipparchia hermione,Robledal de Dilar,23,2019,11308,55,206
+Hipparchia hermione,Robledal de Dilar,23,2020,5670,27,210
+Hipparchia hermione,Robledal de Dilar,23,2021,9968,47,212
+Hipparchia hermione,Robledal de Dilar,23,2022,4089,19,215
+Hipparchia semele,Durcal,45,2014,8459,38,223
+Hipparchia semele,Durcal,45,2015,5043,24,210
+Hipparchia semele,Durcal,45,2016,3886,19,205
+Hipparchia semele,Durcal,45,2017,10834,55,197
+Hipparchia semele,Durcal,45,2018,10048,47,214
+Hipparchia semele,Durcal,45,2019,5499,28,196
+Hipparchia semele,Durcal,45,2020,9468,49,193
+Hipparchia semele,Durcal,45,2021,19931,103,194
+Hipparchia semele,Durcal,45,2022,7297,37,197
+Hipparchia semele,Purche,20,2012,3664,20,183
+Hipparchia semele,Purche,20,2013,11047,44,251
+Hipparchia semele,Purche,20,2014,4555,21,217
+Hipparchia semele,Purche,20,2015,154,1,154
+Hipparchia semele,Purche,20,2017,3317,14,237
+Hipparchia semele,Purche,20,2019,2040,12,170
+Hipparchia semele,Purche,20,2020,162,1,162
+Hipparchia semele,Purche,20,2021,2644,14,189
+Hipparchia semele,Robledal de Dilar,23,2012,884,4,221
+Hipparchia semele,Robledal de Dilar,23,2013,178,1,178
+Hipparchia semele,Robledal de Dilar,23,2014,1624,7,232
+Hipparchia semele,Robledal de Dilar,23,2015,436,2,218
+Hipparchia semele,Robledal de Dilar,23,2017,1304,6,217
+Hipparchia semele,Robledal de Dilar,23,2020,192,1,192
+Hipparchia semele,Robledal de Dilar,23,2021,996,4,249
+Hipparchia semele,Robledal de Dilar,23,2022,2073,9,230
+Hipparchia statilinus,Catifas,34,2013,4455,18,248
+Hipparchia statilinus,Catifas,34,2016,1395,6,232
+Hipparchia statilinus,Catifas,34,2019,921,4,230
+Hipparchia statilinus,Catifas,34,2020,2067,9,230
+Hipparchia statilinus,Catifas,34,2021,2727,12,227
+Hipparchia statilinus,Durcal,45,2015,1368,6,228
+Hipparchia statilinus,Durcal,45,2016,7215,33,219
+Hipparchia statilinus,Durcal,45,2017,11031,54,204
+Hipparchia statilinus,Durcal,45,2018,12800,59,217
+Hipparchia statilinus,Durcal,45,2019,9794,47,208
+Hipparchia statilinus,Durcal,45,2020,5794,28,207
+Hipparchia statilinus,Durcal,45,2021,11432,56,204
+Hipparchia statilinus,Matas Verdes,21,2013,1145,5,229
+Hipparchia statilinus,Matas Verdes,21,2016,6312,27,234
+Hipparchia statilinus,Matas Verdes,21,2017,1606,7,229
+Hipparchia statilinus,Matas Verdes,21,2019,2506,11,228
+Hipparchia statilinus,Matas Verdes,21,2021,3118,13,240
+Hipparchia statilinus,Purche,20,2013,48786,203,240
+Hipparchia statilinus,Purche,20,2014,13764,58,237
+Hipparchia statilinus,Purche,20,2015,7297,33,221
+Hipparchia statilinus,Purche,20,2016,11530,48,240
+Hipparchia statilinus,Purche,20,2017,9302,41,227
+Hipparchia statilinus,Purche,20,2020,13150,57,231
+Hipparchia statilinus,Purche,20,2021,10871,48,226
+Hipparchia statilinus,Robledal de Dilar,23,2016,4243,18,236
+Hipparchia statilinus,Robledal de Dilar,23,2017,5913,26,227
+Hipparchia statilinus,Robledal de Dilar,23,2019,3487,15,232
+Hipparchia statilinus,Robledal de Dilar,23,2021,10962,47,233
+Hipparchia statilinus,Robledal de Dilar,23,2022,11084,48,231
+Hyponephele,Borreguiles San Juan,16,2012,4774,23,208
+Hyponephele,Borreguiles San Juan,16,2013,3554,15,237
+Hyponephele,Borreguiles San Juan,16,2014,3103,14,222
+Hyponephele,Borreguiles San Juan,16,2015,12772,63,203
+Hyponephele,Borreguiles San Juan,16,2017,1573,8,197
+Hyponephele,Borreguiles San Juan,16,2019,1920,9,213
+Hyponephele,Campos de Otero,24,2012,13672,66,207
+Hyponephele,Campos de Otero,24,2013,28892,133,217
+Hyponephele,Campos de Otero,24,2014,18448,86,215
+Hyponephele,Campos de Otero,24,2015,24348,118,206
+Hyponephele,Campos de Otero,24,2016,32824,153,215
+Hyponephele,Campos de Otero,24,2017,26805,131,205
+Hyponephele,Campos de Otero,24,2018,12958,59,220
+Hyponephele,Campos de Otero,24,2019,19839,98,202
+Hyponephele,Campos de Otero,24,2020,13629,65,210
+Hyponephele,Campos de Otero,24,2021,17889,85,210
+Hyponephele,Campos de Otero,24,2022,14253,70,204
+Hyponephele,Catifas,34,2013,3799,18,211
+Hyponephele,Catifas,34,2016,2590,13,199
+Hyponephele,Catifas,34,2017,2697,13,207
+Hyponephele,Catifas,34,2019,4027,19,212
+Hyponephele,Catifas,34,2020,2595,13,200
+Hyponephele,Catifas,34,2021,1872,9,208
+Hyponephele,Catifas,34,2022,2679,13,206
+Hyponephele,Durcal,45,2014,26268,124,212
+Hyponephele,Durcal,45,2015,19003,92,207
+Hyponephele,Durcal,45,2016,25599,126,203
+Hyponephele,Durcal,45,2017,32697,163,201
+Hyponephele,Durcal,45,2019,29167,139,210
+Hyponephele,Durcal,45,2020,14486,68,213
+Hyponephele,Durcal,45,2021,22551,110,205
+Hyponephele,Durcal,45,2022,89296,443,202
+Hyponephele,Loma de Papeles Bajo,18,2012,18149,92,197
+Hyponephele,Loma de Papeles Bajo,18,2013,23771,114,209
+Hyponephele,Loma de Papeles Bajo,18,2014,9783,47,208
+Hyponephele,Loma de Papeles Bajo,18,2016,5552,27,206
+Hyponephele,Loma de Papeles Bajo,18,2017,4134,21,197
+Hyponephele,Loma de Papeles Bajo,18,2019,4392,21,209
+Hyponephele,Loma de Papeles Bajo,18,2020,19777,97,204
+Hyponephele,Loma de Papeles Bajo,18,2021,10354,52,199
+Hyponephele,Loma de Papeles Bajo,18,2022,14086,73,193
+Hyponephele,Matas Verdes,21,2012,32945,161,205
+Hyponephele,Matas Verdes,21,2013,55676,261,213
+Hyponephele,Matas Verdes,21,2014,16558,81,204
+Hyponephele,Matas Verdes,21,2015,11270,54,209
+Hyponephele,Matas Verdes,21,2016,21895,105,209
+Hyponephele,Matas Verdes,21,2017,36917,188,196
+Hyponephele,Matas Verdes,21,2019,20106,99,203
+Hyponephele,Matas Verdes,21,2020,23954,115,208
+Hyponephele,Matas Verdes,21,2021,29562,145,204
+Hyponephele,Matas Verdes,21,2022,63349,320,198
+Hyponephele,Praillos,35,2013,2909,14,208
+Hyponephele,Praillos,35,2016,1958,9,218
+Hyponephele,Praillos,35,2017,823,4,206
+Hyponephele,Praillos,35,2020,3063,15,204
+Hyponephele,Praillos,35,2022,803,4,201
+Hyponephele,Purche,20,2012,24990,134,186
+Hyponephele,Purche,20,2013,58693,296,198
+Hyponephele,Purche,20,2014,15838,69,230
+Hyponephele,Purche,20,2016,7807,32,244
+Hyponephele,Purche,20,2017,2578,13,198
+Hyponephele,Purche,20,2019,4268,22,194
+Hyponephele,Purche,20,2020,3235,14,231
+Hyponephele,Purche,20,2021,1895,8,237
+Hyponephele,Robledal de Dilar,23,2012,44373,221,201
+Hyponephele,Robledal de Dilar,23,2013,101146,471,215
+Hyponephele,Robledal de Dilar,23,2014,20757,104,200
+Hyponephele,Robledal de Dilar,23,2015,12258,59,208
+Hyponephele,Robledal de Dilar,23,2016,44664,214,209
+Hyponephele,Robledal de Dilar,23,2017,28056,142,198
+Hyponephele,Robledal de Dilar,23,2019,39226,192,204
+Hyponephele,Robledal de Dilar,23,2020,27016,129,209
+Hyponephele,Robledal de Dilar,23,2021,51332,255,201
+Hyponephele,Robledal de Dilar,23,2022,73309,361,203
+Lycaena alciphron,Campos de Otero,24,2013,2650,13,204
+Lycaena alciphron,Campos de Otero,24,2014,2158,11,196
+Lycaena alciphron,Campos de Otero,24,2015,4955,26,191
+Lycaena alciphron,Campos de Otero,24,2016,6823,35,195
+Lycaena alciphron,Campos de Otero,24,2017,7336,41,179
+Lycaena alciphron,Campos de Otero,24,2019,4805,25,192
+Lycaena alciphron,Campos de Otero,24,2021,2164,11,197
+Lycaena alciphron,Durcal,45,2014,1989,11,181
+Lycaena alciphron,Durcal,45,2015,1921,12,160
+Lycaena alciphron,Durcal,45,2016,9105,48,190
+Lycaena alciphron,Durcal,45,2017,5197,29,179
+Lycaena alciphron,Durcal,45,2019,7354,38,194
+Lycaena alciphron,Durcal,45,2021,8317,44,189
+Lycaena alciphron,Durcal,45,2022,2936,17,173
+Lycaena alciphron,Loma de Papeles Alto,17,2012,3546,19,187
+Lycaena alciphron,Loma de Papeles Alto,17,2013,4526,22,206
+Lycaena alciphron,Loma de Papeles Alto,17,2014,11096,57,195
+Lycaena alciphron,Loma de Papeles Alto,17,2015,3866,21,184
+Lycaena alciphron,Loma de Papeles Alto,17,2016,16046,86,187
+Lycaena alciphron,Loma de Papeles Alto,17,2017,5304,32,166
+Lycaena alciphron,Loma de Papeles Alto,17,2018,10594,53,200
+Lycaena alciphron,Loma de Papeles Alto,17,2019,6050,34,178
+Lycaena alciphron,Loma de Papeles Alto,17,2020,2890,17,170
+Lycaena alciphron,Loma de Papeles Alto,17,2021,14256,77,185
+Lycaena alciphron,Loma de Papeles Alto,17,2022,5758,31,186
+Lycaena alciphron,Loma de Papeles Bajo,18,2012,7685,41,187
+Lycaena alciphron,Loma de Papeles Bajo,18,2013,2979,15,199
+Lycaena alciphron,Loma de Papeles Bajo,18,2014,6583,36,183
+Lycaena alciphron,Loma de Papeles Bajo,18,2015,945,5,189
+Lycaena alciphron,Loma de Papeles Bajo,18,2016,4128,23,179
+Lycaena alciphron,Loma de Papeles Bajo,18,2018,4237,22,193
+Lycaena alciphron,Loma de Papeles Bajo,18,2019,4412,25,176
+Lycaena alciphron,Loma de Papeles Bajo,18,2020,8055,44,183
+Lycaena alciphron,Loma de Papeles Bajo,18,2021,4018,22,183
+Lycaena alciphron,Loma de Papeles Bajo,18,2022,1305,7,186
+Lycaena alciphron,Matas Verdes,21,2013,2708,14,193
+Lycaena alciphron,Matas Verdes,21,2014,4447,24,185
+Lycaena alciphron,Matas Verdes,21,2016,2619,14,187
+Lycaena alciphron,Matas Verdes,21,2017,815,5,163
+Lycaena alciphron,Matas Verdes,21,2019,1938,11,176
+Lycaena alciphron,Praillos,35,2013,4554,24,190
+Lycaena alciphron,Praillos,35,2014,3035,17,179
+Lycaena alciphron,Praillos,35,2019,1668,10,167
+Lycaena alciphron,Praillos,35,2021,1377,8,172
+Lycaena alciphron,Robledal de Dilar,23,2014,4082,22,186
+Lycaena alciphron,Robledal de Dilar,23,2015,2177,11,198
+Lycaena alciphron,Robledal de Dilar,23,2017,4960,29,171
+Lycaena alciphron,Robledal de Dilar,23,2019,3892,21,185
+Lycaena alciphron,Robledal de Dilar,23,2020,1162,6,194
+Lycaena alciphron,Robledal de Dilar,23,2021,1510,8,189
+Maniola jurtina,Pitres,48,2014,13058,74,176
+Maniola jurtina,Pitres,48,2015,7220,42,172
+Maniola jurtina,Pitres,48,2016,8761,49,179
+Maniola jurtina,Pitres,48,2017,9667,54,179
+Maniola jurtina,Pitres,48,2018,12735,64,199
+Maniola jurtina,Pitres,48,2019,9358,52,180
+Maniola jurtina,Pitres,48,2020,8930,47,190
+Maniola jurtina,Pitres,48,2021,14890,84,177
+Maniola jurtina,Pitres,48,2022,5655,28,202
+Maniola jurtina,Purche,20,2012,644,4,161
+Maniola jurtina,Purche,20,2013,17417,83,210
+Maniola jurtina,Purche,20,2014,36302,213,170
+Maniola jurtina,Purche,20,2015,15932,94,169
+Maniola jurtina,Purche,20,2016,11604,66,176
+Maniola jurtina,Purche,20,2017,4025,22,183
+Maniola jurtina,Purche,20,2019,12624,74,171
+Maniola jurtina,Purche,20,2020,17905,93,193
+Maniola jurtina,Purche,20,2021,36653,204,180
+Melanargia lachesis,Barranco de San Juan,33,2013,16749,84,199
+Melanargia lachesis,Barranco de San Juan,33,2014,11361,60,189
+Melanargia lachesis,Barranco de San Juan,33,2016,2550,13,196
+Melanargia lachesis,Barranco de San Juan,33,2017,1553,9,173
+Melanargia lachesis,Barranco de San Juan,33,2019,2899,15,193
+Melanargia lachesis,Barranco de San Juan,33,2020,3681,19,194
+Melanargia lachesis,Barranco de San Juan,33,2021,7166,37,194
+Melanargia lachesis,Barranco de San Juan,33,2022,4939,27,183
+Melanargia lachesis,Catifas,34,2013,13854,68,204
+Melanargia lachesis,Catifas,34,2014,8323,42,198
+Melanargia lachesis,Catifas,34,2015,2847,15,190
+Melanargia lachesis,Catifas,34,2016,6311,32,197
+Melanargia lachesis,Catifas,34,2017,11814,65,182
+Melanargia lachesis,Catifas,34,2019,7757,40,194
+Melanargia lachesis,Catifas,34,2021,9943,52,191
+Melanargia lachesis,Catifas,34,2022,13059,69,189
+Melanargia lachesis,Durcal,45,2014,54034,265,204
+Melanargia lachesis,Durcal,45,2015,40326,213,189
+Melanargia lachesis,Durcal,45,2016,60073,304,198
+Melanargia lachesis,Durcal,45,2017,68531,348,197
+Melanargia lachesis,Durcal,45,2018,60240,280,215
+Melanargia lachesis,Durcal,45,2019,47375,239,198
+Melanargia lachesis,Durcal,45,2020,58316,307,190
+Melanargia lachesis,Durcal,45,2021,57096,292,196
+Melanargia lachesis,Durcal,45,2022,142277,716,199
+Melanargia lachesis,Matas Verdes,21,2012,52661,266,198
+Melanargia lachesis,Matas Verdes,21,2013,71132,334,213
+Melanargia lachesis,Matas Verdes,21,2014,31738,157,202
+Melanargia lachesis,Matas Verdes,21,2016,12830,62,207
+Melanargia lachesis,Matas Verdes,21,2017,30316,157,193
+Melanargia lachesis,Matas Verdes,21,2019,19486,99,197
+Melanargia lachesis,Matas Verdes,21,2020,27214,134,203
+Melanargia lachesis,Matas Verdes,21,2021,70102,350,200
+Melanargia lachesis,Matas Verdes,21,2022,106335,540,197
+Melanargia lachesis,Pitres,48,2014,3218,17,189
+Melanargia lachesis,Pitres,48,2015,2576,14,184
+Melanargia lachesis,Pitres,48,2016,5003,26,192
+Melanargia lachesis,Pitres,48,2017,3159,18,176
+Melanargia lachesis,Pitres,48,2021,2718,14,194
+Melanargia lachesis,Pitres,48,2022,541,3,180
+Melanargia lachesis,Praillos,35,2013,5878,28,210
+Melanargia lachesis,Praillos,35,2014,4360,22,198
+Melanargia lachesis,Praillos,35,2016,3491,17,205
+Melanargia lachesis,Praillos,35,2017,3418,18,190
+Melanargia lachesis,Praillos,35,2020,5220,26,201
+Melanargia lachesis,Praillos,35,2021,6350,33,192
+Melanargia lachesis,Praillos,35,2022,4731,24,197
+Melanargia lachesis,Purche,20,2012,21136,110,192
+Melanargia lachesis,Purche,20,2013,40248,202,199
+Melanargia lachesis,Purche,20,2014,41451,222,187
+Melanargia lachesis,Purche,20,2015,11036,61,181
+Melanargia lachesis,Purche,20,2016,12296,62,198
+Melanargia lachesis,Purche,20,2017,4385,24,183
+Melanargia lachesis,Purche,20,2019,22454,121,186
+Melanargia lachesis,Purche,20,2020,3002,16,188
+Melanargia lachesis,Purche,20,2021,12397,65,191
+Melanargia lachesis,Robledal de Dilar,23,2012,57440,290,198
+Melanargia lachesis,Robledal de Dilar,23,2013,94831,451,210
+Melanargia lachesis,Robledal de Dilar,23,2014,72900,367,199
+Melanargia lachesis,Robledal de Dilar,23,2015,13454,69,195
+Melanargia lachesis,Robledal de Dilar,23,2016,15131,72,210
+Melanargia lachesis,Robledal de Dilar,23,2017,49914,264,189
+Melanargia lachesis,Robledal de Dilar,23,2019,46128,237,195
+Melanargia lachesis,Robledal de Dilar,23,2020,17967,87,207
+Melanargia lachesis,Robledal de Dilar,23,2021,100730,500,201
+Melanargia lachesis,Robledal de Dilar,23,2022,124905,632,198
+Melanargia occitanica,Loma de Papeles Alto,17,2012,9248,50,185
+Melanargia occitanica,Loma de Papeles Alto,17,2013,4484,22,204
+Melanargia occitanica,Loma de Papeles Alto,17,2014,4150,22,189
+Melanargia occitanica,Loma de Papeles Alto,17,2016,14166,81,175
+Melanargia occitanica,Loma de Papeles Alto,17,2018,9245,46,201
+Melanargia occitanica,Loma de Papeles Alto,17,2019,2636,16,165
+Melanargia occitanica,Loma de Papeles Alto,17,2020,4651,27,172
+Melanargia occitanica,Loma de Papeles Alto,17,2021,14221,77,185
+Melanargia occitanica,Loma de Papeles Bajo,18,2012,1613,9,179
+Melanargia occitanica,Loma de Papeles Bajo,18,2013,1741,9,193
+Melanargia occitanica,Loma de Papeles Bajo,18,2014,2801,16,175
+Melanargia occitanica,Loma de Papeles Bajo,18,2019,491,3,164
+Melanargia occitanica,Loma de Papeles Bajo,18,2021,2893,17,170
+Melitaea deione,Pitres,48,2014,25932,192,135
+Melitaea deione,Pitres,48,2015,42704,316,135
+Melitaea deione,Pitres,48,2016,11489,80,144
+Melitaea deione,Pitres,48,2017,13497,98,138
+Melitaea deione,Pitres,48,2018,21930,144,152
+Melitaea deione,Pitres,48,2019,22523,192,117
+Melitaea deione,Pitres,48,2020,11067,75,148
+Melitaea deione,Pitres,48,2021,24425,168,145
+Melitaea phoebe,Barranco de San Juan,33,2014,1385,9,154
+Melitaea phoebe,Barranco de San Juan,33,2015,990,7,141
+Melitaea phoebe,Barranco de San Juan,33,2019,938,7,134
+Melitaea phoebe,Barranco de San Juan,33,2020,1875,11,170
+Melitaea phoebe,Barranco de San Juan,33,2021,882,5,176
+Melitaea phoebe,Purche,20,2014,4123,29,142
+Melitaea phoebe,Purche,20,2015,4110,25,164
+Melitaea phoebe,Purche,20,2016,4772,28,170
+Melitaea phoebe,Purche,20,2019,3512,23,153
+Melitaea phoebe,Purche,20,2021,2729,16,171
+Melitaea phoebe,Robledal de Dilar,23,2014,1653,11,150
+Melitaea phoebe,Robledal de Dilar,23,2015,2316,16,145
+Melitaea phoebe,Robledal de Dilar,23,2016,1604,10,160
+Melitaea phoebe,Robledal de Dilar,23,2017,6166,40,154
+Melitaea phoebe,Robledal de Dilar,23,2019,1398,10,140
+Melitaea phoebe,Robledal de Dilar,23,2020,1525,10,152
+Melitaea phoebe,Robledal de Dilar,23,2021,1017,7,145
+Melitaea trivia,Loma de Papeles Alto,17,2014,3087,18,172
+Melitaea trivia,Loma de Papeles Alto,17,2015,3357,18,186
+Melitaea trivia,Loma de Papeles Alto,17,2016,8684,48,181
+Melitaea trivia,Loma de Papeles Alto,17,2020,4965,26,191
+Melitaea trivia,Loma de Papeles Alto,17,2021,5266,31,170
+Melitaea trivia,Praillos,35,2013,1520,9,169
+Melitaea trivia,Praillos,35,2014,3356,20,168
+Melitaea trivia,Praillos,35,2017,514,3,171
+Melitaea trivia,Praillos,35,2019,614,4,154
+Melitaea trivia,Praillos,35,2020,2373,13,183
+Parnassius apollo,Borreguiles San Juan,16,2012,1187,6,198
+Parnassius apollo,Borreguiles San Juan,16,2013,4000,19,211
+Parnassius apollo,Borreguiles San Juan,16,2014,10847,54,201
+Parnassius apollo,Borreguiles San Juan,16,2015,9042,46,197
+Parnassius apollo,Borreguiles San Juan,16,2017,13423,79,170
+Parnassius apollo,Borreguiles San Juan,16,2018,3972,19,209
+Parnassius apollo,Campos de Otero,24,2012,9497,50,190
+Parnassius apollo,Campos de Otero,24,2013,41809,205,204
+Parnassius apollo,Campos de Otero,24,2014,48613,253,192
+Parnassius apollo,Campos de Otero,24,2015,15973,85,188
+Parnassius apollo,Campos de Otero,24,2016,13450,69,195
+Parnassius apollo,Campos de Otero,24,2017,7515,44,171
+Parnassius apollo,Campos de Otero,24,2018,9746,47,207
+Parnassius apollo,Campos de Otero,24,2019,13177,73,181
+Parnassius apollo,Campos de Otero,24,2020,7994,42,190
+Parnassius apollo,Campos de Otero,24,2021,6642,36,184
+Parnassius apollo,Laguna Seca,14,2012,22047,120,184
+Parnassius apollo,Laguna Seca,14,2013,29301,149,197
+Parnassius apollo,Laguna Seca,14,2014,53709,293,183
+Parnassius apollo,Laguna Seca,14,2015,7481,42,178
+Parnassius apollo,Laguna Seca,14,2017,6943,41,169
+Parnassius apollo,Laguna Seca,14,2018,9492,48,198
+Parnassius apollo,Laguna Seca,14,2019,1945,11,177
+Parnassius apollo,Laguna Seca,14,2021,2965,16,185
+Parnassius apollo,Loma de Papeles Alto,17,2013,16656,83,201
+Parnassius apollo,Loma de Papeles Alto,17,2014,17719,95,187
+Parnassius apollo,Loma de Papeles Alto,17,2016,6312,34,186
+Parnassius apollo,Loma de Papeles Alto,17,2018,5017,25,201
+Parnassius apollo,Loma de Papeles Alto,17,2019,3730,21,178
+Parnassius apollo,Loma de Papeles Bajo,18,2013,19968,106,188
+Parnassius apollo,Loma de Papeles Bajo,18,2014,35212,203,173
+Parnassius apollo,Loma de Papeles Bajo,18,2015,16349,91,180
+Parnassius apollo,Loma de Papeles Bajo,18,2016,11440,63,182
+Parnassius apollo,Loma de Papeles Bajo,18,2017,13540,84,161
+Parnassius apollo,Loma de Papeles Bajo,18,2018,11999,62,194
+Parnassius apollo,Loma de Papeles Bajo,18,2020,6155,34,181
+Parnassius apollo,Loma de Papeles Bajo,18,2021,6838,38,180
+Plebejus argus,Catifas,34,2013,2284,12,190
+Plebejus argus,Catifas,34,2014,6872,38,181
+Plebejus argus,Catifas,34,2016,7439,39,191
+Plebejus argus,Catifas,34,2017,8742,51,171
+Plebejus argus,Catifas,34,2019,3161,18,176
+Plebejus argus,Catifas,34,2021,3001,16,188
+Plebejus argus,Durcal,45,2014,5526,27,205
+Plebejus argus,Durcal,45,2015,5660,29,195
+Plebejus argus,Durcal,45,2016,46952,242,194
+Plebejus argus,Durcal,45,2017,8450,43,197
+Plebejus argus,Durcal,45,2018,8800,43,205
+Plebejus argus,Durcal,45,2019,7323,36,203
+Plebejus argus,Durcal,45,2020,6444,32,201
+Plebejus argus,Durcal,45,2021,8509,43,198
+Plebejus argus,Matas Verdes,21,2013,38372,197,195
+Plebejus argus,Matas Verdes,21,2014,23580,128,184
+Plebejus argus,Matas Verdes,21,2015,10432,57,183
+Plebejus argus,Matas Verdes,21,2017,15665,85,184
+Plebejus argus,Matas Verdes,21,2019,17300,94,184
+Plebejus argus,Matas Verdes,21,2020,9764,51,191
+Plebejus argus,Matas Verdes,21,2021,7516,39,193
+Plebejus argus,Matas Verdes,21,2022,3790,21,180
+Plebejus argus,Praillos,35,2013,4342,23,189
+Plebejus argus,Praillos,35,2014,3336,18,185
+Plebejus argus,Praillos,35,2016,6487,34,191
+Plebejus argus,Praillos,35,2017,5525,31,178
+Plebejus argus,Praillos,35,2020,1516,8,190
+Plebejus argus,Praillos,35,2021,6120,33,185
+Plebejus argus,Robledal de Dilar,23,2013,8392,44,191
+Plebejus argus,Robledal de Dilar,23,2014,21715,119,182
+Plebejus argus,Robledal de Dilar,23,2016,11814,64,185
+Plebejus argus,Robledal de Dilar,23,2019,7098,39,182
+Plebejus argus,Robledal de Dilar,23,2020,10080,53,190
+Plebejus argus,Robledal de Dilar,23,2021,4008,21,191
+Plebejus idas,Durcal,45,2014,12758,68,188
+Plebejus idas,Durcal,45,2015,11155,60,186
+Plebejus idas,Durcal,45,2016,12940,67,193
+Plebejus idas,Durcal,45,2017,7156,39,183
+Plebejus idas,Durcal,45,2018,10694,54,198
+Plebejus idas,Durcal,45,2019,11974,62,193
+Plebejus idas,Durcal,45,2020,7968,43,185
+Plebejus idas,Durcal,45,2021,11118,59,188
+Plebejus idas,Durcal,45,2022,39615,211,188
+Plebejus idas,Laguna Seca,14,2012,68007,366,186
+Plebejus idas,Laguna Seca,14,2014,25008,131,191
+Plebejus idas,Laguna Seca,14,2016,24972,131,191
+Plebejus idas,Laguna Seca,14,2019,96282,528,182
+Plebejus idas,Laguna Seca,14,2020,33283,181,184
+Plebejus idas,Laguna Seca,14,2021,27013,145,186
+Polyommatus amandus,Durcal,45,2014,8747,49,179
+Polyommatus amandus,Durcal,45,2015,5056,28,181
+Polyommatus amandus,Durcal,45,2016,6037,33,183
+Polyommatus amandus,Durcal,45,2018,3767,20,188
+Polyommatus amandus,Durcal,45,2019,2269,12,189
+Polyommatus amandus,Durcal,45,2020,3162,18,176
+Polyommatus escheri,Borreguiles San Juan,16,2013,3735,18,208
+Polyommatus escheri,Borreguiles San Juan,16,2014,4817,26,185
+Polyommatus escheri,Borreguiles San Juan,16,2015,3933,21,187
+Polyommatus escheri,Borreguiles San Juan,16,2017,9484,57,166
+Polyommatus escheri,Borreguiles San Juan,16,2020,4887,26,188
+Polyommatus escheri,Borreguiles San Juan,16,2021,11875,62,192
+Polyommatus escheri,Durcal,45,2016,2734,13,210
+Polyommatus escheri,Durcal,45,2017,1140,6,190
+Polyommatus escheri,Durcal,45,2018,4382,22,199
+Polyommatus escheri,Durcal,45,2019,1587,8,198
+Polyommatus escheri,Durcal,45,2020,1610,8,201
+Polyommatus escheri,Durcal,45,2021,3695,19,194
+Polyommatus escheri,Durcal,45,2022,1965,10,196
+Polyommatus escheri,Matas Verdes,21,2013,9252,42,220
+Polyommatus escheri,Matas Verdes,21,2016,2064,11,188
+Polyommatus escheri,Matas Verdes,21,2017,1099,6,183
+Polyommatus escheri,Matas Verdes,21,2021,1574,8,197
+Polyommatus escheri,Matas Verdes,21,2022,1555,8,194
+Polyommatus golgus,Borreguiles San Juan,16,2012,990,5,198
+Polyommatus golgus,Borreguiles San Juan,16,2013,850,4,212
+Polyommatus golgus,Borreguiles San Juan,16,2014,1662,9,185
+Polyommatus golgus,Borreguiles San Juan,16,2016,1575,8,197
+Polyommatus golgus,Borreguiles San Juan,16,2017,5783,33,175
+Polyommatus golgus,Borreguiles San Juan,16,2018,1422,7,203
+Polyommatus golgus,Borreguiles San Juan,16,2019,5281,28,189
+Polyommatus golgus,Borreguiles San Juan,16,2020,2282,12,190
+Polyommatus golgus,Borreguiles San Juan,16,2021,2858,15,191
+Polyommatus golgus,Borreguiles San Juan,16,2022,12259,64,192
+Polyommatus nivescens,Durcal,45,2014,7613,41,186
+Polyommatus nivescens,Durcal,45,2015,4091,27,152
+Polyommatus nivescens,Durcal,45,2016,8111,42,193
+Polyommatus nivescens,Durcal,45,2017,3916,21,186
+Polyommatus nivescens,Durcal,45,2018,3495,17,206
+Polyommatus nivescens,Durcal,45,2019,4450,28,159
+Polyommatus nivescens,Durcal,45,2020,4384,26,169
+Polyommatus nivescens,Durcal,45,2021,4149,24,173
+Polyommatus nivescens,Durcal,45,2022,1997,13,154
+Pyronia bathseba,Barranco de San Juan,33,2013,4726,26,182
+Pyronia bathseba,Barranco de San Juan,33,2014,6064,35,173
+Pyronia bathseba,Barranco de San Juan,33,2017,3159,19,166
+Pyronia bathseba,Barranco de San Juan,33,2019,2331,14,166
+Pyronia bathseba,Barranco de San Juan,33,2020,1245,7,178
+Pyronia bathseba,Barranco de San Juan,33,2021,3789,21,180
+Pyronia bathseba,Barranco de San Juan,33,2022,3661,21,174
+Pyronia bathseba,Purche,20,2013,4361,24,182
+Pyronia bathseba,Purche,20,2014,5832,35,167
+Pyronia bathseba,Purche,20,2015,2764,18,154
+Pyronia bathseba,Purche,20,2016,2077,12,173
+Pyronia bathseba,Purche,20,2019,5315,30,177
+Pyronia bathseba,Purche,20,2020,1648,10,165
+Pyronia bathseba,Purche,20,2021,1078,6,180
+Pyronia cecilia,Turbera,49,2015,7721,40,193
+Pyronia cecilia,Turbera,49,2016,1811,10,181
+Pyronia cecilia,Turbera,49,2017,964,4,241
+Pyronia cecilia,Turbera,49,2019,2756,14,197
+Pyronia cecilia,Turbera,49,2020,501,3,167
+Pyronia cecilia,Turbera,49,2022,1245,7,178
+Pyronia tithonus,Durcal,45,2014,24760,111,223
+Pyronia tithonus,Durcal,45,2015,17618,80,220
+Pyronia tithonus,Durcal,45,2016,58717,269,218
+Pyronia tithonus,Durcal,45,2017,39528,178,222
+Pyronia tithonus,Durcal,45,2018,6379,29,220
+Pyronia tithonus,Durcal,45,2019,15797,73,216
+Pyronia tithonus,Durcal,45,2020,15082,69,219
+Pyronia tithonus,Durcal,45,2021,49071,241,204
+Pyronia tithonus,Pitres,48,2014,2246,10,225
+Pyronia tithonus,Pitres,48,2015,1434,7,205
+Pyronia tithonus,Pitres,48,2016,1722,8,215
+Pyronia tithonus,Pitres,48,2017,1069,5,214
+Pyronia tithonus,Pitres,48,2020,1615,7,231
+Pyronia tithonus,Pitres,48,2021,1291,6,215
+Satyrium esculi,Pitres,48,2014,2446,13,188
+Satyrium esculi,Pitres,48,2015,4664,25,187
+Satyrium esculi,Pitres,48,2016,4621,24,193
+Satyrium esculi,Pitres,48,2018,12492,63,198
+Satyrium esculi,Pitres,48,2021,1779,9,198
+Satyrus actaea,Borreguiles San Juan,16,2012,21267,101,211
+Satyrus actaea,Borreguiles San Juan,16,2013,17404,74,235
+Satyrus actaea,Borreguiles San Juan,16,2014,21224,94,226
+Satyrus actaea,Borreguiles San Juan,16,2016,8468,38,223
+Satyrus actaea,Borreguiles San Juan,16,2017,20539,97,212
+Satyrus actaea,Borreguiles San Juan,16,2018,8922,39,229
+Satyrus actaea,Borreguiles San Juan,16,2019,5969,28,213
+Satyrus actaea,Borreguiles San Juan,16,2021,6330,29,218
+Satyrus actaea,Borreguiles San Juan,16,2022,14740,70,211
+Satyrus actaea,Campos de Otero,24,2012,28972,133,218
+Satyrus actaea,Campos de Otero,24,2013,25297,110,230
+Satyrus actaea,Campos de Otero,24,2014,20006,88,227
+Satyrus actaea,Campos de Otero,24,2015,15093,71,213
+Satyrus actaea,Campos de Otero,24,2016,27977,124,226
+Satyrus actaea,Campos de Otero,24,2017,45558,216,211
+Satyrus actaea,Campos de Otero,24,2018,17028,73,233
+Satyrus actaea,Campos de Otero,24,2019,9442,44,215
+Satyrus actaea,Campos de Otero,24,2020,11963,55,218
+Satyrus actaea,Campos de Otero,24,2021,18570,84,221
+Satyrus actaea,Campos de Otero,24,2022,30160,141,214
+Satyrus actaea,Durcal,45,2014,103576,468,221
+Satyrus actaea,Durcal,45,2015,31138,147,212
+Satyrus actaea,Durcal,45,2016,86487,397,218
+Satyrus actaea,Durcal,45,2017,116982,547,214
+Satyrus actaea,Durcal,45,2018,84923,381,223
+Satyrus actaea,Durcal,45,2019,46094,217,212
+Satyrus actaea,Durcal,45,2020,40928,175,234
+Satyrus actaea,Durcal,45,2021,47970,206,233
+Satyrus actaea,Durcal,45,2022,34209,158,217
+Satyrus actaea,Laguna Seca,14,2012,53059,250,212
+Satyrus actaea,Laguna Seca,14,2013,136572,596,229
+Satyrus actaea,Laguna Seca,14,2014,32424,143,227
+Satyrus actaea,Laguna Seca,14,2015,32374,148,219
+Satyrus actaea,Laguna Seca,14,2016,35983,167,215
+Satyrus actaea,Laguna Seca,14,2017,39030,183,213
+Satyrus actaea,Laguna Seca,14,2018,15412,63,245
+Satyrus actaea,Laguna Seca,14,2019,37422,174,215
+Satyrus actaea,Laguna Seca,14,2020,17454,77,227
+Satyrus actaea,Laguna Seca,14,2021,28423,128,222
+Satyrus actaea,Laguna Seca,14,2022,11970,55,218
+Satyrus actaea,Loma de Papeles Alto,17,2012,35795,174,206
+Satyrus actaea,Loma de Papeles Alto,17,2013,144263,638,226
+Satyrus actaea,Loma de Papeles Alto,17,2014,60447,277,218
+Satyrus actaea,Loma de Papeles Alto,17,2016,50745,232,219
+Satyrus actaea,Loma de Papeles Alto,17,2017,46613,222,210
+Satyrus actaea,Loma de Papeles Alto,17,2018,23022,96,240
+Satyrus actaea,Loma de Papeles Alto,17,2019,13335,62,215
+Satyrus actaea,Loma de Papeles Alto,17,2020,26011,118,220
+Satyrus actaea,Loma de Papeles Alto,17,2021,16996,78,218
+Satyrus actaea,Loma de Papeles Alto,17,2022,16440,80,206
+Satyrus actaea,Loma de Papeles Bajo,18,2012,13425,65,207
+Satyrus actaea,Loma de Papeles Bajo,18,2013,19045,84,227
+Satyrus actaea,Loma de Papeles Bajo,18,2014,5829,27,216
+Satyrus actaea,Loma de Papeles Bajo,18,2015,4428,21,211
+Satyrus actaea,Loma de Papeles Bajo,18,2016,10195,46,222
+Satyrus actaea,Loma de Papeles Bajo,18,2017,10345,51,203
+Satyrus actaea,Loma de Papeles Bajo,18,2021,4071,18,226
+Satyrus actaea,Loma de Papeles Bajo,18,2022,10270,49,210
+Satyrus actaea,Matas Verdes,21,2012,4478,21,213
+Satyrus actaea,Matas Verdes,21,2013,6237,27,231
+Satyrus actaea,Matas Verdes,21,2014,5390,24,225
+Satyrus actaea,Matas Verdes,21,2016,6579,29,227
+Satyrus actaea,Matas Verdes,21,2017,2075,10,208
+Satyrus actaea,Matas Verdes,21,2021,1190,5,238
+Satyrus actaea,Matas Verdes,21,2022,1723,8,215
+Satyrus actaea,Praillos,35,2013,1770,8,221
+Satyrus actaea,Praillos,35,2014,1735,8,217
+Satyrus actaea,Praillos,35,2019,614,3,205
+Satyrus actaea,Praillos,35,2021,902,4,226
+Satyrus actaea,Praillos,35,2022,1037,5,207
+Satyrus actaea,Robledal de Dilar,23,2012,3453,16,216
+Satyrus actaea,Robledal de Dilar,23,2013,5680,24,237
+Satyrus actaea,Robledal de Dilar,23,2014,4230,19,223
+Satyrus actaea,Robledal de Dilar,23,2015,5875,27,218
+Satyrus actaea,Robledal de Dilar,23,2016,5740,25,230
+Satyrus actaea,Robledal de Dilar,23,2021,1694,7,242
+Satyrus actaea,Robledal de Dilar,23,2022,7742,37,209
+Satyrus actaea,Sabinas,36,2013,4202,18,233
+Satyrus actaea,Sabinas,36,2014,5710,26,220
+Satyrus actaea,Sabinas,36,2019,2875,14,205
+Satyrus actaea,Sabinas,36,2020,2373,11,216
+Satyrus actaea,Sabinas,36,2021,4389,20,219
+Satyrus actaea,Sabinas,36,2022,6775,32,212
+Thymelicus sylvestris,Durcal,45,2014,7561,40,189
+Thymelicus sylvestris,Durcal,45,2015,4119,21,196
+Thymelicus sylvestris,Durcal,45,2017,12241,59,207
+Thymelicus sylvestris,Durcal,45,2018,12065,58,208
+Thymelicus sylvestris,Durcal,45,2019,19149,98,195
+Thymelicus sylvestris,Durcal,45,2020,15332,78,197
+Thymelicus sylvestris,Durcal,45,2021,19339,100,193
+Thymelicus sylvestris,Durcal,45,2022,4360,24,182
+Thymelicus sylvestris,Purche,20,2014,47886,289,166
+Thymelicus sylvestris,Purche,20,2015,40692,245,166
+Thymelicus sylvestris,Purche,20,2016,11995,67,179
+Thymelicus sylvestris,Purche,20,2019,16086,93,173
+Thymelicus sylvestris,Purche,20,2021,16467,98,168
+Zerynthia rumina,Pitres,48,2014,4876,46,106
+Zerynthia rumina,Pitres,48,2015,1545,14,110
+Zerynthia rumina,Pitres,48,2016,1264,13,97
+Zerynthia rumina,Pitres,48,2017,2083,22,95
+Zerynthia rumina,Pitres,48,2018,2188,17,129
+Zerynthia rumina,Pitres,48,2019,1066,13,82
+Zerynthia rumina,Pitres,48,2021,1387,13,107
+Zerynthia rumina,Pitres,48,2022,2452,20,123

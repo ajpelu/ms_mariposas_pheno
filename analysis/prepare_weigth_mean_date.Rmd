@@ -39,8 +39,8 @@ df_raw |> DT::datatable()
 ```{r}
 # Agrupa por sitio, fecha, specie y suma todos los contactos de un transecto (los tramos)
 df <- df_raw |> 
-  dplyr::select(valid_date, site, species, ntotal, doy, year) |> 
-  group_by(species, valid_date, doy, site, year) |> 
+  dplyr::select(valid_date, id_site, site, species, ntotal, doy, year) |> 
+  group_by(species, valid_date, doy, id_site, site, year) |> 
   summarise(total_count = sum(ntotal))
 ```
 
@@ -59,12 +59,15 @@ df_aux |> DT::datatable()
 
 ```{r}
 df_pheno <- df_aux |> 
-  group_by(species, site, year) |> # agrupar por sitio, especie y año 
+  group_by(species, site, id_site, year) |> # agrupar por sitio, especie y año 
   summarise(sum_doy_bichos = sum(doy_x_bichos), # Σ(día juliano x mariposas que se contabilizan ese día)
             sum_conteos = sum(total_count)) |>  # total de mariposas de la especie x que se han contabilizado este año:
   ungroup() |> 
   rowwise() |> 
-  mutate(weigth_mean_date = round(sum_doy_bichos / sum_conteos, 0))
+  mutate(weigth_mean_date = round(sum_doy_bichos / sum_conteos, 0)) |> 
+  separate(id_site, into = c("m", "site_id")) |> 
+  dplyr::select(-m) |> 
+  mutate(site_id = as.numeric(site_id))
 
 df_pheno |> DT::datatable()
 
