@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree18350204fbe592bf17b93bb7620983a8bae078adtargetblank1835020a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree35006421ee0fcde9fae76ef4e1f93a9bf4956c68targetblank3500642a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/18350204fbe592bf17b93bb7620983a8bae078ad" target="_blank">1835020</a>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/35006421ee0fcde9fae76ef4e1f93a9bf4956c68" target="_blank">3500642</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree18350204fbe592bf17b93bb7620983a8bae078adtargetblank1835020a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomajpelumsmariposasphenotree35006421ee0fcde9fae76ef4e1f93a9bf4956c68targetblank3500642a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/18350204fbe592bf17b93bb7620983a8bae078ad" target="_blank">1835020</a>.
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/tree/35006421ee0fcde9fae76ef4e1f93a9bf4956c68" target="_blank">3500642</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,10 +561,9 @@ Ignored files:
     Ignored:    data/raw_data/.DS_Store
 
 Untracked files:
-    Untracked:  data/mk80transect.csv
-    Untracked:  data/raw_data/climate_transects/climate_transect_all_avg_since80.csv
-    Untracked:  output/climate/plot_sen_violin.png
-    Untracked:  output/climate/plot_tau_violin.png
+    Untracked:  data/mk2012transect.csv
+    Untracked:  output/climate/plot_sen_violin2012.png
+    Untracked:  output/climate/plot_tau_violin2012.png
 
 </code></pre>
 <p>
@@ -615,6 +614,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/35006421ee0fcde9fae76ef4e1f93a9bf4956c68/analysis/climate_trends.Rmd" target="_blank">3500642</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-29
+</td>
+<td>
+analysis since 2012
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/ab18a147e6e3181e961fcb6d3ee0e8f2d18138b8/docs/climate_trends.html" target="_blank">ab18a14</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/18350204fbe592bf17b93bb7620983a8bae078ad/analysis/climate_trends.Rmd" target="_blank">1835020</a>
 </td>
 <td>
@@ -638,7 +671,9 @@ add violin plots
 <h2>Introduction</h2>
 <pre class="r"><code>library(here)
 library(tidyverse)
-library(purrr)</code></pre>
+library(purrr)
+library(trend)
+library(Kendall)</code></pre>
 </div>
 <div id="steps-to-compute-the-mk-ss" class="section level2">
 <h2>Steps to compute the MK-Ss</h2>
@@ -683,6 +718,7 @@ df &lt;- raw |&gt;
   distinct() # remove dups 
 rm(raw)
 
+# Compute MK since 1980 
 start_time &lt;- Sys.time()
 result &lt;- df |&gt; 
   group_by(var, id_pixel, month) |&gt; 
@@ -706,8 +742,44 @@ elapsed_time &lt;- end_time - start_time
 mk80transect &lt;- result |&gt; 
   inner_join(unique_pixels)
 
-write_csv(mk80transect, &quot;data/mk80transect.csv&quot;)</code></pre>
+write_csv(mk80transect, &quot;data/mk80transect.csv&quot;)
+
+
+# Compute MK since 2012
+
+start_time &lt;- Sys.time()
+result2012 &lt;- df |&gt; filter(year &gt; 2011) |&gt; 
+  group_by(var, id_pixel, month) |&gt; 
+  summarise(
+    mk_results = list(MannKendall(value)),
+    sen_results = list(sens.slope(value))
+  ) |&gt;
+  mutate(
+    mk_tau = map_dbl(mk_results, ~ .x$tau),
+    mk_pvalue = map_dbl(mk_results, ~ .x$sl),
+    sen_estimate = map_dbl(sen_results, ~ .x$estimate),
+    sen_pvalue = map_dbl(sen_results, ~ .x$p.value)
+    ) |&gt;
+  dplyr::select(-mk_results, -sen_results)
+
+end_time &lt;- Sys.time()
+
+# Calculate the elapsed time
+elapsed_time &lt;- end_time - start_time
+
+mk2012 &lt;- result2012 |&gt; 
+  inner_join(unique_pixels)
+
+write_csv(mk, &quot;data/mk2012transect.csv&quot;)</code></pre>
 <pre class="r"><code>mk80transect &lt;- read_csv(&quot;data/mk80transect.csv&quot;) |&gt; 
+  mutate(var = case_when(
+    var == &quot;p&quot; ~ &quot;Rainfall&quot;, 
+    var == &quot;tmax&quot; ~ &quot;Maximum temperatures&quot;,
+    var == &quot;tmin&quot; ~ &quot;Minimum temperatures&quot;,
+    var == &quot;tmed&quot; ~ &quot;Mean temperatures&quot;
+  ))
+
+mk2012transect &lt;- read_csv(&quot;data/mk2012transect.csv&quot;) |&gt; 
   mutate(var = case_when(
     var == &quot;p&quot; ~ &quot;Rainfall&quot;, 
     var == &quot;tmax&quot; ~ &quot;Maximum temperatures&quot;,
@@ -715,8 +787,8 @@ write_csv(mk80transect, &quot;data/mk80transect.csv&quot;)</code></pre>
     var == &quot;tmed&quot; ~ &quot;Mean temperatures&quot;
   ))</code></pre>
 </div>
-<div id="violin-plots-of-the-trends" class="section level2">
-<h2>Violin plots of the trends</h2>
+<div id="violin-plots-of-the-trends-1980-2022" class="section level2">
+<h2>Violin plots of the trends (1980-2022)</h2>
 <div id="tau" class="section level3">
 <h3>Tau</h3>
 <pre class="r"><code>plot_tau &lt;- mk80transect |&gt; 
@@ -732,6 +804,43 @@ write_csv(mk80transect, &quot;data/mk80transect.csv&quot;)</code></pre>
 
 plot_tau</code></pre>
 <p><img src="figure/climate_trends.Rmd/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/ab18a147e6e3181e961fcb6d3ee0e8f2d18138b8/docs/figure/climate_trends.Rmd/unnamed-chunk-4-1.png" target="_blank">ab18a14</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(plot_tau, 
        filename = &quot;output/climate/plot_tau_violin.png&quot;,
        height = 8, width = 5, 
@@ -752,8 +861,88 @@ plot_tau</code></pre>
 
 plot_sen</code></pre>
 <p><img src="figure/climate_trends.Rmd/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/ab18a147e6e3181e961fcb6d3ee0e8f2d18138b8/docs/figure/climate_trends.Rmd/unnamed-chunk-6-1.png" target="_blank">ab18a14</a>
+</td>
+<td>
+ajpelu
+</td>
+<td>
+2023-08-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(plot_sen, 
        filename = &quot;output/climate/plot_sen_violin.png&quot;,
+       height = 8, width = 5, 
+       device = &quot;png&quot;, dpi = 300)</code></pre>
+</div>
+</div>
+<div id="violin-plots-of-the-trends-2012-2022" class="section level2">
+<h2>Violin plots of the trends (2012-2022)</h2>
+<div id="tau-1" class="section level3">
+<h3>Tau</h3>
+<pre class="r"><code>plot_tau2012 &lt;- mk2012transect |&gt; 
+  ggplot(aes(x = month, y = mk_tau)) +
+  geom_violin() + 
+  stat_summary(fun = &quot;median&quot;, geom = &quot;point&quot;) + 
+  geom_hline(yintercept = 0, colour = &quot;red&quot;, linetype = &quot;dotted&quot;) + 
+  facet_wrap(~var, nrow = 4, scales = &quot;free_y&quot;) + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill=&quot;white&quot;)) +
+  ylab(expression(paste(tau, &quot; Mann-Kendall&quot;)))
+
+plot_tau2012</code></pre>
+<p><img src="figure/climate_trends.Rmd/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(plot_tau2012, 
+       filename = &quot;output/climate/plot_tau_violin2012.png&quot;,
+       height = 8, width = 5, 
+       device = &quot;png&quot;, dpi = 300)</code></pre>
+</div>
+<div id="sen-1" class="section level3">
+<h3>Sen</h3>
+<pre class="r"><code>plot_sen2012 &lt;- mk2012transect |&gt; 
+  ggplot(aes(x = month, y = sen_estimate)) +
+  geom_violin() + 
+  stat_summary(fun = &quot;median&quot;, geom = &quot;point&quot;) + 
+  geom_hline(yintercept = 0, colour = &quot;red&quot;, linetype = &quot;dotted&quot;) + 
+  facet_wrap(~var, nrow = 4, scales = &quot;free_y&quot;) + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill=&quot;white&quot;)) +
+  ylab(&quot;Sen slope&quot;)
+
+plot_sen2012</code></pre>
+<p><img src="figure/climate_trends.Rmd/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(plot_sen2012, 
+       filename = &quot;output/climate/plot_sen_violin2012.png&quot;,
        height = 8, width = 5, 
        device = &quot;png&quot;, dpi = 300)</code></pre>
 <br>
@@ -780,14 +969,15 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] lubridate_1.9.2 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.0    
- [5] purrr_1.0.1     readr_2.1.4     tidyr_1.3.0     tibble_3.1.8   
- [9] ggplot2_3.4.1   tidyverse_2.0.0 here_1.0.1      workflowr_1.7.0
+ [1] Kendall_2.2.1   trend_1.1.4     lubridate_1.9.2 forcats_1.0.0  
+ [5] stringr_1.5.0   dplyr_1.1.0     purrr_1.0.1     readr_2.1.4    
+ [9] tidyr_1.3.0     tibble_3.1.8    ggplot2_3.4.1   tidyverse_2.0.0
+[13] here_1.0.1      workflowr_1.7.0
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.10       getPass_0.2-2     ps_1.7.1          rprojroot_2.0.3  
  [5] digest_0.6.31     utf8_1.2.2        R6_2.5.1          evaluate_0.19    
- [9] httr_1.4.4        highr_0.10        pillar_1.8.1      rlang_1.1.0      
+ [9] highr_0.10        httr_1.4.4        pillar_1.8.1      rlang_1.1.0      
 [13] rstudioapi_0.14   whisker_0.4       callr_3.7.3       jquerylib_0.1.4  
 [17] rmarkdown_2.19    textshaping_0.3.6 labeling_0.4.2    bit_4.0.4        
 [21] munsell_0.5.0     compiler_4.2.3    httpuv_1.6.8      xfun_0.39        
@@ -797,10 +987,11 @@ loaded via a namespace (and not attached):
 [37] lifecycle_1.0.3   git2r_0.30.1      magrittr_2.0.3    scales_1.2.1     
 [41] cli_3.6.0         stringi_1.7.8     vroom_1.6.3       cachem_1.0.6     
 [45] farver_2.1.1      fs_1.6.2          promises_1.2.0.1  bslib_0.4.2      
-[49] ellipsis_0.3.2    ragg_1.2.5        generics_0.1.3    vctrs_0.6.0      
-[53] tools_4.2.3       bit64_4.0.5       glue_1.6.2        hms_1.1.2        
-[57] processx_3.7.0    parallel_4.2.3    fastmap_1.1.0     yaml_2.3.7       
-[61] timechange_0.1.1  colorspace_2.0-3  knitr_1.41        sass_0.4.5       </code></pre>
+[49] ragg_1.2.5        ellipsis_0.3.2    generics_0.1.3    vctrs_0.6.0      
+[53] boot_1.3-28.1     tools_4.2.3       bit64_4.0.5       glue_1.6.2       
+[57] hms_1.1.2         processx_3.7.0    parallel_4.2.3    fastmap_1.1.0    
+[61] yaml_2.3.7        timechange_0.1.1  colorspace_2.0-3  extraDistr_1.9.1 
+[65] knitr_1.41        sass_0.4.5       </code></pre>
 </div>
 </div>
 </div>
