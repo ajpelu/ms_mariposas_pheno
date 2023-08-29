@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Antonio J. Pérez-Luque  " />
 
 
-<title>Home</title>
+<title>Climate trends</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +30,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -231,6 +235,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -238,6 +305,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -281,7 +358,11 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">Climate trends</h1>
+<h4 class="author"><a href="https://github.com/ajpelu">Antonio J.
+Pérez-Luque</a>
+<a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></h4>
 
 </div>
 
@@ -314,7 +395,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 0
 </p>
@@ -351,6 +432,90 @@ class="panel-collapse collapse">
 <p>Great! Since the R Markdown file has been committed to the Git
 repository, you know the exact version of the code that produced these
 results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230601code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230601)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230601code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230601)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -417,10 +582,11 @@ have uncommitted changes.
 
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
-(<code>docs/index.html</code>) files. If you’ve configured a remote Git
-repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
-in the table below to view the files as they were in that past version.
+made to the R Markdown (<code>analysis/climate_trends.Rmd</code>) and
+HTML (<code>docs/climate_trends.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -449,7 +615,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/18350204fbe592bf17b93bb7620983a8bae078ad/analysis/index.Rmd" target="_blank">1835020</a>
+<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/18350204fbe592bf17b93bb7620983a8bae078ad/analysis/climate_trends.Rmd" target="_blank">1835020</a>
 </td>
 <td>
 ajpelu
@@ -461,312 +627,6 @@ ajpelu
 add violin plots
 </td>
 </tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/2869327dbac719994f21cac9ea934800ebd940f0/docs/index.html" target="_blank">2869327</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-08-18
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/2c2970115e0304c53aa1d9c86e2e72d1ec5b674a/analysis/index.Rmd" target="_blank">2c29701</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-08-18
-</td>
-<td>
-wflow_publish("analysis/index.Rmd")
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/3e17e9c89852680e52bdc7ddd1bb43931d8a2f3e/docs/index.html" target="_blank">3e17e9c</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-08-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/bf82a2412595c646c50ebf4b79376760526a5e11/analysis/index.Rmd" target="_blank">bf82a24</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-08-01
-</td>
-<td>
-add link to model selection
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/56906256af9cef5ecb8547d38371d110675eb12b/analysis/index.Rmd" target="_blank">5690625</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-08-01
-</td>
-<td>
-update plots
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/f15bc03c1190ed6163e67c9695e56250d850d873/docs/index.html" target="_blank">f15bc03</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-07-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/5898f794deba4e34f197ac74741d5727b8abe6d6/analysis/index.Rmd" target="_blank">5898f79</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-07-26
-</td>
-<td>
-add data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/0b868bcf1f9705004431d0ef24d3b48721f9ed57/docs/index.html" target="_blank">0b868bc</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-04
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/859df6a2b73ab98fe2fab4b9b07ba8ba4d249c62/analysis/index.Rmd" target="_blank">859df6a</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-04
-</td>
-<td>
-add climate
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/09ec390c6eeb74a2bd6ea009758683e46a826630/docs/index.html" target="_blank">09ec390</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-02
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/48abec01be67b92134ad3bbc4b762117778cb215/docs/index.html" target="_blank">48abec0</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-02
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/43706cb35b68c8d07e48888b8c5f8d713d41253c/analysis/index.Rmd" target="_blank">43706cb</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-02
-</td>
-<td>
-fix link
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/adafba7b0f94620ceca18196fc8627201aaa161f/docs/index.html" target="_blank">adafba7</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/b2cc4a23b6d20b144f56e40a05152f5b62d5a5a2/analysis/index.Rmd" target="_blank">b2cc4a2</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-add link
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/70507ccf311b3e3a3bdf582f6e9d037c8ddb3b8a/docs/index.html" target="_blank">70507cc</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/9d210ef89b522d75de13fa10dc7002dee588d574/analysis/index.Rmd" target="_blank">9d210ef</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-add link to index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/ajpelu/ms_mariposas_pheno/90c999161d89f11147f5f91cc04d60123a1b2480/docs/index.html" target="_blank">90c9991</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-init
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/ajpelu/ms_mariposas_pheno/blob/06fdb2af30979df8727dc24caa300c9b6ba7c623/analysis/index.Rmd" target="_blank">06fdb2a</a>
-</td>
-<td>
-ajpelu
-</td>
-<td>
-2023-06-01
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -774,42 +634,174 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<div id="prepare-data" class="section level1">
-<h1>Prepare Data</h1>
-<ul>
-<li><a href="prepare_climate.html">Climate data</a></li>
-<li><a href="prepare_transects_data.html">Transect data</a></li>
-<li><a href="prepare_peak.html">Peak doy (rbms)</a></li>
-<li><a href="prepare_weigth_mean_date.html">Peak doy (weigth mean
-date)</a></li>
-</ul>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>library(here)
+library(tidyverse)
+library(purrr)</code></pre>
 </div>
-<div id="analysis" class="section level1">
-<h1>Analysis</h1>
+<div id="steps-to-compute-the-mk-ss" class="section level2">
+<h2>Steps to compute the MK-Ss</h2>
 <ul>
-<li><a href="analysis_peak.html">Peak analysis</a></li>
-<li><a href="climate_sensibility.html">Climate sensibility</a><br />
-</li>
-<li><a href="model_selection.html">Selected models</a></li>
+<li>Read the transect data. For each monthly variable (<em>prec</em>,
+<em>tmin</em>, <em>tmed</em>, <em>tmax</em>) there is a temporal series
+for each of the pixels.</li>
+<li>Temporal series spanning from 1980 to 2022.</li>
+<li>Each transect has different number of pixels.</li>
+<li>A dictionary of pixels (<code>unique_pixels</code>, n = 1911) was
+created to easy the manipulation of data.</li>
+<li>For each pixel we would compute the Mann-Kendall trend and Sen slope
+statistics and their significance.</li>
+<li>Output data is stored at: <code>/data/mk80transect.csv</code></li>
 </ul>
+<pre class="r"><code>files &lt;- list.files(&quot;data/raw_data/climate_transects&quot;, pattern = &quot;transect.csv&quot;, full.names = TRUE)
+
+custom_f &lt;- function(x) { 
+  out &lt;- 
+    read_csv(x) |&gt; 
+    dplyr::select(-ID) |&gt; 
+    pivot_longer(-c(&quot;transectid&quot;,&quot;x&quot;, &quot;y&quot;)) |&gt; 
+    separate(name, into = c(&quot;var&quot;, &quot;year&quot;, &quot;month&quot;, &quot;cog&quot;)) |&gt; 
+    dplyr::select(-cog)
+  return(out)
+  }
+
+raw &lt;- files |&gt; 
+  map_df(~custom_f(.)) |&gt; 
+  mutate(var = recode(var, 
+                      &quot;tm2&quot; = &quot;tmin&quot;, 
+                      &quot;tm3&quot; = &quot;tmax&quot;))
+
+unique_pixels &lt;- raw |&gt; 
+  dplyr::select(transectid, x, y) |&gt; 
+  unique() |&gt; 
+  ungroup() |&gt; 
+  mutate(id_pixel = row_number())
+
+df &lt;- raw |&gt; 
+  inner_join(unique_pixels) |&gt; 
+  distinct() # remove dups 
+rm(raw)
+
+start_time &lt;- Sys.time()
+result &lt;- df |&gt; 
+  group_by(var, id_pixel, month) |&gt; 
+  summarise(
+    mk_results = list(MannKendall(value)),
+    sen_results = list(sens.slope(value))
+  ) |&gt;
+  mutate(
+    mk_tau = map_dbl(mk_results, ~ .x$tau),
+    mk_pvalue = map_dbl(mk_results, ~ .x$sl),
+    sen_estimate = map_dbl(sen_results, ~ .x$estimate),
+    sen_pvalue = map_dbl(sen_results, ~ .x$p.value)
+    ) |&gt;
+  dplyr::select(-mk_results, -sen_results)
+
+end_time &lt;- Sys.time()
+
+# Calculate the elapsed time
+elapsed_time &lt;- end_time - start_time
+
+mk80transect &lt;- result |&gt; 
+  inner_join(unique_pixels)
+
+write_csv(mk80transect, &quot;data/mk80transect.csv&quot;)</code></pre>
+<pre class="r"><code>mk80transect &lt;- read_csv(&quot;data/mk80transect.csv&quot;) |&gt; 
+  mutate(var = case_when(
+    var == &quot;p&quot; ~ &quot;Rainfall&quot;, 
+    var == &quot;tmax&quot; ~ &quot;Maximum temperatures&quot;,
+    var == &quot;tmin&quot; ~ &quot;Minimum temperatures&quot;,
+    var == &quot;tmed&quot; ~ &quot;Mean temperatures&quot;
+  ))</code></pre>
 </div>
-<div id="plots" class="section level1">
-<h1>Plots</h1>
-<ul>
-<li><a href="plot_climate.html">Sierra Nevada climtate</a></li>
-<li><a href="climate_trends.html">Trends plot (violin plots of monthly
-trends for transect data)</a></li>
-</ul>
-<div id="autores" class="section level2">
-<h2>Autores</h2>
-<ul>
-<li><a href="https://github.com/ajpelu">Antonio J. Pérez-Luque</a>
-<a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
-<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
-<li>José Miguel Barea-Azcón
-<a href="https://orcid.org/0000-0001-8081-1513" target="orcid.widget">
-<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a></li>
-</ul>
+<div id="violin-plots-of-the-trends" class="section level2">
+<h2>Violin plots of the trends</h2>
+<div id="tau" class="section level3">
+<h3>Tau</h3>
+<pre class="r"><code>plot_tau &lt;- mk80transect |&gt; 
+  ggplot(aes(x = month, y = mk_tau)) +
+  geom_violin() + 
+  stat_summary(fun = &quot;median&quot;, geom = &quot;point&quot;) + 
+  geom_hline(yintercept = 0, colour = &quot;red&quot;, linetype = &quot;dotted&quot;) + 
+  facet_wrap(~var, nrow = 4, scales = &quot;free_y&quot;) + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill=&quot;white&quot;)) +
+  ylab(expression(paste(tau, &quot; Mann-Kendall&quot;)))
+
+plot_tau</code></pre>
+<p><img src="figure/climate_trends.Rmd/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(plot_tau, 
+       filename = &quot;output/climate/plot_tau_violin.png&quot;,
+       height = 8, width = 5, 
+       device = &quot;png&quot;, dpi = 300)</code></pre>
+</div>
+<div id="sen" class="section level3">
+<h3>Sen</h3>
+<pre class="r"><code>plot_sen &lt;- mk80transect |&gt; 
+  ggplot(aes(x = month, y = sen_estimate)) +
+  geom_violin() + 
+  stat_summary(fun = &quot;median&quot;, geom = &quot;point&quot;) + 
+  geom_hline(yintercept = 0, colour = &quot;red&quot;, linetype = &quot;dotted&quot;) + 
+  facet_wrap(~var, nrow = 4, scales = &quot;free_y&quot;) + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill=&quot;white&quot;)) +
+  ylab(&quot;Sen slope&quot;)
+
+plot_sen</code></pre>
+<p><img src="figure/climate_trends.Rmd/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggsave(plot_sen, 
+       filename = &quot;output/climate/plot_sen_violin.png&quot;,
+       height = 8, width = 5, 
+       device = &quot;png&quot;, dpi = 300)</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.3 (2023-03-15)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur ... 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.9.2 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.0    
+ [5] purrr_1.0.1     readr_2.1.4     tidyr_1.3.0     tibble_3.1.8   
+ [9] ggplot2_3.4.1   tidyverse_2.0.0 here_1.0.1      workflowr_1.7.0
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.10       getPass_0.2-2     ps_1.7.1          rprojroot_2.0.3  
+ [5] digest_0.6.31     utf8_1.2.2        R6_2.5.1          evaluate_0.19    
+ [9] httr_1.4.4        highr_0.10        pillar_1.8.1      rlang_1.1.0      
+[13] rstudioapi_0.14   whisker_0.4       callr_3.7.3       jquerylib_0.1.4  
+[17] rmarkdown_2.19    textshaping_0.3.6 labeling_0.4.2    bit_4.0.4        
+[21] munsell_0.5.0     compiler_4.2.3    httpuv_1.6.8      xfun_0.39        
+[25] systemfonts_1.0.4 pkgconfig_2.0.3   htmltools_0.5.4   tidyselect_1.2.0 
+[29] fansi_1.0.3       crayon_1.5.2      tzdb_0.3.0        withr_2.5.0      
+[33] later_1.3.0       grid_4.2.3        jsonlite_1.8.4    gtable_0.3.1     
+[37] lifecycle_1.0.3   git2r_0.30.1      magrittr_2.0.3    scales_1.2.1     
+[41] cli_3.6.0         stringi_1.7.8     vroom_1.6.3       cachem_1.0.6     
+[45] farver_2.1.1      fs_1.6.2          promises_1.2.0.1  bslib_0.4.2      
+[49] ellipsis_0.3.2    ragg_1.2.5        generics_0.1.3    vctrs_0.6.0      
+[53] tools_4.2.3       bit64_4.0.5       glue_1.6.2        hms_1.1.2        
+[57] processx_3.7.0    parallel_4.2.3    fastmap_1.1.0     yaml_2.3.7       
+[61] timechange_0.1.1  colorspace_2.0-3  knitr_1.41        sass_0.4.5       </code></pre>
+</div>
 </div>
 </div>
 
@@ -829,6 +821,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -861,6 +855,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
