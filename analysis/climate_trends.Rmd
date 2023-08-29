@@ -21,6 +21,8 @@ knitr::opts_chunk$set(
 library(here)
 library(tidyverse)
 library(purrr)
+library(trend)
+library(Kendall)
 ```
 
 ## Steps to compute the MK-Ss
@@ -62,6 +64,7 @@ df <- raw |>
   distinct() # remove dups 
 rm(raw)
 
+# Compute MK since 1980 
 start_time <- Sys.time()
 result <- df |> 
   group_by(var, id_pixel, month) |> 
@@ -86,6 +89,34 @@ mk80transect <- result |>
   inner_join(unique_pixels)
 
 write_csv(mk80transect, "data/mk80transect.csv")
+
+
+# Compute MK since 2012
+
+start_time <- Sys.time()
+result2012 <- df |> filter(year > 2011) |> 
+  group_by(var, id_pixel, month) |> 
+  summarise(
+    mk_results = list(MannKendall(value)),
+    sen_results = list(sens.slope(value))
+  ) |>
+  mutate(
+    mk_tau = map_dbl(mk_results, ~ .x$tau),
+    mk_pvalue = map_dbl(mk_results, ~ .x$sl),
+    sen_estimate = map_dbl(sen_results, ~ .x$estimate),
+    sen_pvalue = map_dbl(sen_results, ~ .x$p.value)
+    ) |>
+  dplyr::select(-mk_results, -sen_results)
+
+end_time <- Sys.time()
+
+# Calculate the elapsed time
+elapsed_time <- end_time - start_time
+
+mk2012 <- result2012 |> 
+  inner_join(unique_pixels)
+
+write_csv(mk, "data/mk2012transect.csv")
 ```
 
 ```{r}
@@ -96,9 +127,17 @@ mk80transect <- read_csv("data/mk80transect.csv") |>
     var == "tmin" ~ "Minimum temperatures",
     var == "tmed" ~ "Mean temperatures"
   ))
+
+mk2012transect <- read_csv("data/mk2012transect.csv") |> 
+  mutate(var = case_when(
+    var == "p" ~ "Rainfall", 
+    var == "tmax" ~ "Maximum temperatures",
+    var == "tmin" ~ "Minimum temperatures",
+    var == "tmed" ~ "Mean temperatures"
+  ))
 ```
 
-## Violin plots of the trends 
+## Violin plots of the trends (1980-2022)
 ### Tau 
 ```{r, fig.height=8, fig.width=5}
 plot_tau <- mk80transect |> 
@@ -142,6 +181,54 @@ plot_sen
 ```{r}
 ggsave(plot_sen, 
        filename = "output/climate/plot_sen_violin.png",
+       height = 8, width = 5, 
+       device = "png", dpi = 300)
+```
+
+## Violin plots of the trends (2012-2022)
+### Tau 
+```{r, fig.height=8, fig.width=5}
+plot_tau2012 <- mk2012transect |> 
+  ggplot(aes(x = month, y = mk_tau)) +
+  geom_violin() + 
+  stat_summary(fun = "median", geom = "point") + 
+  geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
+  facet_wrap(~var, nrow = 4, scales = "free_y") + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill="white")) +
+  ylab(expression(paste(tau, " Mann-Kendall")))
+
+plot_tau2012
+```
+
+```{r}
+ggsave(plot_tau2012, 
+       filename = "output/climate/plot_tau_violin2012.png",
+       height = 8, width = 5, 
+       device = "png", dpi = 300)
+```
+
+
+### Sen 
+```{r, fig.height=8, fig.width=5}
+plot_sen2012 <- mk2012transect |> 
+  ggplot(aes(x = month, y = sen_estimate)) +
+  geom_violin() + 
+  stat_summary(fun = "median", geom = "point") + 
+  geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
+  facet_wrap(~var, nrow = 4, scales = "free_y") + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill="white")) +
+  ylab("Sen slope")
+
+plot_sen2012
+```
+
+```{r}
+ggsave(plot_sen2012, 
+       filename = "output/climate/plot_sen_violin2012.png",
        height = 8, width = 5, 
        device = "png", dpi = 300)
 ```
