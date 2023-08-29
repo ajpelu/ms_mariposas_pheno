@@ -1,0 +1,150 @@
+---
+title: "Climate trends"
+author: '[Antonio J. Pérez-Luque](https://github.com/ajpelu) <a href="https://orcid.org/0000-0002-1747-0469" target="orcid.widget">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>'
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10, fig.height = 7
+)
+```
+
+## Introduction
+```{r, message=FALSE, warning=FALSE}
+library(here)
+library(tidyverse)
+library(purrr)
+```
+
+## Steps to compute the MK-Ss
+
+- Read the transect data. For each monthly variable (*prec*, *tmin*, *tmed*, *tmax*) there is a temporal series for each of the pixels. 
+- Temporal series spanning from 1980 to 2022. 
+- Each transect has different number of pixels. 
+- A dictionary of pixels (`unique_pixels`, n = 1911) was created to easy the manipulation of data.
+- For each pixel we would compute the Mann-Kendall trend and Sen slope statistics and their significance. 
+- Output data is stored at: `/data/mk80transect.csv`
+
+```{r, eval=FALSE}
+files <- list.files("data/raw_data/climate_transects", pattern = "transect.csv", full.names = TRUE)
+
+custom_f <- function(x) { 
+  out <- 
+    read_csv(x) |> 
+    dplyr::select(-ID) |> 
+    pivot_longer(-c("transectid","x", "y")) |> 
+    separate(name, into = c("var", "year", "month", "cog")) |> 
+    dplyr::select(-cog)
+  return(out)
+  }
+
+raw <- files |> 
+  map_df(~custom_f(.)) |> 
+  mutate(var = recode(var, 
+                      "tm2" = "tmin", 
+                      "tm3" = "tmax"))
+
+unique_pixels <- raw |> 
+  dplyr::select(transectid, x, y) |> 
+  unique() |> 
+  ungroup() |> 
+  mutate(id_pixel = row_number())
+
+df <- raw |> 
+  inner_join(unique_pixels) |> 
+  distinct() # remove dups 
+rm(raw)
+
+start_time <- Sys.time()
+result <- df |> 
+  group_by(var, id_pixel, month) |> 
+  summarise(
+    mk_results = list(MannKendall(value)),
+    sen_results = list(sens.slope(value))
+  ) |>
+  mutate(
+    mk_tau = map_dbl(mk_results, ~ .x$tau),
+    mk_pvalue = map_dbl(mk_results, ~ .x$sl),
+    sen_estimate = map_dbl(sen_results, ~ .x$estimate),
+    sen_pvalue = map_dbl(sen_results, ~ .x$p.value)
+    ) |>
+  dplyr::select(-mk_results, -sen_results)
+
+end_time <- Sys.time()
+
+# Calculate the elapsed time
+elapsed_time <- end_time - start_time
+
+mk80transect <- result |> 
+  inner_join(unique_pixels)
+
+write_csv(mk80transect, "data/mk80transect.csv")
+```
+
+```{r}
+mk80transect <- read_csv("data/mk80transect.csv") |> 
+  mutate(var = case_when(
+    var == "p" ~ "Rainfall", 
+    var == "tmax" ~ "Maximum temperatures",
+    var == "tmin" ~ "Minimum temperatures",
+    var == "tmed" ~ "Mean temperatures"
+  ))
+```
+
+## Violin plots of the trends 
+### Tau 
+```{r, fig.height=8, fig.width=5}
+plot_tau <- mk80transect |> 
+  ggplot(aes(x = month, y = mk_tau)) +
+  geom_violin() + 
+  stat_summary(fun = "median", geom = "point") + 
+  geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
+  facet_wrap(~var, nrow = 4, scales = "free_y") + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill="white")) +
+  ylab(expression(paste(tau, " Mann-Kendall")))
+
+plot_tau
+```
+
+```{r}
+ggsave(plot_tau, 
+       filename = "output/climate/plot_tau_violin.png",
+       height = 8, width = 5, 
+       device = "png", dpi = 300)
+```
+
+
+### Sen 
+```{r, fig.height=8, fig.width=5}
+plot_sen <- mk80transect |> 
+  ggplot(aes(x = month, y = sen_estimate)) +
+  geom_violin() + 
+  stat_summary(fun = "median", geom = "point") + 
+  geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
+  facet_wrap(~var, nrow = 4, scales = "free_y") + 
+  theme_bw() +
+  theme(panel.grid = element_blank(), 
+        strip.background = element_rect(fill="white")) +
+  ylab("Sen slope")
+
+plot_sen
+```
+
+```{r}
+ggsave(plot_sen, 
+       filename = "output/climate/plot_sen_violin.png",
+       height = 8, width = 5, 
+       device = "png", dpi = 300)
+```
+
+
+
